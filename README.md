@@ -36,6 +36,80 @@ python -m pip --version
 
 ---
 
+## Database schema overview
+
+The system currently uses five core tables:
+
+### 1) `companies`
+
+- Tenant root record.
+- Key columns:
+  - `id` (PK)
+  - `name` (unique)
+- Purpose: multi-tenant boundary for users and assets.
+
+### 2) `users`
+
+- Login subjects with RBAC role.
+- Key columns:
+  - `id` (PK)
+  - `email` (unique, indexed)
+  - `password_hash`
+  - `role` (`System_Admin` / `Asset_Manager` / `Contractors`)
+  - `company_id` (FK -> `companies.id`, indexed)
+- Purpose: authentication, authorization, and tenant scoping.
+
+### 3) `assets`
+
+- Asset master data used for compliance checks.
+- Key columns:
+  - `id` (PK)
+  - `asset_name` (indexed)
+  - `equipment_type` (indexed, optional)
+  - `max_load_capacity` (float, > 0 in service validation)
+  - `unit` (English only: canonical `kg` / `ton` / `lb`)
+  - `source_file` (optional)
+  - `company_id` (FK -> `companies.id`, indexed)
+- Purpose: stores threshold data for load evaluation.
+
+### 4) `evaluation_logs`
+
+- Immutable-ish audit trail for evaluations.
+- Key columns:
+  - `id` (PK)
+  - `asset_id` (FK -> `assets.id`, indexed)
+  - `user_id` (FK -> `users.id`, indexed)
+  - `planned_load` (converted to asset unit before persistence)
+  - `submitted_planned_load` (raw user input value)
+  - `submitted_unit` (normalized input unit)
+  - `remark` (optional note from evaluator)
+  - `status` (`Compliant` / `Non-Compliant`)
+  - `overload_percentage`
+  - `evaluated_at` (UTC timestamp, indexed)
+- Purpose: traceability, history UI, and future notification/audit use.
+
+### 5) `alembic_version`
+
+- Migration bookkeeping table managed by Alembic.
+- Key column:
+  - `version_num`
+- Purpose: tracks which migrations are applied.
+
+### Relationships summary
+
+- `companies (1) -> (N) users`
+- `companies (1) -> (N) assets`
+- `users (1) -> (N) evaluation_logs`
+- `assets (1) -> (N) evaluation_logs`
+
+### Tenant isolation model
+
+- Every asset query/write is scoped by `company_id`.
+- Auth token payload includes `company_id`, and controllers pass it into services.
+- This prevents cross-tenant reads/writes in normal API flows.
+
+---
+
 ## Run on **Windows** (PowerShell)
 
 ### 1) Open a terminal in the project root
