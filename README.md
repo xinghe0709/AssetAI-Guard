@@ -36,6 +36,94 @@ python -m pip --version
 
 ---
 
+## Get the project with Git
+
+If the project is not on your machine yet, clone it first:
+
+```bash
+git clone https://github.com/xinghe0709/AssetAI-Guard.git
+cd AssetAI-Guard
+```
+
+Check remotes:
+
+```bash
+git remote -v
+```
+
+---
+
+## Git workflow and branch rules
+
+> Team policy: **do not push directly to `main`**.  
+> Always push to your own branch and open a Pull Request.
+
+### 1) Update local `main`
+
+```bash
+git checkout main
+git pull origin main
+```
+
+### 2) Create your working branch
+
+```bash
+git checkout -b <yourname>/<feature-name>
+```
+
+Example:
+
+```bash
+git checkout -b xinghe/feature-bulk-import
+```
+
+### 3) Commit changes
+
+```bash
+git status
+git add .
+git commit -m "feat: add bulk import integration skeleton"
+```
+
+### 4) Push your branch
+
+```bash
+git push -u origin <yourname>/<feature-name>
+```
+
+### 5) Create Pull Request
+
+- Base branch: `main`
+- Compare branch: your feature branch
+- Add reviewers and merge only after review/checks pass
+
+### Common Git commands for daily work
+
+```bash
+# Show current status
+git status
+
+# List local and remote branches
+git branch
+git branch -r
+
+# Switch branch
+git checkout <branch-name>
+
+# Fetch latest remote refs without merging
+git fetch origin
+
+# Rebase your branch on latest main (optional)
+git checkout <your-branch>
+git fetch origin
+git rebase origin/main
+
+# View concise history
+git log --oneline --graph --decorate -20
+```
+
+---
+
 ## Database schema overview
 
 The system currently uses five core tables:
