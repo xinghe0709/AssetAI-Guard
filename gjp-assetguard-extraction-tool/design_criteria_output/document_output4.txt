@@ -1,0 +1,59 @@
+Design Criteria Extraction - output4
+==================================================
+Pages processed: 6
+Images found: 12
+Relevant sections: 10
+Processed: 2025-08-11T10:56:43.437696
+
+DESIGN CRITERIA:
+--------------------
+ITEM: General Notes (PAGE 2)
+- Vertical Datum: Chart Datum, 0.756m below Australian Height Datum (AHD)
+- Tide Levels: LAT +0.200m, MLLW +0.503m, MSL +0.728m, MHHW +0.972m, HAT +1.400m
+- Formwork Stripping Time: Minimum 3 days
+- Cast-in Items: Grade 316 stainless steel
+- Reinforcement Cover: Precast Concrete 60mm, Insitu Concrete 60mm generally, 30mm internal surfaces
+- Concrete Class: Insitu Concrete 50 MPa, Precast Concrete 60 MPa
+- Steel Grade: Structural Steel Grade 350 MPa
+- Welding: AS/NZS 1554 Part 1, Electrode Classification E48XX
+- Grout: Non-shrink, 60 MPa minimum compressive strength
+
+ITEM: Design Criteria (PAGE 3)
+- Concrete Strength: Insitu Concrete 50 MPa, Precast Concrete 60 MPa
+- Reinforcing Steel: N bars fsy 500 MPa, R bars fsy 250 MPa
+- Structural Steel: fsy 350 MPa
+- Tubular Steel: fsy 350 MPa
+- Mooring Loads: Lateral Wind Area 3728m², Longitudinal Wind Area 596m²
+- Berthing Loads: Dead Weight Tonnage 10608 tonnes, Displacement Tonnage 17341 tonnes, Length Overall 169m, Beam Breadth 24.7m
+- Berthing Velocity: 0.1m/s, Current Velocity: 0.2m/s
+- Wind Loads: Ultimate Limit State 45 m/s, Serviceability Limit State 22 m/s
+- Seismic Forces: AS1170.4 -2007, Importance Level 2, Annual Exceedance Probability 1:500
+- Corrosion Allowances: New Piles 3.0mm, New Steel Work 1.0mm
+- Design Life: 50 years
+
+ITEM: Existing Plan and Sections (PAGE 4)
+- Declared Depth: 13.0 metres
+- Concrete Deck Thickness: Approx. 250mm
+- Timber Waler: Upper and Lower
+- BP Oil Pipeline: Live during construction
+
+ITEM: New Works Plan and Sections (PAGE 5)
+- Total New Piles: 21
+- Total Fender Blocks: 6
+- Concrete Deck Thickness: Approx. 250mm
+- BP Oil Pipeline: Live during construction
+
+ITEM: Pile Schedule (PAGE 6)
+- Precast Fender Block: 2-N16 Internal Shear Rings
+- Pile Cut Off Level: RL -2.610
+- Reinforcement: 8 x 2-N32 Bars Equispaced
+- Cover: 55mm
+
+METADATA:
+- Project: Victoria Quay Berth D Fender Upgrade
+- Date: Issued for Construction 07/04/15, Issued for Tender 23/03/15, Issued for Cost Estimate 20/01/15, Issued for Checking 12/01/15
+- Engineer/Designer: MHS, GP
+- Drawing Number: 014-D-139 to 014-D-146
+- Revision: 0
+- Standards: AS 3610, AS 3600, AS/NZS 4671, AS 4100, AS/NZS 1554, AS 1594, AS 3678, AS 3679, AS 1163, AS 1252, AS1170.4
+- Document Type: Engineering Drawings and Specifications

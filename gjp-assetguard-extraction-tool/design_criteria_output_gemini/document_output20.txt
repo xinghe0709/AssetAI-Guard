@@ -1,0 +1,119 @@
+Design Criteria Extraction - output20 (Gemini)
+==================================================
+Pages processed: 1
+Processed: 2025-08-27T10:53:15.964524
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: Regional Ports of Western Australia - Port of Geraldton
+- Date: 29/12/83, 24-89 (likely 24/8/89), Dec 31, 1983
+- Engineer/Designer: C.S. (Draftsperson), CS/JHS (Checker), Slage (Approving Chief Engineer)
+- Drawing Number: 53923-7-4, 53923-7-1 (Locality Plan)
+- Revision: REVISED TO DEC 31, 1983
+- Standards: None explicitly stated
+- Document Type: Cross Sections and Design Loadings drawing
+
+ITEM: Berth No. 5 (PAGE 1)
+- Berthing Load: 27,000 tonne vessel (loaded displacement mass) (PAGE 1)
+- Berthing Impact Velocity: 0.15 m/s (PAGE 1)
+- Kinetic Energy Absorption by Structure: 50% (PAGE 1)
+- Stacked Loads: 4500 kg/m² (PAGE 1)
+- Design Loadings: Referenced (PAGE 1)
+
+ITEM: Crane (PAGE 1)
+- No information about Crane beyond its existence on the berth
+
+ITEM: Heavy Fork Lift (PAGE 1)
+- Lift Capacity: 27,200 kg (PAGE 1)
+- Model: Towmotor AH 60 (No. 3 Berth Only) (PAGE 1)
+
+ITEM: Approach Ramp & Berth Apron (PAGE 1)
+- Pier Centres: 4270 mm (PAGE 1)
+- Ramp Slope: 1:12 (PAGE 1)
+
+ITEM: RC Flat Plate (PAGE 1)
+- Slope: 1:60 (PAGE 1)
+- Thickness: 600 mm min (PAGE 1)
+- RL: -11.20 m approx (PAGE 1)
+- Haunches at piers (PAGE 1)
+
+
+ITEM: Bollard (PAGE 1)
+- Material: Cast Iron (PAGE 1)
+
+ITEM: Piles (PAGE 1)
+- Material: Steel (PAGE 1)
+- Outer Diameter: 474 mm x 12 mm thick (PAGE 1)
+- Outer Diameter (Others): 454 mm x 16 mm thick (PAGE 1)
+- RL: -9.40 m (PAGE 1)
+- Encased in Cast in situ Concrete Cylinders (PAGE 1)
+
+ITEM: Steel Sheet Piling (PAGE 1)
+- RL: -9.70 m (PAGE 1)
+
+ITEM: Steel Beams (PAGE 1)
+- Ex 2 Steel Beams indicated on ramp section (PAGE 1)
+- Shear Heads noted (PAGE 1)
+- RL 1.90m (Mooring Dolphin Walkway) (PAGE 1)
+
+ITEM: Dimensions (PAGE 1)
+- 200 (PAGE 1)
+- 100 (PAGE 1)
+- RL 4.25m (PAGE 1)
+- RL 4.10m (PAGE 1)
+- 19,000 (PAGE 1)
+- 32,000 (PAGE 1)
+- 600 (PAGE 1)
+- 700 (PAGE 1)
+- 500 (PAGE 1)
+- 400 (PAGE 1)
+- 300 (PAGE 1)
+- 13,000 (PAGE 1)
+- 10,000 (PAGE 1)
+- 5230 (PAGE 1)
+- 4880 (Repeated multiple times) (PAGE 1)
+- 1:2 (Slope) (PAGE 1)
+- 1500 (PAGE 1)
+- RL 3.81m (PAGE 1)
+- Seibu V Type 800 H x 1500 L (Dock Rubber Fender Units) (PAGE 1)
+- 8m c/c (Dock Rubber Fender Units spacing) (PAGE 1)
+- RL 1.30m (PAGE 1)
+- 4600 (PAGE 1)
+- 2650 kg (Each Wheel - presumably forklift) (PAGE 1)
+- 15200 kg (Each Wheel - presumably forklift) (PAGE 1)
+- 2750 (PAGE 1)
+- RL 3.22m (PAGE 1)
+- 943 min (PAGE 1)
+- 1:100 (Slope) (PAGE 1)
+- 6100 sq (PAGE 1)
+- 1730 (PAGE 1)
+- RL 3.80m (PAGE 1)
+- RL 2.00m (PAGE 1)
+- 5'9'2 (Likely a misinterpretation of 5.92m or 1.752m given subsequent annotations) (PAGE 1)
+- 1.752m (PAGE 1)
+- 1.2 (PAGE 1)
+- 0.8 (PAGE 1)
+- 24 cm (PAGE 1)
+- 1cm = 2m (Scale reference) (PAGE 1)
+- 1:200 (Scale) (PAGE 1)
+- 0.847 m (Chart Datum below AHD) (PAGE 1)
+
+ITEM: Materials (PAGE 1)
+- Concrete (PAGE 1)
+- Stone Pitching (PAGE 1)
+- Steel (PAGE 1)
+- Timber (PAGE 1)
+- Limestone (PAGE 1)
+
+
+ITEM: General Notes (PAGE 1)
+- Dimensions in millimeters unless otherwise shown (PAGE 1)
+- Drawing ownership and copyright notice (PAGE 1)
+
+ITEM: Mooring Dolphin (PAGE 1)
+- RC Flat Plate: 943mm min, 1:100 slope (PAGE 1)
+- Steel Beam Frame: RL 2.00m (PAGE 1)
+
+
+This is a very detailed extraction of the available technical information. Remember that some of the numerical values lack context and require further investigation using related drawings or documents. This information provides a strong starting point for a detailed analysis of the berth design.

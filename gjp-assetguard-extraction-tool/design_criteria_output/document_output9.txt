@@ -1,0 +1,51 @@
+Design Criteria Extraction - output9
+==================================================
+Pages processed: 6
+Images found: 12
+Relevant sections: 2
+Processed: 2025-08-11T11:04:20.806410
+
+DESIGN CRITERIA:
+--------------------
+ITEM: General Notes and Design Criteria (PAGE 2)
+- Concrete Strength: 50 MPa (insitu), 60 MPa (precast)
+- Reinforcement: N12 bars at 200 centers, N16 bar for corners
+- Lap Lengths: N12 - 375 mm, N15 - 500 mm, N20 - 625 mm, N24 - 750 mm, N28 - 900 mm, N32 - 1100 mm, N36 - 1350 mm
+- Pile Tolerances: 1100 mm at pile cutoff level, 1% vertical deviation
+- Welding: Category SP, AS/NZS 1554 Part 1 2004
+- Grout: Non-shrink, 50 MPa minimum strength
+- Wind Loads: Ultimate Limit State - 45 m/s, Serviceability Limit State - 37 m/s
+- Mooring Loads: Displacement Tonnage - 116,000+, Length Overall - 318.2 m
+- Seismic Forces: Annual Exceedance Probability - 1:500, Peak Horizontal Ground Acceleration - 0.09 g
+- Thermal Loads: Ambient Temperature Range -15°C to +20°C
+- Corrosion Allowance: 3.0 mm for steelwork
+- Design Life: 50 years
+
+ITEM: Existing Wharf Layout Plan (PAGE 3)
+- Existing Concrete Retaining Wall: Under deck
+- Existing Piles: To be demolished and removed
+- Existing Stormwater Outfall: To be reinstated under new rear crane beam
+- Existing Water Line: To be capped and reinstated under new deck
+- Existing Septic Tank: To be decommissioned and backfilled
+
+ITEM: Typical Section Through Existing Berth 10 (PAGE 4)
+- Concrete Slab: 150 mm thick to be demolished
+- Existing Sheet Pile Wall: To be cut off at RL +2.0 m
+- Existing Fender Line: To be removed
+- Existing Concrete Piles: To be cut off 1 m to 2 m above seabed level
+
+ITEM: Stormwater Drainage Details (PAGE 6)
+- New Storm Water Pipe: $225, concrete encased
+- Precast Concrete Lid: 1200x1200x250 mm
+- Concrete Encasement: Fc' 25 MPa, 2-N12 centrally placed
+- Drainage Gully Pits: Wembley Cement Industries extra heavy duty grated cover size 1200x1200x250 mm
+- Drainage Pipes: Class 4, $225 pipes on HS2 type bedding
+
+METADATA:
+- Project: North Quay - Berth 10 Reconstruction
+- Date: 17 December 2008
+- Engineer/Designer: Not explicitly mentioned
+- Drawing Number: Various (e.g., 60028072-001, 60028072-002)
+- Revision: Issued for Construction
+- Standards: AS 3600, AS/NZS 1554, AS 4100, AS 1594, AS 3678, AS 3679, AS 1163, AS 1252
+- Document Type: Engineering Drawings and General Notes

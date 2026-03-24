@@ -1,0 +1,158 @@
+Design Criteria Extraction - output24 (Gemini)
+==================================================
+Pages processed: 1
+Processed: 2025-08-27T10:55:18.404250
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: Victoria Quay - Berth F & Berth G Survey, Fender Upgrade
+- Date: 27 September 2024, 04.07.24, 25/06/24, JUN 2024
+- Engineer/Designer: T.S, A.S, A.W, S.C, P.R
+- Drawing Number: 4400-015-ST-DRW-002
+- Revision: C
+- Standards: AS3610, AS3600, AS4671, AS1304, AS3679.1, AS1163, AS/NZS3678, EN10028-7, AS1554.3, AS4100, AS/NZS1554 Part 1, ISO 3506, AS/NZS1554 Part 2, AS1554.1, AS1554.5, AS4997
+- Document Type: General Notes & Design Criteria, Survey
+
+ITEM: General Notes (PAGE 1)
+- All dimensions in millimeters unless noted otherwise (PAGE 1)
+
+ITEM: Datums (PAGE 1)
+- Vertical Datum: Fremantle Low Water Mark (FLWM) (PAGE 1)
+- FLWM: 0.756m below Australian Height Datum (AHD) (PAGE 1)
+- Coordinates: MGA 2020 (PAGE 1)
+- Tide Levels: Fremantle Low Water Mark (LWM) (PAGE 1)
+
+ITEM: Tide Levels (PAGE 1)
+- HAT: +1.380 m (PAGE 1)
+- MHWS: +1.130 m (PAGE 1)
+- MHHW: +1.020 m (PAGE 1)
+- MSL: +0.790 m (PAGE 1)
+- AHD: 0.00 m (PAGE 1)
+- MLLW: +0.550 m (PAGE 1)
+- LAT: +0.240 m (PAGE 1)
+- LWM/FLWM: 0.000 m (PAGE 1)
+
+ITEM: Formwork (PAGE 1)
+- Stripping Requirement: Concrete strength sufficient to support loads without excessive distortion or cracking (PAGE 1)
+- Minimum stripping times shall comply with specifications (PAGE 1)
+
+ITEM: Penetrations and Cast In Items (PAGE 1)
+- Anchors into concrete deck: Holes to be drilled, not cored (PAGE 1)
+- Cast in items: Grade 316 Stainless Steel (PAGE 1)
+
+ITEM: Reinforcement (PAGE 1)
+- N Bars: Hot rolled deformed bars, Grade D500N to AS/NZS 4671 (PAGE 1)
+- L Bars: Hot rolled deformed bars, Grade D500L to AS/NZS 4671 (PAGE 1)
+- Fabric: Grade D500L or D500N to AS 4671 and AS 1304 (PAGE 1)
+- R Bars: Structural grade plain round bar, Grade 250R to AS 1302 (PAGE 1)
+- Bar Diameter: Number following letter indicates diameter in mm (PAGE 1)
+- Cover to Reinforcement (Minimum):
+    - Precast Concrete: 65mm (PAGE 1)
+    - Insitu Concrete: 65mm (PAGE 1)
+- Cover Tolerance to Reinforcement: +10.0mm, -0.0mm (PAGE 1)
+- Secondary Reinforcement (if not shown): N16 bars at 200mm centers (PAGE 1)
+- Corner Reinforcement: 1-N16 bar, 1200mm long, top and bottom (PAGE 1)
+- Crack control bars in reinstated slabs: Epoxy grouted into pre-drilled holes (PAGE 1)
+- Splice Lengths for N Deformed Bars:
+    - N12: 400mm (PAGE 1)
+    - N16: 500mm (PAGE 1)
+    - N20: 650mm (PAGE 1)
+    - N24: 750mm (PAGE 1)
+    - N28: 900mm (PAGE 1)
+    - N32: 1200mm (PAGE 1)
+    - N36: 1600mm (PAGE 1)
+- Splice Lengths for Horizontal Bars (>300mm concrete below): 1.3 times the values in the table (PAGE 1)
+- N36 and larger bars: Lapped with mechanical splices in accordance with AS3600 (PAGE 1)
+- Existing exposed reinforcement: Coated with Nitoprime Zincrich Epoxy (PAGE 1)
+- Reinforcement Placement Notation: (PAGE 1)
+    - REINF: Reinforcement
+    - EF: Each Face
+    - FF: Far Face
+    - NF: Near Face
+    - ES: Equally Spaced
+    - T: Top
+    - B: Bottom
+    - LT: Top reinforcement lower layer
+    - UT: Top reinforcement upper layer
+    - LB: Bottom reinforcement lower layer
+    - UB: Bottom reinforcement upper layer
+- Tolerance for Precast Concrete Reinforcement:
+    - Overall length of bars: -10.0mm, +0mm (PAGE 1)
+    - Overall dimension of fitments and vertical wall reinforcement: -8.0mm, +0mm (PAGE 1)
+- Welding of reinforcing bars: AS1554.3 (PAGE 1)
+
+ITEM: Concrete Work (PAGE 1)
+- Concrete Class: (PAGE 1)
+    - Insitu Concrete: S50 (PAGE 1)
+    - Precast Concrete: S60 (PAGE 1)
+- Maximum Aggregate Size: 20mm (PAGE 1)
+- Nominal Slump: 80mm (PAGE 1)
+- Maximum W/C Ratio:
+    - S50: 0.40 (PAGE 1)
+    - S60: 0.36 (PAGE 1)
+- Minimum Cement Content:
+    - S50: 450 kg/m³ (PAGE 1)
+    - S60: 520 kg/m³ (PAGE 1)
+- Compressive Strength (MPa):
+    - S50: 50 MPa (PAGE 1)
+    - S60: 60 MPa (PAGE 1)
+- Cement Type: GP-65% Slag (PAGE 1)
+- Curing Duration:
+    - Insitu Concrete: 7 days (PAGE 1)
+    - Precast Concrete: 7 days (PAGE 1)
+- Surface Protection (when air temperature > 32°C or windy): Aliphatic alcohol (PAGE 1)
+
+ITEM: Structural Steel (PAGE 1)
+- Fabrication and Erection: AS4100 (PAGE 1)
+- Welding: AS/NZS1554 Part 1 (PAGE 1)
+- Bolts: Minimum M20 Grade 8.8/TB, installed per AS4100 with locking nuts (PAGE 1)
+- Cast-in bolts, ferrules, plates, angles: Grade 316 (A4-70 to ISO 3506) Stainless Steel (PAGE 1)
+- Ultimate Tensile Strength: 700 MPa min. (PAGE 1)
+- Headed Studs: AS/NZS1554 Part 2 (PAGE 1)
+- Welds: 8mm continuous fillet, electrode yield strength >= parent metal tensile strength (PAGE 1)
+- Butt Welds: Qualified continuous complete penetration butt welds (PAGE 1)
+- Weld Testing: AS1554.1 and AS1554.5 (PAGE 1)
+- Hollow Section Sealing: 8mm plate fully welded at 45° inclination (PAGE 1)
+- Plugs for Galvanized Hollow Sections: Devcon Plastic Steel Putty (PAGE 1)
+
+ITEM: Erection (PAGE 1)
+
+ITEM: Grout (PAGE 1)
+- Minimum Compressive Strength: 65MPa (PAGE 1)
+- Minimum Thickness: 30mm (PAGE 1)
+
+ITEM: Design Criteria (PAGE 1)
+- Vessel Sizes: (PAGE 1)
+    - Smallest Vessel: LOA 176.3m, Laden Draught 6.15m, Displacement 14,613 tonnes (PAGE 1)
+    - Most Common Vessel: LOA 261.3m, Laden Draught 8.1m, Displacement 40,100 tonnes (PAGE 1)
+    - Largest Vessel: LOA 348m, Laden Draught 8.82m, Displacement 82,000 tonnes (PAGE 1)
+- Maximum Berthing Angle: 6° (PAGE 1)
+- Berthing Velocity: 0.12 m/sec (PAGE 1)
+- Partial Energy Factor (Quarter Point Berthing): 1.5 (PAGE 1)
+- Fenders (Grids 90E to 180E): Trelleborg SuperCone SCN900F2.2 (PAGE 1)
+    - Energy Absorption: 364.0 kNm (PAGE 1)
+    - Fender Reaction (CV): 716.4 kN (PAGE 1)
+- Bollard Capacity: 35 tonnes and 80 tonnes (PAGE 1)
+- Live Load: AS4997 Class 15 (PAGE 1)
+- Max. Allowable Pressure (ship hull/fender panel): 250 kPa (PAGE 1)
+
+ITEM: Protective Coatings (PAGE 1)
+- MS Bolts: Hot dipped galvanized (PAGE 1)
+- MS Steelwork: Prepared and coated to specifications (PAGE 1)
+- Exposed Bolts Protection: Tremco Heavy Grade Hydroseal (PAGE 1)
+
+ITEM: Design Life (PAGE 1)
+- Concrete Panels: 50 years (PAGE 1)
+- Steel Panels: 25 years (PAGE 1)
+- Rubber Fender: 3000 cycles (PAGE 1)
+- Chains: 15 years (PAGE 1)
+
+ITEM: Demolition (PAGE 1)
+- Reinstatement Concrete Strength: 38 MPa (PAGE 1)
+
+ITEM: Construction Loads (PAGE 1)
+- Crane Pad Loads: Contractor to assess if exceeding AS4997 Class 15 (PAGE 1)
+- Construction Loads on Partially Demolished Structures: Contractor to assess (PAGE 1)
+
+

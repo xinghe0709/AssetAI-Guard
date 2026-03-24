@@ -1,0 +1,125 @@
+Design Criteria Extraction - output9 (Gemini)
+==================================================
+Pages processed: 6
+Processed: 2025-08-27T10:48:15.855075
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: NORTH QUAY - BERTH 10 RECONSTRUCTION
+- Date: 17.12.08; 17 December 2008; 17 December 2009
+- Engineer/Designer: PLG; PK; MD; VP; WH; NC
+- Drawing Number: 60028072-001; 60028072-002; 60028072-003; 60028072-004; 60028072-005; 60028072-006; 60028072-010; 60028072-011; 60028072-013; 60028072-014; 60028072-015; 60028072-016; 60028072-017; 60028072-018; 60028072-019; 60028072-020; 60028072-021; 60028072-022; 60028072-023; 60028072-024; 60028072-030; 60028072-031; 60028072-032; 60028072-033; 60028072-034; 60028072-035; 60028072-036; 60028072-037; 60028072-038; 60028072-039; 60028072-040; 60028072-041; 60028072-042; 60028072-043; 60028072-044; 60028072-045; 60028072-046; 60028072-047; 60028072-048; 60028072-049; 60028072-050; 60028072-051; 60028072-052; 60028072-053; 60028072-054; 60028072-055; 60028072-056; 60028072-057; 60028072-058; 60028072-059; 60028072-060
+- Revision: FOR CONSTRUCTION
+- Standards: AS 3600; AS/NZS 4671; AS 4671; AS 1594; AS 3678; AS 3679; AS 1163; AS 1252; AS/NZS 1554 PART 1 2004; AS 4100; AS1170.4; AS 5100.2; ISO 9001-2000; AS3610; AS 2700
+- Document Type: Drawing List; General Notes and Design Criteria; Existing Wharf Layout Plan; Existing Wharf Typical Section; Site Services Layout Plan & Details; Stormwater Drainage Details
+
+
+ITEM: General (PAGE 2)
+- Minimum Concrete Cover: 30mm (internal surfaces), 60mm (Precast beams/slab, exposed soffit & sides, in-situ deck top surface), 70mm (in-situ beams/slabs soffits & sides), 30mm (in-situ at construction joint)
+- Concrete Strength (f'c): 50 MPa (in-situ), 60 MPa (precast), 25 MPa (blinding)
+- Reinforcing Steel: N (Hot rolled deformed bars Grade D500N to AS/NZS 4671), R bars (Structural grade plain round bar Grade R250N to AS 4671)
+- Reinforcing Steel Strength (fsy): 500 MPa (N bars), 250 MPa (R bars)
+- Structural Steel Strength (fsy): 300 MPa (typically)
+- Tubular Steel Strength (fsy): 350 MPa
+- Pile Tolerance (Plumb): 1% from true vertical (Wharf Piles), 2% from true vertical (Sheet Piles)
+- Pile Tolerance (Position): 1100mm at pile cutoff level out of position in any direction (Wharf Piles), 50mm in reduced levels at top of finished sheet pile, 175mm deviation perpendicular to theoretical setout line (Sheet Piles)
+- Weld Category: SP (in accordance with AS/NZS 1554 Part 1 2004)
+- Grout Compressive Strength: 50 MPa (minimum characteristic)
+- Corrosion Allowance: 3.0 mm (all steelwork including wharf piles and sheet piles)
+- Design Life: 50 years
+- Cement Type: GP Ordinary Portland Cement
+- Concrete Wet Curing Duration: 7 days (in-situ), 14 days (precast)
+- Concrete Maximum Free Fall: 2m
+- Weld Size: 8mm continuous fillet (unless noted otherwise)
+- Electrode Classification: E48XX
+- Bolt Grade: 8.8 (to AS 1252 unless noted otherwise)
+- Bolt Coating: Hot-dip galvanized (unless noted otherwise)
+- Secondary Reinforcement: N12 bars at 200 centres
+- Reinforcement Splice (Lap Length): N12 - 375mm, N15 - 500mm, N20 - 625mm, N24 - 750mm, N28 - 900mm (precast)/950mm (in-situ), N32 - 1100mm/1200mm, N36 - 1350mm/1450mm
+- Horizontal Bar Splice Length (with >300mm concrete below): 125 times the standard lap length
+
+ITEM: Loads (PAGE 2)
+- Uniformly Distributed Load: 50 kPa (general stack load)
+- Load Reduction Factor (Serviceability): 0.4
+- Forklift Truck Load: 100 tonnes (on front axle)
+- Forklift Truck Wheel Width: 500mm
+- Forklift Truck Wheel Track: 3100mm
+- Mobile Crane Outrigger Pad Load: 88 tonnes (maximum)
+- Mobile Crane Outrigger Pad Size: 1000mm x 1000mm
+- Mobile Crane Outrigger Tyre Pressure: 10 bar
+- Mobile Crane No-Go Zone: within 2.4m of berth cope line
+- Wind Speed (Ultimate Limit State): 45 m/s (fixed structures), 39 m/s (vessels)
+- Wind Speed (Serviceability Limit State): 37 m/s (fixed structures), 32 m/s (vessels)
+- Area Reduction Factor: 0.8
+- Lateral Wind Load (Container Crane): 89 tonnes (factored ultimate)
+- Post-Panamax Container Ship Displacement Tonnage: 1116,000+ tonnes
+- Post-Panamax Container Ship Length Overall (LOA): 318.2m
+- Post-Panamax Container Ship Length Between Perpendiculars (LBP): 302.8m
+- Post-Panamax Container Ship Beam: 42.8m
+- Post-Panamax Container Ship Berthing Draft (Laden): 14m
+- Post-Panamax Container Ship Lateral Wind Area (Laden): 5105m² (shielded by one container height)
+- Post-Panamax Container Ship Lateral Wind Area (Ballast): 4600m²
+- Berthing Velocity: 0.1 m/s (max displacement vessel), 0.15 m/s (min displacement vessel)
+- Berthing Angle: 6° (max displacement vessel), 10° (min displacement vessel)
+- Abnormal Berthing Factor: 1.5 (max displacement vessel), 2.0 (min displacement vessel)
+- Abnormal Berthing Energy: 67 tm
+- Coefficient of Friction (Hull/Fender): 0.20 (single buffer contact), 0.15 (two buffer contact), 0.10 (three or more buffer contact)
+- Maximum Contact Pressure (Hull/Fender): 200 kN/m²
+- Annual Exceedance Probability (Earthquake): 1:500
+- Probability Factor (Kp): 1.0
+- Peak Horizontal Ground Acceleration: 0.09g
+- Site Factor: 45
+- Structure Response Factor (Rf): 1.0
+- Temperature Range (Thermal Expansion): +20°C to -15°C
+- Coastal Temperature (Hot Top): +18°C
+- Cold Top Temperature: -7.2°C
+
+ITEM: Container Stack Loads (PAGE 2)
+- 40' Container: 32t gross weight, 3 high stack, 0.85 reduction factor, 81.6 kPa internal pad load (600mm x 600mm), 40.8 kPa external pad load (600mm x 300mm)
+- 20' Container: 28t gross weight, 3 high stack, 0.85 reduction factor, 71.4 kPa internal pad load (600mm x 600mm), 35.7 kPa external pad load (600mm x 300mm)
+- 40' Container Spacing: 2.5m (transverse), 12.3m (longitudinal)
+- 20' Container Spacing: 2.5m (transverse), 6.2m (longitudinal)
+- Standard Container Dimensions: 20ft (6.1m) long x 8ft (2.44m) wide x 8.5ft (2.59m) high
+
+ITEM: Container Crane Loads (PAGE 2)
+- Wheel Spacing: 1.5m
+- Corner Spacing (along wharf): 15.7m
+- Rail Gauge: 25.3m
+- Wheel Loads (Ultimate Limit State): Waterside Leg A - 45.6t, Leg B - 60.9t; Landside Leg C - 53.1t, Leg D - 55.8t
+- Wheel Loads (Stowed/Storm): Waterside Leg A - 46.9t, Leg B - 55.9t; Landside Leg C - 66.9t, Leg D - 61.1t
+- Wheel Loads (Operating): Waterside Leg A - 56.9t, Leg B - 57.7t; Landside Leg C - 58.4t, Leg D - 57.5t
+- Wheel Loads (Seismic): Not specified
+
+ITEM: Stormwater Drainage (PAGE 6)
+- Pipe Diameter: 225mm, 300mm
+- Pipe Class: 4 (unless noted otherwise)
+- Bedding Type: HS2 (225mm pipe), HS1 (other diameters)
+- Grating Cover Size: 1200mm x 1200mm x 250mm
+- Manhole Liner Diameter: 1066mm
+- Dry Pack Mortar: 80mm (inside & out), 50mm (for levelling)
+- Clearance (Bunkering Pipelines): 300mm minimum
+- Concrete Encasement Diameter: 2/3 of pipe diameter
+- Top of Rear Crane Rail: RL +4.090m
+- Sheetpile Wall Cutoff Level: RL +2.0m
+- Concrete Strength (Mass Concrete): f'c = 25MPa
+- Reinforcement (Mass Concrete): 2-N12 centrally placed
+
+ITEM: Demolition (PAGE 3, PAGE 4)
+- Existing Concrete Slab on Ground Thickness: 150mm
+- Existing 'Larssen' Sheet Pile Wall Cutoff Level: RL +2.0m
+- Existing Concrete Sheetpile Wall Thickness: 300mm
+- Existing Concrete Sheetpile Wall Demolition Level: RL +2.0m
+- Extent of Berth 10 Demolition: 25000mm (nominal)
+- Existing Concrete Thickness to be Demolished: 1397mm to 767mm (nominal)
+- Existing Concrete Pile Cutoff Levels: 1m to 2m above seabed level (Rows A to C), 1m above LWL (Rows D to H)
+
+
+ITEM: Site Services (PAGE 5)
+- Upstream Invert Level (US): 1.725 (12.5m length), 2.92 (14.2m length), 2.900 (37.2m length), 2.64 (25.4m length), 3.23 (16.47m length each side), 3.01 (10.6m length each side)
+- Downstream Invert Level (DS): 1.60, 2.778, 2.714, 2.513, 3.065, 2.936
+- Pipe Diameter/Class/Grade: 300'4"/100, 225'4"/100, 225'4"/200
+- Concrete Encasement Length: Not specified explicitly, but implied on drawings.
+
+
+This is a very thorough extraction of the technical information provided in the document. Remember that "REF" dimensions should be verified on-site.  This detailed extraction should be a valuable resource for any engineering work related to this project.

@@ -1,0 +1,123 @@
+Design Criteria Extraction - output13 (Gemini)
+==================================================
+Pages processed: 6
+Processed: 2025-08-27T10:50:08.192839
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: SINH Berth Fender Upgrade
+- Date: 09/09/22 (Issued for Construction), AUG 2019 (Survey/Design)
+- Engineer/Designer: P.R./A.W. (Design), J.J.M./S.D. (Checked), BTH/CH (Drawn/Approved)
+- Drawing Number: 4408-016-GA-DRW-001, ST-002 (superseded), ST-005 (superseded), ST-011 (superseded), ST-012 (superseded), ST-020 (superseded), ST-021 (superseded)
+- Standards: AS3610, AS3600, AS4997, AS4671, AS3679.1, AS1163, AS/NZS3678, EN10028-7, AS4100, AS/NZS1554 Part 1, AS/NZS1554 Part 2, AS1554.1, AS1554.5, AS1554.3, AS1304, AS1302
+- Document Type: General Notes & Design Criteria, Layout of New Fenders, Existing Pit & Bollard Layout, New General Arrangement
+
+ITEM: General Notes (PAGE 1)
+- Lap Length N12: 400 mm
+- Lap Length N16: 500 mm
+- Lap Length N20: 650 mm
+- Lap Length N24: 750 mm
+- Lap Length N28: 900 mm
+- Lap Length N32: 1200 mm
+- Lap Length N36: 1600 mm
+- Plate Thickness for Sealing Hollow Sections: 8 mm
+- Plate Inclination for Sealing: 45°
+- Concrete Cover for Horizontal Bars (Increased): 1.3 times standard
+- Vertical Datum: Chart Datum (CD)
+- Low Water Mark (LWM): 0.756m below Australian Height Datum (AHD)
+- Coordinate System: PCG94
+- Cover to Reinforcement (Precast): 65 mm
+- Cover to Reinforcement (Insitu): 65 mm
+- Cover Tolerance: +10.0mm, -0.0mm
+- Secondary Reinforcement Spacing: 200 c/c
+- Secondary Reinforcement Size: N16
+- Corner Reinforcement: 1-N16 bar, 1200 mm long (top and bottom)
+- Air Temperature Limit for Concrete Finishing: 32°C
+- Design Life (Steel Panels): 25 years
+- Design Life (Rubber Fender): 3000 cycles
+- Design Life (Steelwork and Concrete): 50 years
+- Concrete Strength for Temporary Support Removal: 75% of characteristic strength
+
+ITEM: Protective Coatings (PAGE 1)
+- Bolt Coating: Hot Dipped Galvanised
+
+ITEM: Reinforcement (PAGE 1)
+- Reinforcement Steel Grade (N bars): D500N to AS/NZS 4671
+- Reinforcement Steel Grade (R bars): D500R to AS/NZS 4671 (Implied, based on similar notation)
+- Reinforcement Steel Grade (Fabric): D500L or D500N to AS 4671 and AS 1304
+- Reinforcement Steel Grade (Plain Round Bar): 250R to AS 1302
+- Tolerance (Bar Length): -10.0mm, +0mm
+- Tolerance (Fitments/Vertical Reinforcement): -8.0mm, +0mm
+- Existing Reinforcement Coating: Nitoprime ZINCRICH Epoxy
+
+ITEM: Concrete Work (PAGE 1)
+- Concrete Class (Insitu): S50
+- Concrete Class (Precast): S60
+- Max. Aggregate Size: 20 mm
+- Slump (Insitu): 80 mm
+- Slump (Precast): 60-80mm (Range implied)
+- Max. w/c ratio (Insitu): 0.40
+- Max. w/c ratio (Precast): 0.36
+- Min. Cement Content (Insitu): 450 kg/m³
+- Min. Cement Content (Precast): 520 kg/m³
+- Cement Type: GP-65% Slag
+- Curing Time (Insitu): 7 days
+- Curing Time (Precast): 7 days
+
+ITEM: Materials (PAGE 1)
+- Reinforcing Steel Yield Strength (N bars): 500 MPa
+- Reinforcing Steel Yield Strength (R bars): 250 MPa
+- Structural Steel Yield Strength (Grade 300): 300 MPa
+- Structural Steel Yield Strength (Grade 350/350LO): 350 MPa
+- Steel Plate Yield Strength: 350 MPa
+- Stainless Steel Plate Grade: S32205 Duplex to EN10028-7
+
+ITEM: Grout (PAGE 1)
+- Grout Compressive Strength: 50 MPa
+- Minimum Grout Thickness: 30 mm
+
+ITEM: Design Criteria (PAGE 1)
+- Smallest Vessel: LOA 167.25 m, Beam 28.0 m, Draught 8.6 m, DWT 12459 tonnes
+- Most Common Vessel: LOA 200.0 m, Beam 32.2 m, Draught 9.7 m, DWT 20000 tonnes
+- Largest Vessel: LOA 228.7 m, Beam 32.26 m, Draught 10.0 m, DWT 27351 tonnes
+- Maximum Berthing Angle: 6°
+- Berthing Velocity: 0.1 m/sec
+- Berthing Type: Quarter Point
+- Proposed Fenders (Grids 180E-229E): Trelleborg SuperCone SCN700F2.3, Energy Absorption 177.0 kNm, Fender Reaction 447.4 kN
+- Proposed Fenders (Grids 231E-245E): Trelleborg SuperCone SCN700F0.9, Energy Absorption 117.0 kNm, Fender Reaction 280.0 kN
+- Bollard Capacity: 35 tonnes
+- Live Load: AS4997 Class 15
+- Max. Pressure (Hull/Fender): 250 kPa
+- Abnormal Energy Factor: 2.0
+
+ITEM: Structural Steel (PAGE 1)
+- Bolt Size (Minimum): M20
+- Bolt Grade: 8.8/TB
+- Cast-in Bolts/Ferrules/Plates/Angles Grade: 316 Stainless Steel (A4-70 to ISO 3506)
+- Ultimate Tensile Strength (Cast-in Items): 700 MPa
+- Weld Size: 8 mm continuous fillet
+- Butt Weld Type: Qualified Continuous Complete Penetration
+
+
+ITEM: Layout of New Fenders (PAGE 2)
+- Nominal Length with no Fenders: 5 bays
+- Heavy Duty Pad Nominal Width: 32000 mm
+- Typical Spacing between Fenders (Type 1): 4572 mm
+- Typical Spacing between Fenders (Type 3): 3048 mm
+- Number of New Fenders: 31 (23 Type 1, 8 Type 3)
+- Dredged Level: -11.000 m
+- Scale: 1:200 (Section), 1:500 (Layout)
+
+ITEM: Existing Layout - Piers 180E to 195E (PAGE 3)
+- Scale: 1:100
+- Offset from Deck to Berth Line (Existing): 1016 mm (From Note 2)
+- Offset from Deck to New Berth Line: 1155 mm (From Note 5)
+- Bollard Capacity (All Except B96A): 35 t SWL
+- Bollard Capacity (B96A): 80 t SWL
+
+ITEM: Existing Layout - Piers 225E to 245E (PAGE 4)
+- Scale: 1:100
+
+
+

@@ -1,0 +1,61 @@
+Design Criteria Extraction - output10
+==================================================
+Pages processed: 6
+Images found: 12
+Relevant sections: 11
+Processed: 2025-08-11T11:11:22.673145
+
+DESIGN CRITERIA:
+--------------------
+ITEM: Mersey Point Jetty Design (PAGE 1)
+- Design Life: 50 years
+- Annual Probability of Design Wave Event: 1/500
+- Deck Load Class: 5 (Pedestrian Crowd)
+- Uniformly Distributed Load (Main Jetty): 5 kPa
+- Point Load (Main Jetty): 13 kN at 1.8 m centers
+- Uniformly Distributed Load (Low Level Landing): 5 kPa
+- Point Load (Low Level Landing): 4.5 kN at 1.8 m centers
+- Design Vessel Max Displacement: 15 tonnes
+- Max Berthing Velocity: 0.30 m/s
+- Max Wind Speed When Vessel Berthed: 22.1 m/s (30s duration)
+- Max Wave Height When Vessel Berthed: 0.90 m
+- Tidal Levels: HAT 0.58 mAHD, MHHW 0.20 mAHD, MSL -0.01 mAHD, MLLW -0.23 mAHD, LAT -0.56 mAHD, CD -0.76 mAHD
+
+ITEM: Standards and Codes (PAGE 1)
+- AS1170:2002 Structural Design Actions
+- AS2159:2009 Piling Design and Installation
+- AS3600:2009 Concrete Structures
+- AS4100:1998 Steel Structures
+- AS4997:2005 Guidelines for the Design of Maritime Structures
+
+ITEM: Concrete Deck & Headstock Layout (PAGE 3)
+- Cover: 65 mm minimum
+- Reinforcement: N16-LL, N24-LL, N32-LL
+- Headstock Type: Variations A, B, C, D, E, F
+- Deck Panel Type: Variations 1, 1a, 1b, 1c, 2, 3, 4, 5, 6, 7a, 8
+
+ITEM: Concrete Details (PAGE 4)
+- Pile Cap Plan: 1:10 scale
+- Pile Connection Void: Rough exposed aggregate finish
+- Reinforcement: 8xN28 cage, 8xN24 cage, 6xN24 rods
+- Concrete Mix: SC50 for void filling
+- Bolt Details: 4 x M20 bolts, 350 mm P.C.D.
+
+ITEM: Low Level Landing Layout (PAGE 5)
+- Member Schedule: H1 (300x200x8), S1 (250x150x6), B1 (100x50x6)
+- Kerb: To all edges except ladder location and access to main jetty
+
+ITEM: Low Level Landing Details (PAGE 6)
+- Headstock Connection: 20 PL with 2xM28 SS threaded rods, min 200 mm embedment
+- FRP Grating: 38 mm
+- Ladder: 40 NB galvanized pipe, bottom rung below -0.9 mAHD
+- Fender: Trelleborg DC-200
+
+METADATA:
+- Project: Mersey Point Jetty
+- Date: Various dates including 13.12.16, 28.09.16, 08.08.16, 20.09.16
+- Engineer/Designer: PMD
+- Drawing Number: D1313-00-01, D1313-01-01, D1313-04-01, D1313-04-02, D1313-05-01, D1313-05-02
+- Revision: Various revisions including A, B, C, D
+- Standards: AS1170:2002, AS2159:2009, AS3600:2009, AS4100:1998, AS4997:2005
+- Document Type: General Arrangement, Concrete Deck & Headstock Layout, Concrete Details, Low Level Landing Layout, Low Level Landing Details

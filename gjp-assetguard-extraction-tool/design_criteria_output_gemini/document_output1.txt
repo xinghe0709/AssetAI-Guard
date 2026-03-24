@@ -1,0 +1,185 @@
+Design Criteria Extraction - output1 (Gemini)
+==================================================
+Pages processed: 8
+Processed: 2025-08-27T10:42:27.417284
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: Transitional Structure - Small Craft Pens - Inner Harbour
+- Date: 11.07.24, 05.09.24, 23.08.24, 06.08.24, 26.07.24, 25.07.24, 20.08.24, 05.08.24
+- Engineer/Designer: R. Thickett, D. Starbuck, N. Dixon
+- Drawing Number: 6120-018-ST-DRW-001, 6120-018-ST-DRW-002, 6120-018-ST-DRW-003, 6120-018-ST-DRW-004, 6120-018-ST-DRW-005, 6120-018-ST-DRW-006, 6120-018-ST-DRW-007, 6120-018-ST-DRW-008, 6120-018-ST-DRW-009, 6120-018-ST-DRW-010, 6120-018-ST-DRW-011, 6120-018-ST-DRW-012, 6120-018-ST-DRW-013, 6120-018-ST-DRW-014
+- Revision: D, C, B, A, A1
+- Standards: AS 4100, AS/NZS 5131, AS3894.10-AS3894.14, AS3678, AS 3679.1, AS 1163, AS 1252, AS/NZS 1554, AS 1657, AS 2159, AS 1428.1, Fremantle Ports Coating and Hot Dipped Galvanising Guidelines (30064845-REP-003), Fremantle Ports Marine and Structures Guidelines (3005485-REP-002)
+- Document Type: Drawing List and General Notes, Existing Jetty Modifications, General Arrangement Plan and Elevation, General Arrangement Sections, Steel Work Details, Services Arrangement
+
+ITEM: Design Life (PAGE 1)
+- Design Life: 10 years
+
+ITEM: Structural Importance (PAGE 1)
+- Importance Level: 2
+
+ITEM: Deck Loads (PAGE 1)
+- Uniformly Distributed Load: 2.5 kPa
+- Concentrated Load: 1.1 kN over 100mm x 100mm area
+
+ITEM: Design Vessel: Paddy Troy (Pilot Boat) (PAGE 1)
+- Displacement: 55 tonnes
+- Draft: 1.62m (Likely a typo, probably 1.620m intended)
+- Length Overall (LOA): 20.5m
+- Beam (B): 5.78m
+- Berthing Angle: 10 degrees
+- Berthing Velocity: 0.3 m/s
+
+ITEM: Mooring Loads (PAGE 1)
+- Bollard Capacity: 12.5 tonnes SWL
+
+ITEM: Environmental Loads (PAGE 1)
+- Wind and Earthquake: 1/100 AEP
+- Current: 1.3 m/s
+
+ITEM: Construction Categories (PAGE 1)
+- Referenced Standards: AS 4100, AS/NZS 5131
+
+ITEM: Tidal Data (PAGE 1, 2, 3, 4)
+- LAT: +0.240m CD
+- MLW: +0.550m CD
+- MSL: +0.790m CD
+- MHW: +1.02m CD
+- MHWS: +1.130m CD
+- HAT: +1.380m CD
+- Chart Datum (CD): 0.756m below AHD
+- AHD: Australian Height Datum
+
+ITEM: Protective Coatings (PAGE 1)
+- Standards: AS3894.10-AS3894.14
+- Document: Fremantle Ports Coating and Hot Dipped Galvanising Guidelines (30064845-REP-003)
+- Coating System:
+    - 1st Coat: 400µm DFT (Glass Flake Reinforced Epoxy, e.g., Interzone 1000 or similar approved, Black)
+    - 2nd Coat: 400µm DFT (Glass Flake Reinforced Epoxy, e.g., Interzone 1000 or similar approved, Grey)
+    - Total DFT: 800µm
+- Surface Preparation: Abrasive blast clean to AS1627.4 SA 2½
+- Inspection/Testing/Documentation: As per AS3894.10-AS3894.14
+
+ITEM: Structural Steel (PAGE 1)
+- Standards: AS4100, Fremantle Ports Marine and Structures Guidelines (3005485-REP-002)
+- Steel Grades: Grade 350 (AS3678 or AS 3679.1), Grade 350 (AS 1163), Grade 300 (AS3679.1)
+- Bolts: Stainless Steel Grade 316 (above MSL), Super Duplex Grade 2507 (below MSL), Structural Grade 8.8 (AS 1252)
+- Galvanic Isolation: Isolating washers required for stainless bolts and cast-in items
+- Welding: By qualified welders in accordance with AS/NZS 1554.1
+- Butt Welds: Pre-qualified continuous complete penetration butt welds.
+- Fillet Welds: 10mm continuous fillet, electrode E48XX, yield strength equal to or greater than parent metal, minimum weld category SP
+- Corner Rounding: 2mm radius minimum
+- Tubular Sections Sealing: 6mm plate unless otherwise noted.
+
+ITEM: Lifting and Transportation Study (PAGE 1)
+- Required for major components.
+
+ITEM: Handrailing (PAGE 1)
+- Standard: AS 1657
+- System: Bolted Monowills galvanised tubular handrail system
+- Toe Plate: 100mm x 6mm
+- Post Centres: Maximum as per AS 1657, less than 500mm at changes in direction
+- Toe Plate Location: 5mm above top of floor plate grating
+- Closure Bends: Required at ends of handrails on walkways, stairs, and access points.
+- Post Bolts: 2 M16 hot-dip galvanised steel bolts
+
+ITEM: Piling (PAGE 1)
+- Standards: Fremantle Ports Marine and Structures Guidelines (3005485-REP-002), AS 2159
+- Pile Type: Tubular sections (compliant with Fremantle Ports guidelines and structural steel notes)
+- Driving Method: Hydraulic hammer or combination of vibration and hydraulic hammer
+- Pile Driveability Study: Required (including environmental impact assessment)
+- Driving Record: Required, daily submission, minimum items as per Section 6.8.2 of Fremantle Ports guidelines
+- Minimum Toe Levels: As shown on Pile Schedule Drawing 6120-018-ST-DRW-005
+- Pile Tolerances: ±150mm at cut-off after driving, ±75mm at cut-off after pull-back, plumb within 10mm in 1000mm
+- As-Constructed Survey: Required
+- Pile Reinforcement: As deemed necessary by contractor
+- Pile Splicing: Single lengths preferred
+- Pile Welding Category: SP (AS/NZS 1554)
+- NDT: As per Fremantle Ports guidelines
+- PDA Testing: 10% of piles, evenly spread on plan and pile type, schedule required.
+
+ITEM: Grating (PAGE 1)
+- Standard: AS 1657, FPA Specifications
+- Type: Heavy duty Treadwell fibre reinforced plastic (FRP) square mesh
+- Load Bar Spacing: 38mm x 38mm
+- Jetty Grating Thickness: 50mm (GTX-503838)
+- Ramp Grating Thickness: 38mm (GTX-383838)
+- Resin: Vinyl ester
+- Cut Coating: Vinyl ester
+- Colour: Green
+- Surface: Marine grade anti-slip
+- Clips: M type stainless 316 hold down clips, 900mm centres, 4 or more clips per piece
+- Clip Fixing Bolts: M8 stainless steel Grade 316
+- Open Flange Fixing: Preferred, cleats provided for closed sections if necessary.
+- Cleat Thickness: 10mm
+- Isolating Washers/Spacers: Required where dissimilar metals contact.
+- Penetration Trimming/Banding: Required.
+
+ITEM: Existing Jetty Modifications (PAGE 2)
+- Fender Pile Cut-Back: To top of existing jetty (RL +2.290 CD)
+- Bollard Removal: All existing double bitt bollards
+- Fender Removal: All existing rubber tyre fenders
+- Ladder Removal: All existing ladders
+- Service Relocation: Low tension power cables, water, wharf outlets, lighting to new jetty (except as noted)
+- Cable Tray Provision: Required for relocated services (Drawing 6120-ST-DRW-014)
+- Existing Power Outlet Removal
+- Existing Single Head Light Pole Removal
+- Existing Fire Hose Reel and Water Service Removal
+- Connection Movement Allowance: Minimum 150mm at joint between jetty and existing capping beam
+
+ITEM: General Arrangement - Plan and Elevation (PAGE 3)
+- New Jetty Overall Length: 57150mm (57.15m)
+- Existing Jetty Overall Length: 69494mm (69.494m)(Ref)
+- Pile Spacing: 8000mm, 4000mm, 5500mm
+- New Pilot Boat LOA: 19.2m
+- New Jetty TOG: RL +2.850 CD
+- Existing Jetty TOC: RL +2.290 CD
+- Access Ramp Design: AS 1657 (not AS 1428.1)
+
+ITEM: General Arrangement - Sections (PAGE 4)
+- Fender Top: RL +4.000 CD
+- Prefabricated Welded Frame: 25530mm (NTS)
+- Prefabricated Ramp Frame: 4525mm (Nom)
+- Nominal Clear: 110mm
+- Construction Sequence Detailed
+
+ITEM: Steel Work Details - Sheet 2 (PAGE 5)
+- Bearing Plate Thickness: 20mm
+- Gap: 45mm
+- End Plate Thickness: 10mm
+- Stiffeners: Boxed stiffeners to B2/B1 end connections
+- Plate Taper: Refer Detail 3
+- Welded Splice Details
+
+ITEM: Steel Work Details - Sheet 3 (PAGE 6)
+- Grating Type (Ramp): Treadwell GratEx Heavy Duty FRP square mesh GTX-383838 (V-Series) or approved equal
+- Checker Plate Thickness: 10mm
+- End Plate Dimensions: 3125mm long x 10mm thick
+- Bearing Pads: 2 No. 6mm thick stainless steel
+- Baseplate Thickness: 10mm
+- Bolts: 4 M20 stainless steel Grade 316
+- Bracket Plate Thickness: 12mm
+- Outrigger Dimensions: 50x8 each
+- Seal Plate Thickness: 10mm
+- Stiffener Plate Thickness: 10mm
+
+ITEM: Steel Work Details - Sheet 4 (PAGE 7)
+- Rung Spacing: 12 rungs at 300mm CRS
+- Stiffener Plate Dimensions: 90x12
+- Stiles: 75x6.0 SHS
+- Seal Plate Thickness: 6mm
+- Rungs: ø20 round bar
+- Stub: 75x6.0 SHS
+- End Plate Dimensions: 380x100x12, 175x100x12, 275x100x12
+- Bolts: 1 M16 Grade 2507 Super Duplex U-bolt, 1 M20 Stainless Steel Grade 316 bolt, 2 M20 Grade 2507 Super Duplex bolts
+- Green Length: 150mm
+
+
+ITEM: Services Arrangement (PAGE 8)
+- Cable Runs: Along top of existing concrete deck and within cable ladders on both sides of jetty.
+- Connection Details: Contractor to submit for approval
+
+
+This extraction contains a large amount of technical data directly from the document. Remember to always cross-reference with the original document and relevant standards for final design and construction decisions.  It appears there are additional drawings referenced (e.g., 6120-018-ST-DRW-005 for Pile Plan and Schedule) that would contain further crucial information.  This analysis should be considered a starting point, not a comprehensive collection of all project requirements.

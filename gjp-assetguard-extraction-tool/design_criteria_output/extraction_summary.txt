@@ -1,0 +1,843 @@
+Design Criteria Extraction Summary
+==================================================
+Generated: 2025-08-11 11:17:45
+Total documents processed: 12
+
+
+Document: output1
+------------------------------
+Status: Successfully processed
+Pages: 8
+Images: 8 total, 6 relevant sections
+Processed: 2025-08-11T10:52:57.880264
+
+Design Criteria:
+ITEM: Jetty Design Criteria (PAGE 1)
+- Design Life: 10 years
+- Structural Importance Level: 2
+- Deck Loads: 2.5 kPa uniformly distributed loads
+- Concentrated Load: 1.1 kN over 100mm x 100mm area
+- Design Vessel: Paddy Troy (Pilot Boat)
+  - Displacement: 55 tonnes
+  - Draft: 162m
+  - Length Overall (LOA): 20.5m
+  - Beam (B): 5.78m
+  - Berthing Angle: 10 degrees
+  - Berthing Velocity: 0.3 m/s
+- Mooring Loads: 12.5 tonnes SWL bollard capacity
+- Environmental Loads: Wind and earthquake 1/100 AEP, Current 1.3 m/s
+
+ITEM: Structural Steel Specifications (PAGE 1)
+- Steel Bars, Plates, Flats, and Hollow Sections: Grade 350 to AS3678 or AS 3679.1
+- Steel Hollow Sections: Grade 350 to AS 1163
+- Hot Rolled Steel Sections: Grade 300 in accordance with AS3679.1
+- Bolts, Nuts, and Washers: Stainless Steel Grade 316 above M.S.L and Super Duplex Grade 2507 below M.S.L
+- Structural Bolts: Grade 8.8 to AS 1252, hot dip galvanized
+- Welding: AS/NZS 1554, Butt welds to be pre-qualified continuous complete penetration, Fillet welds 10mm continuous, Electrode classification E48XX
+
+ITEM: Protective Coatings (PAGE 1)
+- Surface Preparation: AS1627.4 SA 2½
+- Coating System: Glass flake reinforced epoxy, Interzone 1000 or similar, 400pm DFT per coat, total 800pm DFT
+- Coating Inspection: AS3894.10 to AS3894.14
+
+ITEM: Piling Specifications (PAGE 1)
+- Pile Handling and Driving: AS 2159, Hydraulic hammer or vibration and hydraulic hammer
+- Pile Tolerances: ±150mm at pile cut-off level after driving, ±75mm after pull-back, Deviation not more than 10mm in 1000mm from true vertical
+- Pile Geotechnical Testing: PDA testing on 10% of piles
+
+ITEM: Grating Specifications (PAGE 1)
+- Grating Type: Heavy duty Treadwell FRP square mesh, 38mm x 38mm load bar spacing
+- Jetty Grating Thickness: 50mm (GTX-503838)
+- Ramp Grating Thickness: 38mm (GTX-383838)
+- Material: Vinyl ester resin, Marine grade anti-slip surface
+- Fixing: M8 Stainless Steel Bolts Grade 316, 900mm centers
+
+ITEM: Datum and Tidal Data (PAGE 1)
+- Chart Datum: Fremantle Low Water Mark (CD) 0.756m below AHD
+- Tide Levels: LAT +0.240, MLW +0.550, MSL +0.790, MHW +1.02, MHWS +1.130, HAT +1.380
+
+ITEM: Handrailing Specifications (PAGE 1)
+- Handrails: Standard bolted Monowills galvanized tubular handrail system, 100mm x 6mm toe plate
+- Maximum Post Centers: As per AS1657, Posts not more than 500mm from change in direction
+
+ITEM: General Construction Notes (PAGE 1)
+- All dimensions in millimeters
+- No loads on existing jetty during construction
+- Contractor responsible for maintaining structure stability
+- Compliance with Standards Australia Codes of Practice
+
+ITEM: Jetty Modifications (PAGE 2)
+- Existing Fender Piles: Cut back to top of existing jetty RL +2.290 CD
+- Existing Services: Relocate low tension power cables, water, lighting, and other services to new jetty
+
+ITEM: New Jetty General Arrangement (PAGE 3)
+- New Jetty Length: 57150
+- Access Ladder: Both sides of jetty
+- Horizontal Walers: Clamped to piles
+
+ITEM: Steel Work Details (PAGE 5)
+- Bearing Plate: 20 THK slotted into beam
+- Welded Splice: Typical jetty welded splice detail
+
+ITEM: Access Ramp Specifications (PAGE 6)
+- Grating: Treadwell Gratex heavy duty FRP square mesh type GTX-383838
+- Handrailing: Both sides of ramp
+- Ramp Width: 3125 Lg continuous 10 THK end plate welded to ends of B5 beam
+
+ITEM: Ladder Specifications (PAGE 7)
+- Ladder Rung Spacing: 300 CRS
+- Ladder Stiles: 75x6.0 SHS
+- Ladder End Plate: 175x100x12 THK
+
+METADATA:
+- Project: Inner Harbour Small Craft Pens
+- Date: 11.07.24
+- Engineer/Designer: R. Thickett, D. Starbuck
+- Drawing Number: 6120-018-ST-DRW-001 to 6120-018-ST-DRW-014
+- Revision: D
+- Standards: AS 4100, AS/NZS 5131, AS 3678, AS 3679.1, AS 1163, AS 1252, AS/NZS 1554, AS 2159, AS 1657, AS 1428.1, AS3894.10 to AS3894.14, AS1627.4
+- Document Type: Drawing List and General Notes
+==================================================
+
+Document: output2
+------------------------------
+Status: Successfully processed
+Pages: 5
+Images: 10 total, 0 relevant sections
+Processed: 2025-08-11T10:54:20.761513
+
+Design Criteria:
+ITEM: General Notes (PAGE 2)
+- Vertical Datum: Chart Datum, 0.756m below Australian Height Datum (AHD)
+- Tide Levels: LAT +0.200m, MLLW +0.503m, MSL +0.728m, MHHW -0.972m, HAT +1.400m
+- Formwork Stripping Time: Minimum 3 days
+- Cast-in Items Material: Grade 316 Stainless Steel
+- Reinforcement Cover: Precast Concrete 60mm, Insitu Concrete 60mm (exposed), 30mm (internal)
+- Concrete Class: Insitu Concrete 50 MPa, Precast Concrete 60 MPa
+- Concrete Slump: 50mm pre-super plasticized, 80-150mm post-super plasticized
+- Cement Type: Type LH for large/deep pours, Type GP for others
+- Curing Time: Precast Fender Block 14 days, Precast Concrete 14 days, Insitu Concrete (GP) 7 days
+- Maximum Free Fall of Concrete: 2m
+- Steel Grade: Grade 350 for rolled sections, Grade 8.8 for bolts
+- Welding Standard: AS/NZS 1554
+- Pile Tolerances: ±75mm at pile cutoff level, 1 in 50 rake deviation
+- Grout Strength: Minimum 60 MPa
+
+ITEM: Material Properties (PAGE 3)
+- Insitu Concrete Strength: 50 MPa
+- Precast Concrete Strength: 60 MPa
+- Reinforcing Steel Strength: 500 MPa (fsy), 250 MPa (fsy)
+- Structural Steel Strength: 350 MPa (fsy)
+
+ITEM: Loads and Forces (PAGE 3)
+- Vertical Live Loads: 40 kPa
+- Mooring Loads: Lateral Wind Area 3728m², Longitudinal Wind Area 596m²
+- Berthing Velocity: 0.15 m/s
+- Maximum Berthing Angle: 6 degrees
+- Current Velocity: 0.2 m/s
+- Coefficient of Friction: 0.20
+- Contact Pressure: 350 kN/m²
+- Wind Speed (Ultimate Limit State): 39 m/s
+- Wind Speed (Serviceability Limit State): 32 m/s
+
+ITEM: Design Life and Corrosion Allowances (PAGE 3)
+- Design Life: 50 years
+- Corrosion Allowance for New Piles: 3.0mm
+- Corrosion Allowance for New Steel Work: 10mm
+
+ITEM: Wharf General Arrangement (PAGE 4)
+- Bollards: 2 x 100T
+- Anchor Piles: 1200x16mm, 10m long, 1200mm centers
+- Fender Type: Trelleborg SCN 1600 F1.4
+- Fender Panel Width: 3m
+- King Piles: 1200x16mm, 1.28m centers
+
+ITEM: SW Drainage Layout (PAGE 5)
+- Pipe Sizes: 375 RCP CL-4 (527m), 450 RCP CL-4 (480m), 525 RCP CL-4 (320m), 675 RCP CL-4 (118m)
+
+METADATA:
+- Project: Inner Harbour North Quay Berths 1 & 2 Redevelopment
+- Date: 09.04.24, 22.02.24, 09.02.24, 02.02.24
+- Engineer/Designer: GPI, TS
+- Drawing Number: 4787-019-ST-DRW-001 to 4787-019-ST-DRW-011
+- Revision: A, B, 0, 1
+- Standards: AS 3610, AS 3600, AS/NZS 4671, AS 4100, AS/NZS 1554, AS 1594, AS 3678, AS 3679, AS 1163, AS 1252
+- Document Type: General Notes, Material Properties, Loads and Forces, Wharf General Arrangement, SW Drainage Layout
+==================================================
+
+Document: output3
+------------------------------
+Status: Successfully processed
+Pages: 6
+Images: 12 total, 0 relevant sections
+Processed: 2025-08-11T10:55:30.047724
+
+Design Criteria:
+ITEM: Service Wharf (PAGE 2)
+- Live Loads: 15 kPa, 200 kN
+- Mooring & Berthing: 10t bollards
+
+ITEM: Boat Ramps (PAGE 2)
+- Wind Speed (Vp): 18 m/s
+- Single Lane Axle Load: 5t
+- Double Lane Axle Load: 10t
+
+ITEM: Foundations (PAGE 2)
+- Safe Working Bearing Pressure: 150 kPa
+- Foundation Material Approval: Required before placing concrete or driving piles
+
+ITEM: Concrete Specifications (PAGE 2)
+- Structural Concrete Grade: S50 (20)
+- Minimum Clear Cover to Reinforcement: 65 mm
+- Reinforcement Bar Classes: R-Structural Grade Plain Round Bar, Grade 230; N-High Strength Deformed Bar, Grade 500 (Normal Ductility)
+
+ITEM: Reinforcement (PAGE 3)
+- Grade and Type Symbols: R, N, L, SL, RL, W
+- Reinforcement Bar Designation Example: 17 N20 350 EF
+- Tolerances for Reinforcement Position: -5 mm, +10 mm for beams, slabs, columns, and walls
+
+ITEM: Steelwork (PAGE 3)
+- Steel Components Conformity: AS4100
+- Steel Grades: Plate (AS3678, Grade 250), CHS >80mm Dia. (AS1163, C350), CHS <80mm Dia. (AS1163, C250), RHS and SHS (AS1163, C450)
+- Bolt Grades: ISO Metric Bolts and Screws (AS1111), High Strength Steel Bolts (AS1252)
+
+ITEM: Welding (PAGE 3)
+- Weld Types: Continuous Fillet Weld (CFW), Complete Penetration Butt Weld (CPBW), Partial Penetration Butt Weld (PPBW), Full Strength Butt Weld (FSBW)
+- Welding Standards: AS1554.1, AS1554.5, AWS D1.1
+
+ITEM: Protective Coatings (PAGE 3)
+- Non-Encapsulated Piles and Structural Steel: Abrasive Blast Cleaning to AS1627.4 SA 2.5, Minimum Dry Film Thickness: 900 μm
+- Floating Structure Piling: Hot Dip Galvanized HDG600, Polyurethane Top Coat Minimum Dry Film Thickness: 85 μm
+
+ITEM: Precast Concrete (PAGE 6)
+- Precast Headstock Dimensions: B1 (800W x 600D), B2 (Inverted "T"/"L"), B3 (Inverted), B4 ("L")
+- Precast Deck Dimensions: PC1 (10.25x1.1 m), PC2 (5.25x1.4 m), PC3 (10x1.4 m), PC4 (10x1.1 m), PC5 (4.75x1.4 m)
+
+METADATA:
+- Project: Augusta Boat Harbour
+- Date: 25.02.14 (Issued for Construction), 17.12.13 (Issued for 85% Review)
+- Engineer/Designer: R. Parker
+- Drawing Number: 1680-01-01, 1680-01-02, 1680-01-03, 1680-02-01, 1680-03-02, 1680-03-04
+- Revision: 0, A, B, C, D
+- Standards: AS4671, AS3600, AS4100, AS1554.1, AS1554.5, AS1627.4, AS2312, AS1214, AS1379, AS1478, AS2159, AS3850, AS5100
+- Document Type: Design & Construct-Design Drawings
+
+This extraction includes all technical specifications, dimensions, material properties, and engineering parameters found in the provided document text.
+==================================================
+
+Document: output4
+------------------------------
+Status: Successfully processed
+Pages: 6
+Images: 12 total, 10 relevant sections
+Processed: 2025-08-11T10:56:43.437696
+
+Design Criteria:
+ITEM: General Notes (PAGE 2)
+- Vertical Datum: Chart Datum, 0.756m below Australian Height Datum (AHD)
+- Tide Levels: LAT +0.200m, MLLW +0.503m, MSL +0.728m, MHHW +0.972m, HAT +1.400m
+- Formwork Stripping Time: Minimum 3 days
+- Cast-in Items: Grade 316 stainless steel
+- Reinforcement Cover: Precast Concrete 60mm, Insitu Concrete 60mm generally, 30mm internal surfaces
+- Concrete Class: Insitu Concrete 50 MPa, Precast Concrete 60 MPa
+- Steel Grade: Structural Steel Grade 350 MPa
+- Welding: AS/NZS 1554 Part 1, Electrode Classification E48XX
+- Grout: Non-shrink, 60 MPa minimum compressive strength
+
+ITEM: Design Criteria (PAGE 3)
+- Concrete Strength: Insitu Concrete 50 MPa, Precast Concrete 60 MPa
+- Reinforcing Steel: N bars fsy 500 MPa, R bars fsy 250 MPa
+- Structural Steel: fsy 350 MPa
+- Tubular Steel: fsy 350 MPa
+- Mooring Loads: Lateral Wind Area 3728m², Longitudinal Wind Area 596m²
+- Berthing Loads: Dead Weight Tonnage 10608 tonnes, Displacement Tonnage 17341 tonnes, Length Overall 169m, Beam Breadth 24.7m
+- Berthing Velocity: 0.1m/s, Current Velocity: 0.2m/s
+- Wind Loads: Ultimate Limit State 45 m/s, Serviceability Limit State 22 m/s
+- Seismic Forces: AS1170.4 -2007, Importance Level 2, Annual Exceedance Probability 1:500
+- Corrosion Allowances: New Piles 3.0mm, New Steel Work 1.0mm
+- Design Life: 50 years
+
+ITEM: Existing Plan and Sections (PAGE 4)
+- Declared Depth: 13.0 metres
+- Concrete Deck Thickness: Approx. 250mm
+- Timber Waler: Upper and Lower
+- BP Oil Pipeline: Live during construction
+
+ITEM: New Works Plan and Sections (PAGE 5)
+- Total New Piles: 21
+- Total Fender Blocks: 6
+- Concrete Deck Thickness: Approx. 250mm
+- BP Oil Pipeline: Live during construction
+
+ITEM: Pile Schedule (PAGE 6)
+- Precast Fender Block: 2-N16 Internal Shear Rings
+- Pile Cut Off Level: RL -2.610
+- Reinforcement: 8 x 2-N32 Bars Equispaced
+- Cover: 55mm
+
+METADATA:
+- Project: Victoria Quay Berth D Fender Upgrade
+- Date: Issued for Construction 07/04/15, Issued for Tender 23/03/15, Issued for Cost Estimate 20/01/15, Issued for Checking 12/01/15
+- Engineer/Designer: MHS, GP
+- Drawing Number: 014-D-139 to 014-D-146
+- Revision: 0
+- Standards: AS 3610, AS 3600, AS/NZS 4671, AS 4100, AS/NZS 1554, AS 1594, AS 3678, AS 3679, AS 1163, AS 1252, AS1170.4
+- Document Type: Engineering Drawings and Specifications
+==================================================
+
+Document: output5
+------------------------------
+Status: Successfully processed
+Pages: 5
+Images: 10 total, 3 relevant sections
+Processed: 2025-08-11T10:57:52.643020
+
+Design Criteria:
+ITEM: Southern Breakwater Wharf Extension (PAGE 3)
+- Design Loads: Pavement Design - 15 kPa Localised
+- Design Loads: Stack Loading - 2 kPa Average (for settlement)
+- Design Loads: Truck Loading - Single Unit Truck 12.5m Long, 18 tonne Gross, 14.4 tonne over Dual Rear Axles
+- Design Loads: Crane Load - 10 tonne Mobile Crane with 20 tonne Jack Load (including dynamic effects on a 1.2m x 1.2m pad)
+- Design Loads: Berthing Loads - Based on 150 tonne displacement, 24m long vessel berthing at 0.3 m/s normal to the berth, at maximum approach angle of 15°
+- Design Footing Pressures: Limited to 150 kPa
+
+ITEM: Drainage System (PAGE 3)
+- RC Drainage Pipework: Class 2 Rubber-Ring Jointed
+- Drainage Structures: Fully sealed using an approved sealant
+- Gully Grates: Set down 50mm from surrounding pavement level, provide local grading 1.0m around to suit
+
+ITEM: Sheet Piling and Reclamation (PAGE 5)
+- Weep Hole Pipe: 80 DIA Vinidex Draincoil Slotted Subsoil Pipe x2.0m -9.6m c/c, cap and seal in-board end, allow 50mm projection through sheet piling, seal with Denso Petrolatum Tape and Denso Plastic Overwrap
+- Filter Fabric: Bidim A34 under services trench
+- Initial Rock Fill: RL 2.50 Wharf Level
+- Sand Fill: Compact to RL +1.30
+- Final Rock Fill: RL 0.00
+- Sheet Piling Anchor: Refer DRG 1078-06-01
+
+ITEM: General Construction (PAGE 4)
+- Existing Concrete Footing: Remove existing concrete footing
+- Existing Concrete Blocks: Remove existing concrete blocks from site
+- Existing Timber Stair: Demolish and remove from site
+- Existing Timber Jetties, Timber Pylons, and Timber Walkway: Demolish and remove from site
+
+METADATA:
+- Project: Southern Breakwater Wharf Extension 2000
+- Date: 5 Dec 01 (AS CONSTRUCTED), 4 Jul 01 (ISSUED FOR CONSTRUCTION), 29 Nov 00 (ISSUED FOR TENDER), 29 Sep 00 (ISSUED FOR FINAL REVIEW), 27 Jul 00 (ISSUED FOR REVIEW)
+- Engineer/Designer: P.K.D., D.J.T.
+- Drawing Number: 1078-01-01, 1078-02-01, 1078-03-01, 1078-04-01, 1078-04-03
+- Revision: AS CONSTRUCTED, ISSUED FOR CONSTRUCTION, ISSUED FOR TENDER, ISSUED FOR FINAL REVIEW, ISSUED FOR REVIEW
+- Standards: Not explicitly mentioned
+- Document Type: Engineering Drawings and Plans
+
+This extraction includes all technical specifications, dimensions, and parameters found in the provided document text. If there are any additional pages or documents, further extraction may be necessary.
+==================================================
+
+Document: output6
+------------------------------
+Status: Successfully processed
+Pages: 5
+Images: 10 total, 10 relevant sections
+Processed: 2025-08-11T10:59:08.499660
+
+Design Criteria:
+ITEM: General Notes (PAGE 2)
+- Units: All dimensions in millimeters unless noted otherwise
+- Levels: All levels are in meters relative to Chart Datum
+- Tide Levels: HAT +1.20m, MHHW +0.90m, MLHW +0.80m, MSL +0.60m, MHLW +0.30m, MLLW +0.20m, LAT +0.00m
+
+ITEM: Reinforcement (PAGE 2)
+- Reinforcement Symbols: N (Grade D500N), SL (Grade D500L), R (Grade R250N)
+- Cover: Precast Deck Unit - 60mm top, bottom, and sides
+- Lap Lengths: N12 - 400mm, N16 - 500mm, N20 - 600mm, N24 - 850mm, N32 - 1000mm
+- Reinforcement Strength: N Bars fsy 500 MPa, R Bars fsy 250 MPa
+
+ITEM: Structural Steel (PAGE 2)
+- Steel Grade: Grade 350 to AS 1594, AS 3678, AS 3679
+- Bolts: Structural Grade 8.8 to AS 1252, Stainless Steel ISO 3506 Grade A4-70
+- Welding: 8mm continuous fillet, Electrode Classification E48XX
+
+ITEM: Pile Driving (PAGE 2)
+- Tolerances: ±75mm at pile cutoff level, deviation not more than 1% from vertical
+- Testing: 100% ultrasonic testing for pile splices
+
+ITEM: Design Criteria (PAGE 2)
+- Concrete Strength: Precast Concrete f'c 60 MPa
+- Structural Steel Strength: Tubular Steel fsy 350 MPa, Piles fsy 350 MPa
+- Design Life: 25 years
+
+ITEM: Handrail (PAGE 2)
+- System: Standard bolted Monowills galvanized tubular handrail
+- Spacing: Maximum stanchion spacing 1.5m
+- Coating: Safety yellow polyurethane paint
+
+ITEM: Corrosion Protection (PAGE 2)
+- Steelwork: Class 2.5 blast, Interzone 954, 700 micron DFT minimum
+- Sacrificial Anode: Aluminum Alloy A1, A2, A6, design life 12.5 years
+
+ITEM: Concretework (PAGE 2)
+- Concrete Quality: Precast Concrete f'c 60 MPa, max aggregate size 20mm, slump 80mm
+- Curing: 14 days continuously wet
+
+ITEM: Loads (PAGE 2)
+- Vertical Live Loads: 5 kPa
+- Wind Loads: Ultimate Limit State 48 m/s, Serviceability Limit State 39 m/s
+- Wave Loads: Hmax 2.3m, Period T 10 seconds
+- Mooring Loads: Design Vessel P.V. Houtman, Length 22m, Beam 6.2m, Draft 1.8m, Freeboard 1.6m, Displacement 50 tonnes
+- Berthing Loads: Velocity 0.3 m/s, Abnormal Berthing Factor 2.0, Energy 4.98 kNm
+- Corrosion Allowance: 2.0 mm for all steelwork
+
+ITEM: Precast Panel (PAGE 3)
+- Precast Panel Type 1: 12000mm length
+- Fender Spacings: 2000mm centers
+
+ITEM: Typical Section Thru Approach Jetty (PAGE 4)
+- Steel Crosshead: Refer to DRG No. 60290364-MA-DRG-0008
+- Steel Piles: Approximate seabed level varies
+
+ITEM: Alternative Precast Deck Unit Details (PAGE 5)
+- Macalloy Bars: Tensioned to 354 kN
+- Grout: 50 MPa non-shrink grout
+
+METADATA:
+- Project: Abrolhos Island Jetties - Option 1
+- Date: 24 March 2015
+- Engineer/Designer: JJM
+- Drawing Number: Various (e.g., 60290364-MA-DRG-0001, 60290364-MA-DRG-0002)
+- Revision: Issued for Construction
+- Standards: AS/NZS 4671, AS 3600, AS 4100, AS/NZS 1554, AS 1594, AS 3678, AS 3679, AS 1252, ISO 3506, AS 2239, AS 2700
+- Document Type: General Notes & Design Criteria, General Arrangement, Alternative Precast Deck Unit Details
+==================================================
+
+Document: output7
+------------------------------
+Status: Successfully processed
+Pages: 6
+Images: 12 total, 0 relevant sections
+Processed: 2025-08-11T11:01:03.172934
+
+Design Criteria:
+ITEM: Boardwalk - General Specifications (PAGE 1)
+- Project: SWAN RIVER - BARRACK ST JETTIES
+- Drawing Number: 1043-1-1
+- Document Type: Drawing List
+- Date: 8:44:01
+- Engineer/Designer: P. GEORGE
+
+ITEM: Reinforcement Grades and Symbols (PAGE 2)
+- Hot Rolled Deformed Bars: AS1302 (Grade 400)
+- Structural Grade Plain Round Bar: AS1302 (Grade 250)
+- Hard Drawn Steel Wire Reinforcing Fabric: AS1302 (Grade 450)
+
+ITEM: Steel Piles (PAGE 2)
+- Compliance: AS2159
+- Pile Splices: Full Strength Butt Welds, Category SP, AS1554
+- Installation: As detailed in the specification
+
+ITEM: General Construction Notes (PAGE 2)
+- Dimensions: Not to be obtained by scaling
+- Coatings: Applied per manufacturer's instructions
+- Steelwork: New, AS4100 and AS1554 compliance
+- Welds: 6mm continuous fillet, Grade SP, Electrode E48XX
+- Fasteners: Strength Grade 8.8/S, Stainless Steel Grade 316
+- Concrete Mix Design: To be submitted for approval
+
+ITEM: Design Criteria (PAGE 2)
+- Terrain Category: 2
+- Wind Speed: Vp 41m/s
+- Structural Steel: 300 MPa
+- Aluminium: 6061 T6
+- Stainless Steel: 316
+
+ITEM: Concrete Specifications (PAGE 2)
+- Concrete Type A: 50 MPa, 20mm aggregate, 80mm slump, 440 kg/m³ cement
+- Concrete Type B: 50 MPa, 20mm aggregate, 80mm slump, 440 kg/m³ cement
+- Concrete Type C: 40 MPa, 20mm aggregate, 80mm slump, 400 kg/m³ cement
+- Concrete Type D: 25 MPa, 20mm aggregate
+
+ITEM: Boardwalk/Small Boat Landing (PAGE 2)
+- Vertical Live Loading: 5 kPa
+- Berthing: 50 tonne displacement vessel at 0.3 m/s
+
+ITEM: Timber Specifications (PAGE 2)
+- Fenders: Hardwood, Stress Grade F17
+- Decking, Kerbs & Joists: Jarrah, Stress Grade F11
+
+ITEM: Handrails (PAGE 2)
+- Type: Standard Proprietary Tubular (Monowills or similar)
+- Galvanised and Powder Coated
+- Maximum Stanchion Centres: 2000mm
+
+ITEM: Survey Control Listing (PAGE 3)
+- Various Points: Easting, Northing, RL values provided
+
+ITEM: Jetty 5 Lighting (PAGE 4)
+- Lamp Type: Thorn Piazza Standard Range, 70W MH E/I Bulkhead Lamp
+
+ITEM: Pile Schedule (PAGE 4)
+- Pile Size: 457x12.7
+- Cut Off Level (COL): RL 1.169m
+- Factored Vertical Capacity: 200 kN
+- Factored Horizontal Capacity: 30 kN
+- Factored Vertical Uplift Capacity: 30 kN
+
+ITEM: Deck Framing Plan (PAGE 5)
+- Member Schedule: 250 x 150 x 9.0 RHS, 250 UB 37, 100 x 100 x 8 EA
+- Cleat: 10 Plate
+
+ITEM: Ramp Framing Plan (PAGE 6)
+- Handrails: 100 x 50, fixed with 2-M10 bolts
+- Timber Joists: 200 x 100 (F11), fixed with 2-M12 bolts
+- Cross Bracing: 200 x 50 (F11), fixed with 2-M12 bolts
+
+METADATA:
+- Project: SWAN RIVER - BARRACK ST JETTIES
+- Date: 14.12.99, 17.11.99, 16/12/99
+- Engineer/Designer: P. GEORGE, J. WILSON
+- Drawing Number: 1043-1-1, 1043-1-2, 1043-1-3, 1043-1-4, 1043-1-5
+- Revision: Issue 1
+- Standards: AS1302, AS2159, AS1554, AS4100, AS3600, AS3610, AS3850.3, AS1720, AS2741, AS2319, AS2321
+- Document Type: Engineering Drawings and Specifications
+==================================================
+
+Document: output8
+------------------------------
+Status: Successfully processed
+Pages: 8
+Images: 16 total, 6 relevant sections
+Processed: 2025-08-11T11:02:57.214107
+
+Design Criteria:
+ITEM: General Structural Components (PAGE 2)
+- Live Loadings: 5 kPa (Vertical Live Loading for Jetties)
+- Berthing Load: 17 tonne displacement vessel at 0.3 m/s (Approach Velocity)
+- Berthing Load: 150 tonne displacement vessel at 0.3 m/s (Approach Velocity for Jetties)
+- Berthing Load: 50 tonne displacement vessel at 0.3 m/s (Approach Velocity for Low Level Landing)
+- Material Standard: AS 4100, AS 1554, AS 3600, AS 3610, AS 3850.3, AS 2159, AS 1720
+- Steel Grade: 300 MPa (Structural Steel)
+- Concrete Strength: 25 MPa (Minimum at removal from moulds)
+- Concrete Type: Type A, B, C, D with various specifications
+- Concrete Grade: N25, 50 MPa, 40 MPa
+- Concrete Slump: 80 mm
+- Maximum Aggregate Size: 20 mm
+- Minimum Cement Content: 440 kg/m³
+- Maximum Water/Cement Ratio: 0.38
+- Timber Stress Grade: F17 (Boardwalk/Small Boat Landing), F11 (Decking, Kerbs & Joists)
+- Fastener Grade: 8.8/S (Snug Tightened), Stainless Steel Grade 316
+- Electrode Classification: E48XX
+- Wind Speed: Vp 41 m/s
+- Terrain Category: 2
+- Reinforcement Grade: Y16, Y20, Y28, Y32, R (Grade 250), F (Grade 450)
+- Pile Compliance: AS 2159
+- Pile Splices: Full Strength Butt Welds Category SP
+- Precast Concrete Compliance: AS 3600, AS 3610, AS 3850.3
+- Precast Concrete Strength: 25 MPa (Minimum at removal from moulds)
+- Precast Concrete Cover: 50 mm
+- Precast Concrete Reinforcement: Y16, Y20, Y28, Y32
+- Precast Concrete Surface Finish: Class 2 (AS 3610)
+- Precast Concrete Roughness: 5 mm Amplitude
+
+ITEM: Piling Layout & Schedule (PAGE 5)
+- Pile Type: P1 EX
+- Pile Size: 610x12.7 mm
+- Cut Off Level (C.O.L.): RL 1.205 m
+- Factored Vertical Capacity: 675 kN
+- Factored Horizontal Capacity: 150 kN
+- Minimum Pile Penetration: 7000 mm
+
+ITEM: Precast Headstock Details (PAGE 7)
+- Precast Headstock Hole: 900x900 mm
+- Reinforcement: 4-Y24, 4-Y16, 6-Y28, 3-Y16 Ligs
+- Surface Finish: Class 2 (AS 3610)
+- Roughness: 5 mm Amplitude
+
+ITEM: Precast Panel & Reinforcement Layout (PAGE 6)
+- Precast Panel Type: PC1, PC2, PC3, PC4, PC5, PC6
+- Reinforcement: Y12 @ 150 mm, Y16 @ 150 mm, Y20 @ 150 mm, Y28
+- Cover: 50 mm
+- Headstock Bars: 4-Y28, 2-Y16, 2-Y12 'U' Bars @ 150 mm
+- Construction Joint: Thoroughly Scabble
+
+METADATA:
+- Project: SWAN RIVER - BARRACK ST JETTIES
+- Date: 16/12/99, 17/01/00, 20/01/00, 24/01/00
+- Engineer/Designer: P. George, J. Wilson, A. Wright, J. Lums, P. Moses, P. Crane
+- Drawing Number: 1041-1-1, 1041-1-2, 1041-3-1, 1041-4-1, 1041-5-1, 1041-5-2
+- Revision: Issue 1, A, B
+- Standards: AS 4100, AS 1554, AS 3600, AS 3610, AS 3850.3, AS 2159, AS 1720
+- Document Type: Drawing List, Standard Notes, Site Plan, Plan & Elevation, Piling Layout & Schedule, Precast Panel & Reinforcement Layout, Precast Headstock Details
+==================================================
+
+Document: output9
+------------------------------
+Status: Successfully processed
+Pages: 6
+Images: 12 total, 2 relevant sections
+Processed: 2025-08-11T11:04:20.806410
+
+Design Criteria:
+ITEM: General Notes and Design Criteria (PAGE 2)
+- Concrete Strength: 50 MPa (insitu), 60 MPa (precast)
+- Reinforcement: N12 bars at 200 centers, N16 bar for corners
+- Lap Lengths: N12 - 375 mm, N15 - 500 mm, N20 - 625 mm, N24 - 750 mm, N28 - 900 mm, N32 - 1100 mm, N36 - 1350 mm
+- Pile Tolerances: 1100 mm at pile cutoff level, 1% vertical deviation
+- Welding: Category SP, AS/NZS 1554 Part 1 2004
+- Grout: Non-shrink, 50 MPa minimum strength
+- Wind Loads: Ultimate Limit State - 45 m/s, Serviceability Limit State - 37 m/s
+- Mooring Loads: Displacement Tonnage - 116,000+, Length Overall - 318.2 m
+- Seismic Forces: Annual Exceedance Probability - 1:500, Peak Horizontal Ground Acceleration - 0.09 g
+- Thermal Loads: Ambient Temperature Range -15°C to +20°C
+- Corrosion Allowance: 3.0 mm for steelwork
+- Design Life: 50 years
+
+ITEM: Existing Wharf Layout Plan (PAGE 3)
+- Existing Concrete Retaining Wall: Under deck
+- Existing Piles: To be demolished and removed
+- Existing Stormwater Outfall: To be reinstated under new rear crane beam
+- Existing Water Line: To be capped and reinstated under new deck
+- Existing Septic Tank: To be decommissioned and backfilled
+
+ITEM: Typical Section Through Existing Berth 10 (PAGE 4)
+- Concrete Slab: 150 mm thick to be demolished
+- Existing Sheet Pile Wall: To be cut off at RL +2.0 m
+- Existing Fender Line: To be removed
+- Existing Concrete Piles: To be cut off 1 m to 2 m above seabed level
+
+ITEM: Stormwater Drainage Details (PAGE 6)
+- New Storm Water Pipe: $225, concrete encased
+- Precast Concrete Lid: 1200x1200x250 mm
+- Concrete Encasement: Fc' 25 MPa, 2-N12 centrally placed
+- Drainage Gully Pits: Wembley Cement Industries extra heavy duty grated cover size 1200x1200x250 mm
+- Drainage Pipes: Class 4, $225 pipes on HS2 type bedding
+
+METADATA:
+- Project: North Quay - Berth 10 Reconstruction
+- Date: 17 December 2008
+- Engineer/Designer: Not explicitly mentioned
+- Drawing Number: Various (e.g., 60028072-001, 60028072-002)
+- Revision: Issued for Construction
+- Standards: AS 3600, AS/NZS 1554, AS 4100, AS 1594, AS 3678, AS 3679, AS 1163, AS 1252
+- Document Type: Engineering Drawings and General Notes
+==================================================
+
+Document: output10
+------------------------------
+Status: Successfully processed
+Pages: 6
+Images: 12 total, 11 relevant sections
+Processed: 2025-08-11T11:11:22.673145
+
+Design Criteria:
+ITEM: Mersey Point Jetty Design (PAGE 1)
+- Design Life: 50 years
+- Annual Probability of Design Wave Event: 1/500
+- Deck Load Class: 5 (Pedestrian Crowd)
+- Uniformly Distributed Load (Main Jetty): 5 kPa
+- Point Load (Main Jetty): 13 kN at 1.8 m centers
+- Uniformly Distributed Load (Low Level Landing): 5 kPa
+- Point Load (Low Level Landing): 4.5 kN at 1.8 m centers
+- Design Vessel Max Displacement: 15 tonnes
+- Max Berthing Velocity: 0.30 m/s
+- Max Wind Speed When Vessel Berthed: 22.1 m/s (30s duration)
+- Max Wave Height When Vessel Berthed: 0.90 m
+- Tidal Levels: HAT 0.58 mAHD, MHHW 0.20 mAHD, MSL -0.01 mAHD, MLLW -0.23 mAHD, LAT -0.56 mAHD, CD -0.76 mAHD
+
+ITEM: Standards and Codes (PAGE 1)
+- AS1170:2002 Structural Design Actions
+- AS2159:2009 Piling Design and Installation
+- AS3600:2009 Concrete Structures
+- AS4100:1998 Steel Structures
+- AS4997:2005 Guidelines for the Design of Maritime Structures
+
+ITEM: Concrete Deck & Headstock Layout (PAGE 3)
+- Cover: 65 mm minimum
+- Reinforcement: N16-LL, N24-LL, N32-LL
+- Headstock Type: Variations A, B, C, D, E, F
+- Deck Panel Type: Variations 1, 1a, 1b, 1c, 2, 3, 4, 5, 6, 7a, 8
+
+ITEM: Concrete Details (PAGE 4)
+- Pile Cap Plan: 1:10 scale
+- Pile Connection Void: Rough exposed aggregate finish
+- Reinforcement: 8xN28 cage, 8xN24 cage, 6xN24 rods
+- Concrete Mix: SC50 for void filling
+- Bolt Details: 4 x M20 bolts, 350 mm P.C.D.
+
+ITEM: Low Level Landing Layout (PAGE 5)
+- Member Schedule: H1 (300x200x8), S1 (250x150x6), B1 (100x50x6)
+- Kerb: To all edges except ladder location and access to main jetty
+
+ITEM: Low Level Landing Details (PAGE 6)
+- Headstock Connection: 20 PL with 2xM28 SS threaded rods, min 200 mm embedment
+- FRP Grating: 38 mm
+- Ladder: 40 NB galvanized pipe, bottom rung below -0.9 mAHD
+- Fender: Trelleborg DC-200
+
+METADATA:
+- Project: Mersey Point Jetty
+- Date: Various dates including 13.12.16, 28.09.16, 08.08.16, 20.09.16
+- Engineer/Designer: PMD
+- Drawing Number: D1313-00-01, D1313-01-01, D1313-04-01, D1313-04-02, D1313-05-01, D1313-05-02
+- Revision: Various revisions including A, B, C, D
+- Standards: AS1170:2002, AS2159:2009, AS3600:2009, AS4100:1998, AS4997:2005
+- Document Type: General Arrangement, Concrete Deck & Headstock Layout, Concrete Details, Low Level Landing Layout, Low Level Landing Details
+==================================================
+
+Document: output11
+------------------------------
+Status: Successfully processed
+Pages: 4
+Images: 8 total, 9 relevant sections
+Processed: 2025-08-11T11:12:55.220554
+
+Design Criteria:
+ITEM: General Notes (PAGE 1)
+- Dimensions: All dimensions are in millimeters
+- Levels: All levels are in meters
+- Steel Grade: Hot rolled Grade 300 steel for shear keys
+- Welding Standard: AS 1554, SP category welding
+- Welding Inspection: 100% visual inspection, 20% ultrasonic testing for shear key welds
+- Welding Filler Metal: Minimum nominal tensile strength of 490 MPa
+- Concrete Curing: 7 days by keeping surfaces wet
+- Concrete Strength: 28-day compressive strength of 60 MPa, N60 grade
+- Reinforcement: D500N deformed 500 MPa normal bars
+- Minimum Clear Cover: 50 mm with tolerance of +8 mm -0 mm
+- Bar Lap Length: Minimum 40 times the bar diameter
+- Design Life: Nominal design life of 5 years
+- Design Vehicles: 25T Franna crane, mobile cranes with axle loads ≤ 13.5T, outriggers ≤ 90T
+- Maximum Speed Limit: 5 km/h on the new deck
+
+ITEM: Steel Fabrication and Welding (PAGE 1)
+- Steel Surface: Free of oil or grease
+- Weld Slag: Cleaned and removed before grouting or painting
+
+ITEM: Concrete Specifications (PAGE 1)
+- Formwork Removal: Only when concrete strength is sufficient
+- Precast Concrete Handling: No overstressing during handling
+- Lifting Points: Capable of developing full strength without damage
+- Surface Finish: Broom finish for precast beams
+- Edge Chamfer: 15x15 mm minimum
+- Construction Joints: Not allowed in precast elements
+- Shear Key Voids: Sprayed with Rugasol for rough surface
+
+ITEM: Design Criteria (PAGE 1)
+- Structure Class: Class 2 structure
+- Design Vehicles: 25T Franna crane, mobile cranes with axle loads ≤ 13.5T, outriggers ≤ 90T
+- Crawler Cranes: Up to 280T, with rubber wearing surface required
+
+ITEM: Grout Specifications (PAGE 1)
+- Grout Type: Conbextra CB-C
+- Grout Placement: Through shear key voids, flowable mixture
+- Grout Pouring: Two stages if not contained
+
+ITEM: Earthworks and Drainage (PAGE 1)
+- Earthworks Load: Accommodate all loads specified in Section 5.0
+- Gradient: Maximum gradient confirmed by contractor
+- Drainage: Prevent water ponding
+- Topographic Survey: Required before works
+- Ground Investigation: Test pits if required
+
+ITEM: Precast Planks and Deck (PAGE 2)
+- Precast Plank Thickness: 320 mm
+- Existing Concrete Deck: Panels to remain
+- Shear Studs: Welded to existing steel beam
+
+ITEM: Approach Slab (PAGE 3)
+- Approach Slab Depth: Approx. 365 mm
+- Dowel Bars: 8 No. 300 mm long, anchored into existing slab
+- Chamfer: 15x15 mm to all exposed edges
+
+ITEM: Reinforcement Details (PAGE 4)
+- Reinforcement Plan: N16-200 U-bars, N24-200 top and bottom
+- Dowel Bar Embedment: 150 mm minimum into existing slab
+
+METADATA:
+- Project: EI-Dolphin Replacement
+- Date: Various dates from 20.12.24 to 02.04.25
+- Engineer/Designer: S.M., M.R., A.B., L.C.
+- Drawing Number: 0002, 0003, 0004, 0006
+- Revision: Rev 3, Rev 2, Rev 0
+- Standards: AS 1554
+- Document Type: General Notes and Construction Sequence, General Arrangement and Details, Typical Sections and Details, Insitu Approach Slab - RC Details
+==================================================
+
+Document: output12
+------------------------------
+Status: Successfully processed
+Pages: 8
+Images: 16 total, 6 relevant sections
+Processed: 2025-08-11T11:17:44.756348
+
+Design Criteria:
+ITEM: Jetty Design Criteria (PAGE 1)
+- Design Life: 10 years
+- Structural Importance Level: 2
+- Deck Loads: 2.5 kPa uniformly distributed, 1.1 kN concentrated over 100mm x 100mm area
+- Design Vessel: Paddy Troy (Pilot Boat)
+  - Displacement: 55 tonnes
+  - Draft: 162m
+  - Length Overall (LOA): 20.5m
+  - Beam (B): 5.78m
+  - Berthing Angle: 10 degrees
+  - Berthing Velocity: 0.3 m/s
+- Mooring Loads: 12.5 tonnes SWL bollard capacity
+- Environmental Loads: Wind and earthquake 1/100 AEP, Current 1.3 m/s
+
+ITEM: Structural Steel Specifications (PAGE 1)
+- Steel Grades: Grade 350 to AS3678 or AS 3679.1, Grade 300 for hot rolled sections
+- Bolts, Nuts, Washers: Stainless Steel Grade 316 above M.S.L, Super Duplex Grade 2507 below M.S.L
+- Structural Bolts: Grade 8.8 to AS 1252
+- Welding: AS/NZS 1554, Butt welds pre-qualified continuous complete penetration
+- Coating System: AS3894.10 to AS3894.14, Glass flake reinforced epoxy, 400pm DFT
+
+ITEM: Piling Specifications (PAGE 1)
+- Pile Driving: Hydraulic hammer, driveability study required
+- Pile Tolerances: ±150mm at cut-off level, ±75mm after pull-back
+- Welding: Category SP, AS/NZS 1554
+- Geotechnical Testing: PDA testing on 10% of piles
+
+ITEM: Grating Specifications (PAGE 1)
+- Grating Type: Heavy duty Treadwell FRP, 38mm x 38mm load bar spacing
+- Jetty Grating Thickness: 50mm (GTX-503838)
+- Ramp Grating Thickness: 38mm (GTX-383838)
+- Material: Vinyl ester resin, Marine grade anti-slip surface
+
+ITEM: Handrailing Specifications (PAGE 1)
+- Handrails: Standard bolted Monowills galvanised tubular system
+- Maximum Post Centres: As per AS1657
+- Toe Plate: 100mm x 6mm
+
+ITEM: Datum and Tidal Data (PAGE 1)
+- Chart Datum: 0.756m below AHD
+- Tide Levels: LAT +0.240, MLW +0.550, MSL +0.790, MHW +1.02, MHWS +1.130, HAT +1.380
+
+ITEM: General Arrangement and Modifications (PAGE 2)
+- Existing Jetty Modifications: Cut back existing fender piles to RL +2.290 CD
+- Relocation: Existing services to be relocated to new jetty
+
+ITEM: New Jetty General Arrangement (PAGE 3)
+- New Jetty Length: 57150
+- Pile Spacing: 8000
+- Access Ladder: Both sides of jetty
+
+ITEM: Steel Work Details (PAGE 5)
+- Bearing Plate: 20 THK slotted into beam
+- Welded Splice: Typical jetty welded splice detail
+
+ITEM: Access Ramp Details (PAGE 6)
+- Ramp Grating: Treadwell Gratex heavy duty FRP, GTX-383838
+- Handrailing: Both sides of ramp
+- Bearing Pads: 6 THK stainless steel
+
+ITEM: Ladder Details (PAGE 7)
+- Ladder Rung Spacing: 300 CRS
+- Stile: 75x6.0 SHS
+- End Plate: 175x100x12 THK
+
+METADATA:
+- Project: Inner Harbour Small Craft Pens
+- Date: 11.07.24
+- Engineer/Designer: R. Thickett, D. Starbuck
+- Drawing Number: 6120-018-ST-DRW-001 to 014
+- Revision: D
+- Standards: AS 4100, AS/NZS 5131, AS 3678, AS 3679.1, AS 1163, AS 1252, AS/NZS 1554, AS 1657, AS 2159, AS 1428.1, AS 1627.4, AS 3894.10 to AS 3894.14
+- Document Type: Drawing List and General Notes
+==================================================

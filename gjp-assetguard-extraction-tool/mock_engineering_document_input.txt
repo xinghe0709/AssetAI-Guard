@@ -1,0 +1,48 @@
+ENGINEERING DESIGN BASIS
+Port Infrastructure Upgrade Program
+
+DOCUMENT CONTROL
+Drawing Number: AG-PIER-2026-015
+Project: Fremantle Wharf Upgrade Stage 2
+Location: Berth 5
+Date: 2026-03-24
+Revision: B
+
+GENERAL NOTES
+This document defines the design loading requirements for the operational deck area,
+maintenance access zone, and vessel interface region at Berth 5.
+All load limits shall be verified before any heavy equipment deployment.
+
+DESIGN CRITERIA
+
+ITEM: Operational Vehicle Loads (PAGE 2)
+- Max Axle Load: 85 t
+- Max Wheel Load: 420 kN
+- Impact Allowance: 15 %
+
+ITEM: Crane Outrigger Loading (PAGE 2)
+- Max Outrigger Load: 1250 kN
+- Temporary Setup Load: 980 kN
+- Minimum Bearing Plate Size: 1.5 m x 1.5 m
+
+ITEM: Storage and Uniform Loads (PAGE 3)
+- Uniform Distributed Load: 35 kPa
+- Maintenance Access Load: 12 kPa
+- Laydown Area Load: 20 kPa
+
+ITEM: Vessel Interface Criteria (PAGE 4)
+- Maximum Displacement: 72000 t
+- Mooring Load: 450 kN
+- Berthing Load: 680 kN
+
+ITEM: Local Restrictions (PAGE 4)
+- Heavy vehicle turning shall be restricted to marked zones only.
+- Crane outriggers shall not be placed within 2 m of trench covers.
+- Deck load verification is mandatory before vessel service operations.
+
+METADATA:
+- Drawing Number: AG-PIER-2026-015
+- Project: Fremantle Wharf Upgrade Stage 2
+- Location: Berth 5
+- Date: 2026-03-24
+- Revision: B

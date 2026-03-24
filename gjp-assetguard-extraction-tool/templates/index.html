@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Engineering Design Criteria</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ===== THEME / TOKENS (blend of both) ===== -->
+  <link rel="stylesheet" href="/static/progress.css">
+  <style>
+    :root{
+      /* brand palette (safe to change) */
+      --bg:#f5f7fb;
+      --panel:#ffffff;
+      --panel-2:#f8f9fb;
+      --text:#222831;
+      --muted:#6c757d;
+      --accent:#007acc;
+      --accent-2:#005a99;
+      --border:#e1e6ee;
+      --chip:#7cc4ff;
+      --danger:#dc3545;
+      --success:#28a745;
+      --warning:#ffc107;
+
+      /* elevation */
+      --shadow-s:0 6px 18px rgba(0,0,0,.06);
+      --shadow-m:0 10px 30px rgba(0,0,0,.08);
+      --shadow-l:0 20px 60px rgba(0,0,0,.18);
+      --radius:14px;
+      --radius-sm:10px;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji")}
+    .wrap{max-width:1200px;margin:24px auto;padding:0 16px 48px}
+
+    /* card shell */
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-m);overflow:hidden}
+
+    /* sticky, glassy header */
+    .header{
+      position:sticky;top:0;z-index:50;
+      display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;
+      padding:12px 16px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.75);
+      backdrop-filter:blur(8px)
+    }
+    .title{display:flex;gap:12px;align-items:center}
+    .title h1{margin:0;font-size:20px;font-weight:700;letter-spacing:.1px}
+    .modes{display:inline-flex;background:var(--panel-2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    .mode-btn{padding:8px 14px;font-size:13px;color:var(--muted);background:transparent;border:none;cursor:pointer;
+      transition:background .2s,color .2s}
+    .mode-btn[aria-selected="true"]{color:var(--text);background:#e9f3fb}
+    .status{font-size:13px;color:var(--muted);justify-self:end}
+
+    .body{padding:18px}
+
+    .hidden{display:none!important}
+    .row{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:980px){
+      .row{grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:20px}
+    }
+    .stack{display:grid;gap:12px;min-width:0;align-content:start}
+    .panel{background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:14px;min-width:0}
+
+    .field{display:grid;gap:8px}
+    label{font-size:13px;color:var(--muted)}
+    input[type="file"],select,button,.btn,textarea,input[type="checkbox"],input[type="text"],input[type="number"]{
+      border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--text);padding:10px 12px;font-size:14px;outline:none
+    }
+    input[type="checkbox"]{width:18px;height:18px;padding:0}
+    .btn,button{background:var(--accent);color:#fff;border:none;cursor:pointer;transition:transform .06s,filter .2s,background .2s}
+    .btn.secondary{background:#fff;color:var(--text);border:1px solid var(--border)}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .btn:hover:not(:disabled){background:var(--accent-2)}
+    .btn:active:not(:disabled){transform:translateY(1px)}
+    .btn-danger{background:var(--danger)}
+    .btn-outline{background:white;border:1px solid var(--danger);color:var(--danger);text-decoration:none;border-radius:8px}
+    .btn-outline:hover{background:var(--danger);color:white}
+    .btn-sm{padding:4px 8px;font-size:.8em}
+
+    .grid{display:grid;gap:10px}
+    .grid.columns-2{grid-template-columns:1fr 1fr}
+
+    /* thumbnails */
+    .thumbs{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+    .thumb{border:1px solid var(--border);border-radius:10px;background:#fff;overflow:hidden;box-shadow:var(--shadow-s)}
+    .thumb img{width:100%;height:auto;display:block}
+    .thumb label{display:block;padding:6px 8px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);background:var(--panel)}
+
+    /* editable sections */
+    .sections{display:grid;gap:8px}
+    .section-item{display:grid;gap:6px;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--panel);box-shadow:var(--shadow-s)}
+    .section-item:hover{transform:translateY(-1px);box-shadow:var(--shadow-m);transition:.18s ease}
+    .section-head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between}
+    .badge{font-size:12px;background:#e9f3fb;border:1px solid var(--border);padding:4px 8px;border-radius:100px;color:var(--chip)}
+    .sec-title{width:340px}
+    .sec-page{width:90px}
+    .sec-text{width:100%;min-height:120px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px}
+
+    /* result links / cards */
+    .result-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--text);font-size:14px;
+      padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:#fff}
+    .session-card{margin-bottom:15px;border:1px solid var(--border);border-radius:8px;padding:16px;background:white;
+      transition:all .2s ease;box-shadow:var(--shadow-s)}
+    .session-card:hover{border-color:var(--accent)!important;box-shadow:0 2px 10px rgba(0,122,204,.18)!important;transform:translateY(-1px)}
+    .download-link{display:inline-block;background:var(--success);color:#fff;padding:8px 15px;text-decoration:none;border-radius:8px;margin-right:10px;margin-top:5px}
+    .download-link:hover{color:white;filter:brightness(.95)}
+
+    /* modal viewer (glassy) */
+    .modal{position:fixed;inset:0;background:rgba(3,6,12,.35);display:none;z-index:80}
+    .modal.open{display:grid}
+    .modal-inner{margin:auto;width:min(96vw,1100px);height:min(90vh,840px);background:rgba(255,255,255,.9);border:1px solid var(--border);
+      border-radius:14px;display:grid;grid-template-rows:auto 1fr;overflow:hidden;box-shadow:var(--shadow-l);backdrop-filter:blur(8px)}
+    .modal-bar{display:flex;align-items:center;gap:10px;padding:10px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#ffffff,#f3f7fb)}
+    .modal-bar .spacer{flex:1}
+    .modal-title{font-size:14px;color:var(--muted)}
+    .tool{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:10px;padding:6px 8px;background:var(--panel-2)}
+    .tool button{background:#fff;color:var(--text);border:1px solid var(--border);padding:6px 10px;font-size:13px;border-radius:8px}
+    .tool input[type="range"]{width:180px}
+    .viewer{position:relative;overflow:hidden;background:#f3f6fa}
+    .viewport{position:absolute;inset:0;cursor:grab}
+    .viewport.dragging{cursor:grabbing}
+    .viewport img{user-select:none;-webkit-user-drag:none;pointer-events:none;transform-origin:center center;max-width:none;max-height:none}
+
+    /* resizable split */
+    .split{--left-size:460px;display:grid;grid-template-columns:minmax(320px,var(--left-size)) 10px minmax(0,1fr);gap:12px;align-items:stretch}
+    .pane{min-width:0}
+    .gutter{cursor:col-resize;background:linear-gradient(180deg,#f0f4f8,#e9eef4);border-left:1px solid var(--border);border-right:1px solid var(--border);
+      border-radius:8px;position:relative;align-self:stretch;min-height:100%}
+    .gutter::after{content:"";position:absolute;left:50%;top:50%;width:3px;height:60px;transform:translate(-50%,-50%);background:#c9d7e6;border-radius:2px;
+      box-shadow:-6px 0 0 #c9d7e6,6px 0 0 #c9d7e6;opacity:.85}
+    @media(max-width:979px){.split{display:block}.gutter{display:none}}
+
+    .loading{display:none;text-align:center;color:var(--accent);font-style:italic}
+    .error{color:#721c24;background:#f8d7da;padding:10px;border-radius:8px;margin-top:10px}
+    .success{color:#155724;background:#d4edda;padding:10px;border-radius:8px;margin-top:10px}
+
+    /* floating action bar inside editor (sticky) */
+    .floating-actions{
+      position:sticky;bottom:12px;display:flex;gap:8px;justify-content:flex-end;
+      padding:8px;background:rgba(255,255,255,.7);border:1px solid var(--border);
+      border-radius:10px;backdrop-filter:blur(6px)
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <!-- Header -->
+      <div class="header">
+        <div class="title">
+          <h1>Engineering Design Criteria</h1>
+          <div class="modes" role="tablist" aria-label="Layout Modes">
+            <button id="modeAdvanced" class="mode-btn" role="tab" aria-selected="true" aria-controls="advanced">Drawing Design Criteria Search</button>
+            <button id="modeHistory"  class="mode-btn" role="tab" aria-selected="false" aria-controls="history">History</button>
+          </div>
+        </div>
+        <div class="status" id="status">Idle</div>
+      </div>
+
+      <!-- Body -->
+      <div class="body">
+        <!-- ========== ADVANCED ========== -->
+        <div id="advanced" role="tabpanel" aria-labelledby="modeAdvanced">
+          <div class="split" id="advSplit">
+            <!-- Left pane -->
+            <div class="stack pane">
+              <div class="panel">
+                <div class="field">
+                  <label for="pdfAdv">Upload PDF/Image(s) <span style="color:#6c757d;">(PDF, JPG, JPEG, PNG)</span></label>
+                  <input id="pdfAdv" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                  <small class="mono">Tip: You can select multiple PDFs or images and they will be processed in one batch</small>
+                </div>
+                <div class="field" style="margin-top:10px;">
+                  <label for="modelAdv">Model</label>
+                  <select id="modelAdv">
+                    <option value="gpt">GPT</option>
+                    <option value="gemini">Gemini</option>
+                  </select>
+                </div>
+                <div class="grid columns-2" style="margin-top:12px;">
+                  <button id="processAdv" class="btn">Process Document(s)</button>
+                </div>
+              </div>
+
+              <!-- Progress Bar Component -->
+              <div id="progressBarContainer" class="progress-panel" style="display: none;">
+                <div class="progress-field">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <label class="progress-label">Processing Progress</label>
+                    <button id="closeProgressBtn" class="btn btn-sm" style="padding: 4px 8px; font-size: 12px; background: var(--muted); color: white;">✕</button>
+                  </div>
+                  <div class="progress-container">
+                    <div class="progress-header">
+                      <span id="progressText">Initializing...</span>
+                      <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="field">
+                  <label>Latest Outputs</label>
+                  <div id="resultsAdv" class="grid"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gutter -->
+            <div class="gutter" id="advGutter" role="separator" aria-orientation="vertical"
+                 aria-label="Resize panels" aria-valuemin="320" aria-valuemax="900"
+                 aria-valuenow="460" tabindex="0"></div>
+
+            <!-- Right pane -->
+            <div class="stack pane">
+              <div class="panel">
+                <div class="field">
+                  <label>Sections (editable)</label>
+                  <div id="sectionsAdv" class="sections"></div>
+
+                  <!-- Floating action bar -->
+                  <div class="floating-actions">
+                    <button id="quickGen" class="btn">Generate Final (current)</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="field">
+                  <label>Page Thumbnails</label>
+                  <div id="thumbsAdv" class="thumbs"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal viewer -->
+          <div id="modalAdv" class="modal" aria-hidden="true">
+            <div class="modal-inner">
+              <div class="modal-bar">
+                <div class="modal-title" id="modalTitleAdv">Viewer</div>
+                <div class="spacer"></div>
+                <div class="tool">
+                  <button id="zoomOutAdv" type="button">-</button>
+                  <input id="zoomRangeAdv" type="range" min="25" max="300" step="5" value="100" aria-label="Zoom">
+                  <button id="zoomInAdv" type="button">+</button>
+                  <button id="rotateLeftAdv" type="button" title="Rotate left 90°">Rotate ⟲</button>
+                  <button id="rotateRightAdv" type="button" title="Rotate right 90°">Rotate ⟳</button>
+                  <button id="resetViewAdv" type="button">Reset</button>
+                </div>
+                <button id="closeModalAdv" class="btn secondary" type="button" style="margin-left:10px;">Close</button>
+              </div>
+              <div class="viewer" id="viewerAdv">
+                <div class="viewport" id="viewportAdv">
+                  <img id="pageImageAdv" alt="Page">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ========== /ADVANCED ========== -->
+
+        <!-- ========== HISTORY ========== -->
+        <div id="history" class="hidden" role="tabpanel" aria-labelledby="modeHistory">
+          <div class="stack">
+            <div class="panel">
+              <div class="field">
+                <label>Report History</label>
+                <div class="grid columns-2" style="align-items:center;">
+                  <button type="button" class="btn" id="historyRefreshBtn">Refresh History</button>
+                  <div style="display:flex; gap:10px; justify-content:flex-end;">
+                    <input type="text" id="session-search" placeholder="🔍 Search sessions..."
+                          style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;min-width:220px;">
+                    <button id="clearAllBtn" class="btn btn-outline">🗑️ Clear All</button>
+                  </div>
+                </div>
+              </div>
+              <div id="previous-loading" class="loading" style="margin-top:10px;">
+                <p>Loading previous results...</p>
+              </div>
+              <div id="no-previous-results" style="display:none; margin-top:10px;">
+                <div class="success">
+                  <h3 style="margin:0 0 6px 0;">No Previous Results Found</h3>
+                  <p style="margin:0;">You haven't generated any design criteria reports yet. Use the Advanced mode to process your first engineering document.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div id="previous-results" class="results" style="display:none; background: var(--panel-2); border-radius: 10px; padding: 16px;"></div>
+            </div>
+          </div>
+        </div>
+        <!-- ========== /HISTORY ========== -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="/static/progress.js"></script>
+  <script>
+    const statusEl=document.getElementById('status');
+    function setStatus(msg){ statusEl.textContent=msg; }
+
+    // Tabs
+    const modeAdvancedBtn=document.getElementById('modeAdvanced');
+    const modeHistoryBtn =document.getElementById('modeHistory');
+    const advancedTab    =document.getElementById('advanced');
+    const historyTab     =document.getElementById('history');
+
+    function switchMode(mode){
+      const map={advanced:[modeAdvancedBtn,advancedTab],history:[modeHistoryBtn,historyTab]};
+      for(const [btn,el] of [[modeAdvancedBtn,advancedTab],[modeHistoryBtn,historyTab]]){
+        btn.setAttribute('aria-selected','false'); el.classList.add('hidden');
+      }
+      const [btn,el]=map[mode];
+      btn.setAttribute('aria-selected','true'); el.classList.remove('hidden');
+      if(mode==='history') loadReportHistory();
+    }
+    modeAdvancedBtn.addEventListener('click',()=>switchMode('advanced'));
+    modeHistoryBtn .addEventListener('click',()=>switchMode('history'));
+
+    // Advanced DOM
+    const pdfAdv=document.getElementById('pdfAdv');
+    const modelAdv=document.getElementById('modelAdv');
+    const processAdv=document.getElementById('processAdv');
+    const sectionsAdv=document.getElementById('sectionsAdv');
+    const thumbsAdv=document.getElementById('thumbsAdv');
+    const resultsAdv=document.getElementById('resultsAdv');
+
+    const modalAdv=document.getElementById('modalAdv');
+    const modalTitleAdv=document.getElementById('modalTitleAdv');
+    const viewerAdv=document.getElementById('viewerAdv');
+    const viewportAdv=document.getElementById('viewportAdv');
+    const pageImageAdv=document.getElementById('pageImageAdv');
+    const zoomRangeAdv=document.getElementById('zoomRangeAdv');
+    const zoomInAdv=document.getElementById('zoomInAdv');
+    const zoomOutAdv=document.getElementById('zoomOutAdv');
+    const rotateLeftAdv=document.getElementById('rotateLeftAdv');
+    const rotateRightAdv=document.getElementById('rotateRightAdv');
+    const resetViewAdv=document.getElementById('resetViewAdv');
+    const closeModalAdv=document.getElementById('closeModalAdv');
+    const quickGen=document.getElementById('quickGen');
+
+    let processedSessions=[];
+    let currentIndexAdv=null;
+    let currentSessionData=null;
+
+    // Thumbnails
+    function buildThumbsAdv(map){
+      thumbsAdv.innerHTML='';
+      const pages=Object.keys(map||{}).sort((a,b)=>Number(a)-Number(b));
+      for(const p of pages){
+        const wrap=document.createElement('div'); wrap.className='thumb';
+        const img=document.createElement('img'); img.src=map[p]; img.alt='Page '+p; img.loading='lazy';
+        img.addEventListener('click',()=>openViewerAdv(p));
+        const lab=document.createElement('label'); lab.textContent='Page '+p;
+        wrap.appendChild(img); wrap.appendChild(lab); thumbsAdv.appendChild(wrap);
+      }
+    }
+
+    // Parse & render editable sections
+    function parseSectionsFromText(text){
+      const lines=(text||'').split(/\r?\n/);
+      const items=[];
+
+      // Updated regex to be more flexible - captures everything up to (PAGE X)
+      const itemRegex=/^ITEM:\s*(.+?)\s*\(PAGE\s*([0-9]+|unknown)\)/i;
+
+      let current=null;
+
+      for(const line of lines){
+        const trimmedLine = line.trim();
+        const m=trimmedLine.match(itemRegex);
+
+        if(m){
+          // Save previous item before starting new one
+          if(current) items.push(current); 
+
+          // Extract title (remove any trailing content after the page number)
+          let title = m[1].trim();
+          
+          // Handle case where there might be extra content after (PAGE X)
+          const pageMatch = line.match(/\(PAGE\s*([0-9]+|unknown)\)/i);
+          if(pageMatch){
+            const beforePage = line.substring(0, line.indexOf(pageMatch[0]));
+            title = beforePage.replace(/^ITEM:\s*/i, '').trim();
+          }
+          
+          current={
+            title: title,
+            page: m[2].toLowerCase() === 'unknown' ? 1 : Number(m[2]),
+            details:[]
+          }; 
+        }
+      
+        else{ 
+          if(!current) continue; 
+          
+          // Skip empty lines at the start of details
+          if(current.details.length === 0 && !trimmedLine) continue;
+          
+          current.details.push(line); 
+        }
+      }
+      if(current) items.push(current);
+
+      return items;
+    }
+
+
+
+    function renderEditableSections(text){
+      const items=parseSectionsFromText(text||'');
+      sectionsAdv.innerHTML='';
+      if(!items.length){
+        const div=document.createElement('div');
+        div.className='section-item'; div.textContent='No ITEM sections were found.';
+        sectionsAdv.appendChild(div); return;
+      }
+      for(const it of items){
+        const box=document.createElement('div'); box.className='section-item';
+        const head=document.createElement('div'); head.className='section-head';
+
+        const left=document.createElement('div'); left.style.display='flex'; left.style.gap='8px'; left.style.flexWrap='wrap';
+        const titleInput=document.createElement('input'); titleInput.type='text'; titleInput.className='sec-title'; titleInput.value=it.title;
+        const pageInput=document.createElement('input'); pageInput.type='number'; pageInput.min='1'; pageInput.className='sec-page'; pageInput.value=it.page;
+        left.appendChild(titleInput); left.appendChild(pageInput);
+
+        const right=document.createElement('div'); right.style.display='flex'; right.style.gap='8px';
+        const badge=document.createElement('span'); badge.className='badge'; badge.textContent='Page';
+        const btn=document.createElement('button'); btn.className='btn'; btn.type='button'; btn.textContent='Open Page';
+        btn.addEventListener('click',()=>openViewerAdv(String(pageInput.value||it.page)));
+        right.appendChild(badge); right.appendChild(btn);
+
+        head.appendChild(left); head.appendChild(right);
+
+        const details=document.createElement('textarea'); details.className='sec-text'; details.value=(it.details||[]).join('\n').trim();
+
+        box.appendChild(head); box.appendChild(details); sectionsAdv.appendChild(box);
+      }
+    }
+
+    function collectSectionsText(){
+      const blocks=sectionsAdv.querySelectorAll('.section-item');
+      const parts=[];
+      blocks.forEach(b=>{
+        const title=b.querySelector('.sec-title')?.value?.trim()||'Untitled';
+        const page =b.querySelector('.sec-page')?.value?.trim()||'1';
+        const text =b.querySelector('.sec-text')?.value||'';
+        parts.push(`ITEM: ${title} (PAGE ${page})\n${text.trim()}`);
+      });
+      return parts.join('\n\n');
+    }
+
+    // Modal viewer
+    function openViewerAdv(pageKey){
+      const url=currentSessionData?.page_image_urls?.[pageKey];
+      if(!url){ alert('No image available for Page '+pageKey); return; }
+      pageImageAdv.src=url; modalTitleAdv.textContent='Viewing Page '+pageKey;
+      zoomRangeAdv.value=100; setTransformAdv(1,0,0,0);
+      modalAdv.classList.add('open'); modalAdv.setAttribute('aria-hidden','false');
+    }
+    function closeViewer(){ modalAdv.classList.remove('open'); modalAdv.setAttribute('aria-hidden','true'); }
+
+    let scaleAdv=1, offsetXAdv=0, offsetYAdv=0, rotDegAdv=0;
+    let draggingAdv=false, startXAdv=0, startYAdv=0;
+
+    function applyImageTransform(){ pageImageAdv.style.transform=`rotate(${rotDegAdv}deg) scale(${scaleAdv})`; }
+    function setTransformAdv(s,x,y,r=rotDegAdv){ scaleAdv=s; offsetXAdv=x; offsetYAdv=y; rotDegAdv=r; viewportAdv.style.transform=`translate(${offsetXAdv}px, ${offsetYAdv}px)`; applyImageTransform(); }
+
+    viewerAdv.addEventListener('mousedown',(e)=>{ draggingAdv=true; viewportAdv.classList.add('dragging'); startXAdv=e.clientX-offsetXAdv; startYAdv=e.clientY-offsetYAdv; });
+    window.addEventListener('mousemove',(e)=>{ if(!draggingAdv) return; offsetXAdv=e.clientX-startXAdv; offsetYAdv=e.clientY-startYAdv; viewportAdv.style.transform=`translate(${offsetXAdv}px, ${offsetYAdv}px)`; });
+    window.addEventListener('mouseup',()=>{ draggingAdv=false; viewportAdv.classList.remove('dragging'); });
+
+    zoomRangeAdv.addEventListener('input',()=>{ const newScale=Number(zoomRangeAdv.value)/100; setTransformAdv(newScale,offsetXAdv,offsetYAdv); });
+    zoomInAdv.addEventListener('click',()=>{ const v=Math.min(300,Number(zoomRangeAdv.value)+10); zoomRangeAdv.value=v; setTransformAdv(v/100,offsetXAdv,offsetYAdv); });
+    zoomOutAdv.addEventListener('click',()=>{ const v=Math.max(25,Number(zoomRangeAdv.value)-10); zoomRangeAdv.value=v; setTransformAdv(v/100,offsetXAdv,offsetYAdv); });
+    rotateLeftAdv.addEventListener('click',()=>{ rotDegAdv=(rotDegAdv-90)%360; applyImageTransform(); });
+    rotateRightAdv.addEventListener('click',()=>{ rotDegAdv=(rotDegAdv+90)%360; applyImageTransform(); });
+    resetViewAdv.addEventListener('click',()=>{ zoomRangeAdv.value=100; setTransformAdv(1,0,0,0); });
+    closeModalAdv.addEventListener('click',closeViewer);
+
+    // Resizable split
+    const advSplit=document.getElementById('advSplit');
+    const advGutter=document.getElementById('advGutter');
+    function setLeftSize(px){
+      const min=320; const max=Math.min(900,advSplit.clientWidth-360);
+      const clamped=Math.max(min,Math.min(max,px));
+      advSplit.style.setProperty('--left-size',clamped+'px');
+      advGutter.setAttribute('aria-valuenow',String(clamped));
+    }
+    let splitDragging=false, splitStartX=0, splitStartLeft=460;
+    function getCurrentLeft(){ const cs=getComputedStyle(advSplit); return parseFloat(cs.getPropertyValue('--left-size'))||460; }
+    advGutter.addEventListener('mousedown',(e)=>{ splitDragging=true; splitStartX=e.clientX; splitStartLeft=getCurrentLeft(); document.body.style.userSelect='none'; });
+    window.addEventListener('mousemove',(e)=>{ if(!splitDragging) return; setLeftSize(splitStartLeft+(e.clientX-splitStartX)); });
+    window.addEventListener('mouseup',()=>{ if(!splitDragging) return; splitDragging=false; document.body.style.userSelect=''; });
+    advGutter.addEventListener('keydown',(e)=>{
+      const step=e.shiftKey?40:16; const cur=getCurrentLeft();
+      if(e.key==='ArrowLeft'){ setLeftSize(cur-step); e.preventDefault(); }
+      if(e.key==='ArrowRight'){ setLeftSize(cur+step); e.preventDefault(); }
+      if(e.key==='Home'){ setLeftSize(320); e.preventDefault(); }
+      if(e.key==='End'){ const max=Math.min(900,advSplit.clientWidth-360); setLeftSize(max); e.preventDefault(); }
+    });
+    advGutter.addEventListener('dblclick',()=>setLeftSize(460));
+    window.addEventListener('resize',()=>setLeftSize(getCurrentLeft()));
+
+    // Batch processing
+    processAdv.addEventListener('click',processDocumentBatchAdv);
+
+    async function processDocumentBatchAdv(){
+      if(!pdfAdv.files.length){ alert('Please choose one or more files (PDF/JPG/JPEG/PNG) first.'); return; }
+
+      // Reset progress status before starting
+      await progressTracker.resetProgressStatus();
+      
+      // Start progress tracking - server now handles batch logic
+      progressTracker.startTracking();
+
+      processAdv.disabled=true; setStatus('Uploading and processing (batch)...');
+      resultsAdv.innerHTML=''; sectionsAdv.innerHTML=''; thumbsAdv.innerHTML='';
+      processedSessions=[]; currentIndexAdv=null; currentSessionData=null;
+
+      const fd=new FormData();
+      for(const f of pdfAdv.files) fd.append('files',f);
+      fd.append('model',modelAdv.value||'gpt');
+
+      try{
+        const resp=await fetch('/api/process-batch-documents',{method:'POST',body:fd});
+        const data=await resp.json();
+        if(!data.success){
+          setStatus('Batch processing failed');
+          alert(data.error||'Unknown error.'); processAdv.disabled=false; return;
+        }
+        const list=data.results||[];
+        processedSessions=list.map((d,i)=>({data:d,filename:d.filename||pdfAdv.files[i]?.name||`File ${i+1}`}));
+        
+        // Force progress to 100% before showing results
+        progressTracker.updateProgress(100, 'All files processed successfully!');
+        
+        // Small delay to ensure user sees 100% before results appear
+        setTimeout(() => {
+          renderBatchCards(processedSessions);
+          if(processedSessions.some(x=>x.data&&x.data.success)){ setStatus('Done — select a file and edit under here'); }
+          else{ setStatus('Done (no successful items)'); }
+          
+          // Stop progress tracking with forced hide since processing is complete
+          progressTracker.stopTracking(true);
+        }, 300);
+      }catch(err){
+        console.error(err); setStatus('Error'); alert('An error occurred while processing.');
+        // On error, also force hide the progress bar
+        progressTracker.stopTracking(true);
+      }finally{ processAdv.disabled=false; }
+    }
+
+    function renderBatchCards(items){
+      resultsAdv.innerHTML=''; if(!items.length) return;
+      for(let i=0;i<items.length;i++){
+        const entry=items[i]; const d=entry.data||{};
+        const wrap=document.createElement('div'); wrap.className='session-card';
+
+        if(d.success){
+          const links=[];
+          if(d.pdf_report_url)  links.push(`<a class="result-link" href="${d.pdf_report_url}" target="_blank">Initial PDF</a>`);
+          if(d.html_report_url) links.push(`<a class="result-link" href="${d.html_report_url}" target="_blank">Initial HTML</a>`);
+          if(d.json_download_url) links.push(`<a class="result-link" href="${d.json_download_url}" target="_blank">Initial JSON</a>`);
+          if(d.text_download_url) links.push(`<a class="result-link" href="${d.text_download_url}" target="_blank">Initial Text</a>`);
+          if(d.original_file_url) links.push(`<a class="result-link" href="${d.original_file_url}" target="_blank">Original</a>`);
+
+          wrap.innerHTML=`
+            <div class="success" style="margin-bottom:10px;">
+              <h3 style="margin:0 0 6px 0;">Initial Processing Complete</h3>
+              <div><strong>File:</strong> ${escapeHtml(entry.filename)}</div>
+              <div><strong>Engine:</strong> ${(d.engine||'gpt').toUpperCase()}</div>
+              <div><strong>Pages Processed:</strong> ${d.pages_processed}</div>
+              <div><strong>Processed:</strong> ${new Date(d.processed_at||Date.now()).toLocaleString()}</div>
+            </div>
+            ${links.length?`<div class="grid">${links.join('')}</div>`:''}
+            <div class="grid" style="margin-top:8px;">
+              <button class="btn edit-btn" type="button">Edit this file</button>
+              <button class="btn gen-btn"  type="button">Generate Final Report</button>
+            </div>
+            <div class="final-links"></div>
+          `;
+
+          wrap.querySelector('.edit-btn').addEventListener('click',()=>selectSession(i));
+
+          const genBtn  = wrap.querySelector('.gen-btn');
+          const linksDiv= wrap.querySelector('.final-links');
+
+          genBtn.addEventListener('click',async ()=>{
+            genBtn.disabled=true; setStatus('Generating final report...');
+            const endpoint=(d.engine&&d.engine.toLowerCase()==='gemini')?'/api/generate-final-report-gemini':'/api/generate-final-report';
+            const criteriaText=(currentIndexAdv===i)?collectSectionsText():(d.design_criteria||'');
+            try{
+              const resp=await fetch(endpoint,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                  design_criteria:criteriaText,
+                  original_filename:entry.filename||'document.pdf',
+                  session_id:d.session_id
+                })
+              });
+              const out=await resp.json();
+              linksDiv.innerHTML='';
+              if(out.success){
+                const parts=[];
+                if(out.pdf_report_url)  parts.push(`<a class="result-link" href="${out.pdf_report_url}" target="_blank">Final PDF</a>`);
+                if(out.html_report_url) parts.push(`<a class="result-link" href="${out.html_report_url}" target="_blank">Final HTML</a>`);
+                if(out.json_download_url) parts.push(`<a class="result-link" href="${out.json_download_url}" target="_blank">Final JSON</a>`);
+                if(out.text_download_url) parts.push(`<a class="result-link" href="${out.text_download_url}" target="_blank">Final Text</a>`);
+                linksDiv.innerHTML=parts.join('');
+                setStatus('Final report ready');
+              }else{
+                linksDiv.innerHTML=`<div class="error">Final Report Generation Failed${out.error?`: ${escapeHtml(out.error)}`:''}</div>`;
+                setStatus('Final generation failed');
+              }
+            }catch(e){
+              linksDiv.innerHTML=`<div class="error">Network Error: ${escapeHtml(e.message)}</div>`;
+              setStatus('Error');
+            }finally{ genBtn.disabled=false; }
+          });
+
+        }else{
+          wrap.innerHTML=`
+            <div class="error">
+              <h3 style="margin:0 0 6px 0;">Processing Failed</h3>
+              <div><strong>File:</strong> ${escapeHtml(entry.filename)}</div>
+              <div>${escapeHtml(d.error||'Unknown error')}</div>
+            </div>
+          `;
+        }
+        resultsAdv.appendChild(wrap);
+      }
+    }
+
+    // Floating actions uses current card's generate button
+    document.getElementById('quickGen').addEventListener('click',()=>{
+      const i=typeof currentIndexAdv==='number'?currentIndexAdv:-1;
+      if(i<0){ alert('Select a processed file first.'); return; }
+      const cardBtn=[...document.querySelectorAll('.session-card .gen-btn')][i];
+      cardBtn?.click();
+    });
+
+    function selectSession(index){
+      const entry=processedSessions[index];
+      if(!entry||!entry.data||!entry.data.success){ alert('This file was not processed successfully.'); return; }
+      currentIndexAdv=index; currentSessionData=entry.data;
+      renderEditableSections(currentSessionData.design_criteria||'');
+      buildThumbsAdv(currentSessionData.page_image_urls||{});
+      setStatus(`Editing: ${entry.filename}`);
+      sectionsAdv.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    // ===== HISTORY =====
+    const historyRefreshBtn=document.getElementById('historyRefreshBtn');
+    const clearAllBtn=document.getElementById('clearAllBtn');
+    const previousLoading=document.getElementById('previous-loading');
+    const previousResults=document.getElementById('previous-results');
+    const noPrevious=document.getElementById('no-previous-results');
+    const searchInput=document.getElementById('session-search');
+
+    historyRefreshBtn.addEventListener('click',loadReportHistory);
+    clearAllBtn.addEventListener('click',clearAllReports);
+    searchInput.addEventListener('input',filterSessions);
+
+    function getTimeAgo(date){
+      const now=new Date(); const diff=now-date;
+      const minutes=Math.floor(diff/60000), hours=Math.floor(diff/3600000), days=Math.floor(diff/86400000);
+      if(minutes<1) return 'Just now';
+      if(minutes<60) return `${minutes}m ago`;
+      if(hours<24) return `${hours}h ago`;
+      if(days<7) return `${days}d ago`;
+      return date.toLocaleDateString();
+    }
+
+    function filterSessions(){
+      const term=(searchInput.value||'').toLowerCase();
+      const cards=previousResults.querySelectorAll('.session-card');
+      let visible=0;
+      cards.forEach(card=>{
+        const data=(card.getAttribute('data-search')||'').toLowerCase();
+        const show=data.includes(term); card.style.display=show?'block':'none'; if(show) visible++;
+      });
+      const header=previousResults.querySelector('h3');
+      if(header){
+        const total=cards.length;
+        header.textContent= term ? `📋 Report History (${visible}/${total} sessions)` : `📋 Report History (${total} sessions)`;
+      }
+    }
+
+    function loadReportHistory(){
+      previousLoading.style.display='block';
+      previousResults.style.display='none';
+      noPrevious.style.display='none';
+      fetch('/api/previous-results')
+        .then(r=>r.json())
+        .then(data=>{
+          previousLoading.style.display='none';
+          if(data.success&&data.results&&data.results.length>0){ displayPreviousResults(data.results); }
+          else{ noPrevious.style.display='block'; }
+        })
+        .catch(err=>{
+          console.error('Error loading previous results:',err);
+          previousLoading.style.display='none'; noPrevious.style.display='block';
+        });
+    }
+
+    function displayPreviousResults(results){
+      previousResults.style.display='block'; noPrevious.style.display='none';
+      let html=`
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <h3 style="margin:0;">📋 Report History (${results.length} sessions)</h3>
+        </div>
+        <div id="sessions-container">
+      `;
+      results.forEach((session)=>{
+        const latestDate=new Date(session.latest_generated);
+        const timeAgo=getTimeAgo(latestDate);
+        const shortId=(session.session_id||'').split('-')[0];
+        html+=`
+          <div class="session-card"
+               data-search="${(session.project_title||session.original_filename||'')} ${(session.original_filename||'')} ${(session.session_id||'')}">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+              <div style="flex:1; min-width:0;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                  <h4 style="margin:0; font-size:1.1em; color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    🏗️ ${session.project_title || session.original_filename}
+                  </h4>
+                  <span style="background:#f0f0f0; padding:2px 6px; border-radius:6px; font-size:.75em; color:#666;">
+                    ${shortId||''}
+                  </span>
+                </div>
+                <div style="display:flex; gap:15px; font-size:.85em; color:#666; margin-bottom:8px;">
+                  <span>⏰ ${timeAgo}</span>
+                  <span>📊 ${session.reports.length} report${session.reports.length!==1?'s':''}</span>
+                  ${session.session_files && session.session_files.length>0 ? `<span>📁 ${session.session_files.length} files</span>` : ''}
+                </div>
+              </div>
+              <button type="button" class="btn btn-sm btn-danger"
+                      onclick="deleteReport('${session.session_id}','${session.original_filename||''}')">🗑️</button>
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+              ${session.original_file_url ? `
+                <a href="${session.original_file_url}" class="download-link"
+                   style="background:#e8f4f8; color:var(--accent); border:1px solid var(--accent);">📥 Original</a>` : ''}
+              ${session.reports.map(r=>`
+                <div style="display:flex; gap:4px;">
+                  ${r.pdf_report_url ? `<a href="${r.pdf_report_url}" class="download-link">📄 PDF</a>`:''}
+                  ${r.html_report_url? `<a href="${r.html_report_url}" class="download-link" style="background:var(--accent);">🌐 HTML</a>`:''}
+                  ${r.json_download_url? `<a href="${r.json_download_url}" class="download-link" style="background:#f39c12;">🧩 JSON</a>`:''}
+                  ${r.text_download_url? `<a href="${r.text_download_url}" class="download-link" style="background:#6c757d;">📝 Text</a>`:''}
+                </div>`).join('')}
+            </div>
+
+            ${session.session_files && session.session_files.length>0 ? `
+              <details style="margin-top:10px;">
+                <summary style="cursor:pointer; color:var(--accent); font-weight:bold;">📁 Session Files (${session.session_files.length})</summary>
+                <div style="margin-top:10px; padding:15px; background-color:var(--panel-2); border-radius:8px;">
+                  <p><strong>Session Directory:</strong> ${session.session_directory||''}</p>
+                  <div style="margin-top:10px;">
+                    ${session.session_files.map(file=>`
+                      <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid #dee2e6; background:white; margin-bottom:5px; border-radius:6px;">
+                        <span>📄 ${file.name}</span>
+                        <div>
+                          <span style="color:#6c757d; font-size:.9em;">${(file.size/1024).toFixed(1)} KB</span>
+                          <a href="${file.url}" class="download-link" style="margin-left:10px; padding:4px 8px; font-size:.8em;">Download</a>
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              </details>` : ''}
+
+            <details style="margin-top:8px;">
+              <summary style="cursor:pointer; color:var(--accent); font-size:.9em; user-select:none;">▼ More details & design criteria</summary>
+              <div style="margin-top:10px; padding:12px; background-color:var(--panel-2); border-radius:8px; border-left:3px solid var(--accent);">
+                <div style="margin-bottom:15px; font-size:.85em; color:#666;">
+                  <div><strong>Session ID:</strong> ${session.session_id||''}</div>
+                  <div><strong>Original File:</strong> ${session.original_filename||''}</div>
+                  <div><strong>Created:</strong> ${session.earliest_generated ? new Date(session.earliest_generated).toLocaleString() : ''}</div>
+                </div>
+                ${session.reports.map(report=>`
+                  <div style="margin-bottom:15px; padding:10px; background:white; border-radius:8px; border:1px solid var(--border); box-shadow:var(--shadow-s);">
+                    <div style="font-weight:bold; color:${report.report_type==='final' ? '#28a745' : '#007acc'}; margin-bottom:8px;">
+                      ${report.report_type==='final' ? '🎯 Final Report' : '📝 Initial Report'}
+                      <span style="font-weight:normal; color:#666; font-size:.85em;"> - ${new Date(report.generated_at).toLocaleString()}</span>
+                    </div>
+                    ${report.design_criteria && report.design_criteria!=='Design criteria not available' ? `
+                      <details style="margin-top:8px;">
+                        <summary style="cursor:pointer; color:var(--accent); font-size:.85em;">📋 View Design Criteria</summary>
+                        <pre style="margin-top:8px; max-height:150px; overflow-y:auto; background:#f8f9fa; padding:8px; border-radius:6px; font-size:.85em; white-space:pre-wrap;">${report.design_criteria}</pre>
+                      </details>` : '<div style="color:#999; font-style:italic; font-size:.85em;">No design criteria available</div>'}
+                  </div>
+                `).join('')}
+              </div>
+            </details>
+          </div>
+        `;
+      });
+      html+='</div>';
+      previousResults.innerHTML=html;
+      filterSessions();
+    }
+
+    function clearAllReports(){
+      if(!confirm('Are you sure you want to delete ALL report history? This action cannot be undone.')) return;
+      fetch('/api/clear-previous-results',{method:'POST',headers:{'Content-Type':'application/json'}})
+      .then(r=>r.json())
+      .then(data=>{
+        if(data.success){ alert(`Successfully cleared ${data.cleared_count} items`); loadReportHistory(); }
+        else{ alert('Failed to clear reports: '+(data.error||'Unknown error')); }
+      })
+      .catch(err=>alert('Error clearing reports: '+err.message));
+    }
+
+    function deleteReport(sessionId,filename){
+      if(!confirm(`Delete the report "${filename||sessionId}"? This cannot be undone.`)) return;
+      fetch('/api/delete-report',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({session_id:sessionId})
+      })
+      .then(r=>r.json())
+      .then(data=>{
+        if(data.success){ alert('Report deleted successfully.'); loadReportHistory(); }
+        else{ alert('Failed to delete report: '+(data.error||'Unknown error')); }
+      })
+      .catch(err=>alert('Error deleting report: '+err.message));
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"'`=\/]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;','=':'&#61;','/':'&#47;'}[c]));
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded',()=>{
+      setStatus('Idle'); switchMode('advanced');
+      const leftInit=parseFloat(getComputedStyle(document.getElementById('advSplit')).getPropertyValue('--left-size'))||460;
+      document.getElementById('advGutter').setAttribute('aria-valuenow',String(leftInit));
+
+      // Setup progress bar close button
+      const closeProgressBtn = document.getElementById('closeProgressBtn');
+      if (closeProgressBtn && window.progressTracker) {
+        closeProgressBtn.addEventListener('click', () => {
+          if (confirm('Are you sure you want to close the progress bar? Processing will continue in the background.')) {
+            window.progressTracker.stopTracking(true);
+          }
+        });
+      }
+    });
+
+  </script>
+</body>
+</html>

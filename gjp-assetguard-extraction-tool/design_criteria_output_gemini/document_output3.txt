@@ -1,0 +1,202 @@
+Design Criteria Extraction - output3 (Gemini)
+==================================================
+Pages processed: 6
+Processed: 2025-08-27T10:44:02.310347
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: Augusta Boat Harbour
+- Date: 25.02.14 (Issued for Construction), 16.12.13 (Note Amended), 08.10.13 (Issued for Comment), 11.09.13 (Issued for Comment), 17.12.13 (Issued for 85% Review), 06.12.13 (Issued for Comment), 31.10.13 (Issued for Comment), 12.12.13 (Issued for Comment)
+- Engineer/Designer: R. Parker (Drawn), AM (Checked/Approved), RP (Designed/Checked)
+- Drawing Number: 1680-01-01, 1680-01-02, 1680-01-03, 1680-02-01, 1680-03-02, 1680-03-04, 1680-03-12, 1680-03-14, 1680-04-01 to 1680-04-05, 1680-05-01, 1680-06-01, 1680-07-01, 1583-04-10, 1680-03-01 to 1680-03-15
+- Revision: C, B, A, D
+- Standards: AS4671, AS3600, AS1554.3, AS5100, AS1214, DIER Specification B20, AS 1554.1, AWS D1.1, AS 1101.3, ISO 8501.3, AS 1111, AS 1252, AS 4100, AS3678, AS1163, AS3679, AS1594, ISO 1111, ISO 1112, AS1252, AS 1443, AS1554.5, AS2312, AS 1627.4, AS 1627.1, AS 1627.2, AS1627.7, AS 4680, AS 1214, AS 1559, AS 4791, AS 4792, AS 3850, AS 1012.13, AS1478, AS1379, AS2159
+- Document Type: Drawing List, General Notes
+
+ITEM: Service Wharf (PAGE 2)
+- Live Load: 15 kPa
+- Live Load: 200 kN
+- Bollard Capacity: 10 tonnes
+- Class: 15
+
+ITEM: Boat Ramps (PAGE 2)
+- Vehicle Speed: 18 m/s
+- Axle Load (Single Lane): 5 tonnes
+- Axle Load (Double Lane): 10 tonnes
+- Berthing Load: 50T at 0.3 m/s, 15° angle, 4 point and 1/2 point contact
+- Berthing Load: 85T at 0.15 m/s, 15° angle, 4 point and 1 point contact
+
+ITEM: General Notes (PAGE 2)
+- Sounding Datum Level: 0 m
+- AHD Level (relative to Sounding Datum): -0.56 m
+- Notice Period for Inspection of Critical Work Stages: 48 hours (two working days)
+- Pile Design Standard: AS2159
+
+ITEM: Foundations (PAGE 2)
+- Safe Working Bearing Pressure: 150 kPa
+- Concrete Grade (Blinding): N7
+- Pile Installation Standard: AS2159
+- Pile Position Tolerance: ±20 mm
+- Maximum Pile Inclination Deviation: 1 in 50
+
+ITEM: Concrete (PAGE 2)
+- Chamfer Dimensions: 20 x 20 mm
+- Concrete Grade: S50 (20)
+- Minimum Clear Cover to Reinforcement: 65 mm
+- Reinforcement Bar Class (R): Structural Grade Plain Round Bar, Grade 230
+- Reinforcement Bar Class (N): High Strength Deformed Bar, Grade 500 (Normal Ductility)
+- Maximum Sulphate Content of Concrete: 5% by mass of acid soluble SO3 to cementitious material
+- Maximum Age of Cementitious Materials: 6 months
+- Silica Fume Content (Blended Cement): < 10%
+- Fly Ash Content (Blended Cement): < 25%
+- Ground Granulated Blast Furnace Slag Content (Blended Cement): < 40%
+- Admixture Standard: AS1478
+- Maximum Acid Soluble Chloride Ion Content: 0.15% by mass of cementitious material
+- Maximum Water:Cement Ratio: 0.4
+- Maximum Total Reactive Alkali Content: 3.0 kg/m³ Na₂O equivalent
+- Maximum Concrete Layer Thickness: 300 mm
+- Minimum Concrete Curing Time: 7 days
+- Concrete Standard: AS1379
+- Drying Shrinkage Testing Standard: AS1012.13
+- Formwork Design Standard: AS3610
+- Formwork Construction Standard: AS3610, AS3600 Clause 19.6.2
+- Plastic Shrinkage Cracking Retardant: Aliphatic Alcohol fog spray application
+
+ITEM: Precast Concrete (PAGE 2)
+- Precast Concrete Standard: AS 3850
+- Minimum Characteristic Compressive Strength (at removal from moulds): 30 MPa
+- Precast Unit Tolerance Standard: AS 3600
+- Lifting Anchor Type: Swiftlift Eye Lifting Anchors (Galvanised)
+- Maximum Angle Between Lifting Slings: 60 degrees
+- Grout Type for Anchors: Non-shrink
+
+ITEM: Reinforcement (PAGE 3)
+- Reinforcement Bar (R): Grade 250 Plain Round Bar to AS4671
+- Reinforcement Bar (N): Hot Rolled Grade 500 Deformed Bar Ductility Class N to AS4671
+- Reinforcement Bar (L): Hot Rolled Grade 500 Deformed Bar Ductility Class L to AS4671
+- Reinforcement Mesh (SL): Hard Drawn Wire Grade 500 Square Reinforcing Mesh Ductility Class L to AS4671
+- Reinforcement Mesh (RL): Hard Drawn Wire Grade 500 Rectangular Reinforcing Mesh Ductility Class L to AS4671
+- Steel Reinforcing Wire (W): Grade 500 to AS4671
+- Mesh Lap Splice Bar: N12, 300 mm minimum overlap
+- Trench Mesh Lap: 500 mm minimum
+- L-Intersection Bar (Trench Mesh): N12, 500 mm lap
+- Welding Standard: AS3600, AS1554.3
+- Weld Inspection (Visual Scanning): 100%
+- Weld Inspection (Visual Examination): 50%
+- Weld Inspection (Radiographic/Ultrasonic): 5% of fillet welds, 100% of butt welds
+- Minimum Hook Angle (Column/Beam Ligatures): 135 degrees
+- First Ligature Distance from Support Face: 50 mm
+- Diagonal Trimmer Bars: N12, 1000 mm long
+- Cover Tolerance (Beams, Slabs, Columns, Walls): -5 mm, +10 mm
+- Cover Tolerance (Residential Slabs on Ground): -10 mm, +20 mm
+- Cover Tolerance (Residential Strip Footings): -20 mm, +40 mm
+- Tendon Location Tolerance: ±5 mm
+- Reinforcement End Position Tolerance: ±50 mm
+- Bar Spacing Tolerance (Walls/Slabs/Fitments): -10% of spacing, or ±15 mm minimum
+- Pullout Bar Reinforcement: N12 Quenched and Self-Tempered (e.g., Tempcore by OneSteel)
+
+ITEM: Steelwork (PAGE 3)
+- Steelwork Standard: AS4100
+- Steel Plate: AS3678 Grade 250
+- CHS >80mm Diameter: AS1163 Grade C350
+- CHS <80mm Diameter: AS1163 Grade C250
+- RHS and SHS: AS1163 Grade C450
+- Welded Beams and Columns: AS3679 Grade 300
+- Flat Bars and Rods: AS3679 Grade 250
+- Hot Rolled Steel Flats: AS1594 Grade 250
+- Hot Rolled Sections: AS3679 Grade 300
+- Welded Sections: AS3679 Grade 300
+- ISO Metric Bolts and Screws: ISO 1111
+- ISO Metric Nuts: ISO 1112
+- High Strength Steel Bolts: AS1252
+- Cold Finished Bars: AS 1443
+- Minimum Bolt Size (Connections): M20 Grade 8.8/S, Galvanised, 22 mm diameter holes
+- Minimum Holding Down Bolt Size: M20 Grade 8.8/S, Galvanised
+- Minimum Cleat Plate/Stiffener Thickness: 10 mm
+- Butt Weld Type: Complete Penetration
+- Weld Joint Detail Standard: AS1554.5, AWS D1.1
+- Sharp Edge Radius: 6 mm
+- Steelwork Shop Drawing Review Time: 14 days
+
+ITEM: Welding (PAGE 3)
+- Welding Standard: DIER Specification B20, AS 1554.1
+- Weld Type (Interfaces): Continuous Fillet Welds
+- Weld Location: Shop
+- Weld Category: SP
+- Electrode Classification: E48XX (pre-approved to AS 1554)
+- Weld Supervisor/Inspector Certification: AS 2214
+- Weld Inspection (Visual Scanning): 100%
+- Weld Inspection (Visual Examination): 100% of butt welds in tension members, 50% of other welds
+- Weld Inspection (Radiographic/Ultrasonic): 10% of butt welds in tension members, 5% of other welds
+- Welding Symbols Standard: AS 1101.3
+
+ITEM: Bolting (PAGE 3)
+- Minimum Bolt Size (General): M30 8.8/S, Galvanised, 32 mm diameter holes
+- Bolt Projection Beyond Nut: At least 2 threads, not more than 10 mm after tightening
+- Slotted Hole Length: 2.5 x bolt diameter
+- Bolt Tightening (TF/TB): Part-turn method or load indicating washers
+- Slip Factor (Friction Type Bolt): 0.35
+- Holding Down Bolt Group Cage Material: 10 mm diameter reinforcing bar
+- Holding Down Bolt Cage Template Material: 3 mm mild steel
+- Holding Down Bolt Cage Ligatures: 4 N12
+- Bolt Hole Size (Steel to Steel): Bolt diameter plus 2 mm
+- Bolt Hole Size (Steel to Concrete): Bolt diameter plus 4 mm
+- Bolt Hole Size (Holding Down Bolts): Bolt diameter plus 6 mm
+- Bolt Standard: AS5100
+
+ITEM: Protection of Steelwork (PAGE 3)
+- Abrasive Blast Cleaning Standard: AS 1627.4
+- Surface Preparation Standard: ISO 8501.3, Grade P3
+- Surface Preparation (Power Tool Cleaning): AS 1627.2 Class ST3
+- Coating Standard: AS2312
+- Minimum Dry Film Thickness (Interzone 954 or similar): 900 µm
+- Galvanising Standard: AS 1214
+- Galvanising Standard (Steelwork): AS 4680, AS 1214
+- Galvanising Coating Thickness: HDG600
+- Internal Bottom Coating (Galvanised Piles): HDG800PS, bottom 1000 mm
+- External Coating (Galvanised Piles): HDG600P7, Polyurethane top coat, 85 µm dry film thickness
+- HDPE Sleeve Wall Thickness (Piles): 20 mm
+- HDPE Sleeve Embedment (Seabed): Minimum 0.5 m
+- Concrete Encasement (Steel below ground): 75 mm
+
+ITEM: Galvanising (PAGE 3)
+- Galvanising Standard: AS 1214, AS 1559, AS 4680, AS 4791, AS 4792
+- Sodium Dichromate Solution (Passivation): 0.2%
+
+ITEM: Service Wharf (PAGE 4)
+- Deck RL: 2.10 m
+- HAT RL: 1.48 m
+- MHHW RL: 1.15 m
+- MSL: 0.74 m
+- MLLW: 0.32 m
+
+ITEM: Service Wharf (PAGE 5)
+- Deck RL: 2.10 m
+- HAT RL: 1.48 m
+- MHHW RL: 1.15 m
+- MSL: 0.74 m
+- MLLW: 0.32 m
+- Armour Height: RL 1.40 m
+- Armour Height: RL 1.15 m
+- Fall: 1%
+
+ITEM: Service Wharf (PAGE 6)
+- Bollard Setout: 4.85 m, 5.0 m, 5.17 m, 4.83 m
+- Precast Headstock (B1): 800W x 600D, 4 nos., 2.2 m length, 2.35 t weight
+- Precast Headstock (B2): Inverted "T"/"L" shape, 1 no., 10.1 m length, 18.5 t weight
+- Precast Headstock (B3): Inverted shape, 5 nos., 10.1 m length, 15.8 t weight
+- Precast Headstock (B4): "L" shape, 1 no., 10.1 m length, 17.7 t weight
+- Precast Deck (PC1): 350 mm thick, 10.25 x 1.1 m, 9.87 t weight
+- Precast Deck (PC2): 350 mm thick, 5.25 x 1.4 m, 6.43 t weight
+- Precast Deck (PC3): 350 mm thick, 10 x 1.4 m, 12.30 t weight
+- Precast Deck (PC4): 350 mm thick, 4.75 x 1.4 m, 5.82 t weight
+- Precast Deck (PC5): 350 mm thick, 4.33 x 1.7 m, 6.44 t weight
+- Precast Deck (PC6): 350 mm thick, 5 nos., 4.75 x 1.7 m, 7.07 t weight
+- Precast Deck (PC7): 350 mm thick, 1 no., 4.55 x 1.7 m, 6.77 t weight
+- Precast Deck (PC8): 350 mm thick, 20 nos., 4.55 x 1.7 m, 6.77 t weight
+- Precast Deck (PC9): 350 mm thick, 4 nos., 5 x 1.7 m, 7.44 t weight
+- Precast Deck (PC10): 350 mm thick, 5 nos., 4.33 x 1.7 m, 6.44 t weight
+- Precast Deck (PC11): 350 mm thick, 1 no., 5 x 1.7 m, 7.44 t weight
+
+

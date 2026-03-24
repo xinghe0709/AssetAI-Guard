@@ -1,0 +1,77 @@
+Design Criteria Extraction - output11
+==================================================
+Pages processed: 4
+Images found: 8
+Relevant sections: 9
+Processed: 2025-08-11T11:12:55.220554
+
+DESIGN CRITERIA:
+--------------------
+ITEM: General Notes (PAGE 1)
+- Dimensions: All dimensions are in millimeters
+- Levels: All levels are in meters
+- Steel Grade: Hot rolled Grade 300 steel for shear keys
+- Welding Standard: AS 1554, SP category welding
+- Welding Inspection: 100% visual inspection, 20% ultrasonic testing for shear key welds
+- Welding Filler Metal: Minimum nominal tensile strength of 490 MPa
+- Concrete Curing: 7 days by keeping surfaces wet
+- Concrete Strength: 28-day compressive strength of 60 MPa, N60 grade
+- Reinforcement: D500N deformed 500 MPa normal bars
+- Minimum Clear Cover: 50 mm with tolerance of +8 mm -0 mm
+- Bar Lap Length: Minimum 40 times the bar diameter
+- Design Life: Nominal design life of 5 years
+- Design Vehicles: 25T Franna crane, mobile cranes with axle loads ≤ 13.5T, outriggers ≤ 90T
+- Maximum Speed Limit: 5 km/h on the new deck
+
+ITEM: Steel Fabrication and Welding (PAGE 1)
+- Steel Surface: Free of oil or grease
+- Weld Slag: Cleaned and removed before grouting or painting
+
+ITEM: Concrete Specifications (PAGE 1)
+- Formwork Removal: Only when concrete strength is sufficient
+- Precast Concrete Handling: No overstressing during handling
+- Lifting Points: Capable of developing full strength without damage
+- Surface Finish: Broom finish for precast beams
+- Edge Chamfer: 15x15 mm minimum
+- Construction Joints: Not allowed in precast elements
+- Shear Key Voids: Sprayed with Rugasol for rough surface
+
+ITEM: Design Criteria (PAGE 1)
+- Structure Class: Class 2 structure
+- Design Vehicles: 25T Franna crane, mobile cranes with axle loads ≤ 13.5T, outriggers ≤ 90T
+- Crawler Cranes: Up to 280T, with rubber wearing surface required
+
+ITEM: Grout Specifications (PAGE 1)
+- Grout Type: Conbextra CB-C
+- Grout Placement: Through shear key voids, flowable mixture
+- Grout Pouring: Two stages if not contained
+
+ITEM: Earthworks and Drainage (PAGE 1)
+- Earthworks Load: Accommodate all loads specified in Section 5.0
+- Gradient: Maximum gradient confirmed by contractor
+- Drainage: Prevent water ponding
+- Topographic Survey: Required before works
+- Ground Investigation: Test pits if required
+
+ITEM: Precast Planks and Deck (PAGE 2)
+- Precast Plank Thickness: 320 mm
+- Existing Concrete Deck: Panels to remain
+- Shear Studs: Welded to existing steel beam
+
+ITEM: Approach Slab (PAGE 3)
+- Approach Slab Depth: Approx. 365 mm
+- Dowel Bars: 8 No. 300 mm long, anchored into existing slab
+- Chamfer: 15x15 mm to all exposed edges
+
+ITEM: Reinforcement Details (PAGE 4)
+- Reinforcement Plan: N16-200 U-bars, N24-200 top and bottom
+- Dowel Bar Embedment: 150 mm minimum into existing slab
+
+METADATA:
+- Project: EI-Dolphin Replacement
+- Date: Various dates from 20.12.24 to 02.04.25
+- Engineer/Designer: S.M., M.R., A.B., L.C.
+- Drawing Number: 0002, 0003, 0004, 0006
+- Revision: Rev 3, Rev 2, Rev 0
+- Standards: AS 1554
+- Document Type: General Notes and Construction Sequence, General Arrangement and Details, Typical Sections and Details, Insitu Approach Slab - RC Details

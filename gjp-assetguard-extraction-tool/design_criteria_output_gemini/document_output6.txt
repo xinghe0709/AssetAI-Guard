@@ -1,0 +1,181 @@
+Design Criteria Extraction - output6 (Gemini)
+==================================================
+Pages processed: 5
+Processed: 2025-08-27T10:45:54.179698
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: Abrohlos Island Jett[ies] / Beacon and East Wallabi Island Jetties
+- Date: 24.03.15 / 24 March 2015
+- Engineer/Designer: JJM / SD / Mchoullj
+- Drawing Number: 60290364-MA-DRG-0001, 60290364-MA-DRG-0002, 60290364-MA-DRG-0004, 60290364-MA-DRG-0005, 60290364-MA-DRG-0035, and others listed in the Drawing List
+- Revision: 0
+- Standards: AS/NZS 4671, AS 3600, AS 4100, AS/NZS 1554 Part 1, AS 1594, AS 3678, AS 3679, AS 1163, AS 1252, ISO 3506, AS2700, AS2239, AS3610
+- Document Type: Drawing List (Page 1), General Notes & Design Criteria (Page 2), General Arrangement (Page 3, 4), Alternative Precast Deck Unit Details (Page 5)
+
+
+ITEM: General (PAGE 1)
+- Scale: 1:1000 (East Wallabi Island)
+
+ITEM: General (PAGE 2)
+- Dimensions: mm (unless otherwise noted)
+- Reinforcement Tolerance: -8mm, +0mm (fine tolerance)
+- Design Life: 25 years (PAGE 2)
+
+ITEM: Datums and Tidal Data (PAGE 2 & 4)
+- HAT (Highest Astronomical Tide): +1.20m
+- MHHW (Mean Higher High Water): +0.90m
+- MLHW (Mean Low High Water): +0.80m
+- MSL (Mean Sea Level): +0.60m
+- AHD (Australian Height Datum): 0.00m
+- MHLW (Mean High Low Water): +0.30m
+- MLLW (Mean Low Low Water): +0.20m
+- LAT (Lowest Astronomical Tide): 0.00m
+
+ITEM: Reinforcement (PAGE 2)
+- Grade: D500N (Hot rolled deformed bars, AS/NZS 4671)
+- Grade: D500L (Fabric, AS 4671)
+- Grade: R250N (Plain round bar, AS 4671)
+- Cover: 60mm (Top and bottom of precast deck unit)
+- Cover: 60mm (Sides of precast deck unit)
+- Secondary Reinforcement: N12 bars at 200mm centers
+- Lap Length N12: 400mm (f'c=60 MPa)
+- Lap Length N16: 500mm (f'c=60 MPa)
+- Lap Length N20: 600mm (f'c=60 MPa)
+- Lap Length N24: 750mm (f'c=60 MPa)
+- Lap Length N28: 850mm (f'c=60 MPa)
+- Lap Length N32: 1000mm (f'c=60 MPa)
+- Splice Length Factor: 1.3 (for horizontal bars with >300mm concrete below)
+
+ITEM: Structural Steel (PAGE 2)
+- Grade: 350 (Rolled steel sections, bars, plates, flats, AS 1594, AS 3678, AS 3679)
+- Grade: 350 minimum (Tubular sections, AS 1163)
+- Bolt Grade: 8.8 (AS 1252)
+- Stainless Steel Bolt Grade: ISO 3506 Grade A4-70
+- Weld: 8mm continuous fillet (E48XX electrode)
+- Weld Category: SP
+- Butt Weld: CP (Continuous Complete Penetration)
+- Ultrasonic Testing: 100% (Splice welds)
+- X-Ray Testing: 10% (Butt welds)
+- Magnetic Particle Testing: 10% (Fillet welds), 100% for Butt Welds (if approved by client)
+- Corrosion Allowance: 2.0mm (All steelwork including wharf piles)
+
+ITEM: Pile Driving (PAGE 2)
+- Position Tolerance: ±75mm at pile cutoff level
+- Plumb Tolerance: 1% from true vertical
+
+ITEM: Welding of Piles (PAGE 2)
+- Weld Category: SP (AS/NZS 1554 Part 1)
+- Ultrasonic Testing: 100% (Pile splices)
+
+ITEM: Design Criteria (PAGE 2)
+- Concrete Strength (Precast): f'c = 60 MPa
+- Reinforcing Steel Yield Strength (N bars): fsy = 500 MPa
+- Reinforcing Steel Yield Strength (R bars): fsy = 250 MPa
+- Structural Steel Yield Strength (Tubular): fsy = 350 MPa (typically)
+- Pile Yield Strength: fsy = 350 MPa
+
+
+ITEM: Handrail (PAGE 2)
+- Toe Plate: 100mm x 6mm
+- Stanchion Spacing: 1.5m maximum
+- Stanchion Spacing at Direction Change: 500mm maximum
+- Toe Plate Clearance: 5mm above deck/grating
+- Top Coat: Safety Yellow Polyurethane paint
+
+ITEM: Grating and Treads (PAGE 2)
+- Material: FRP (Webforge or equivalent)
+
+
+ITEM: Corrosion Protection (PAGE 2)
+- Steelwork/Piles Surface Preparation: Class 2.5 Blast
+- Steelwork/Piles Prime Coat: Intergard 269
+- Steelwork/Piles Top Coat: Interzone 954 (2 coats, 700 micron DFT minimum), N35 Light Grey (AS2700)
+- Pile Top Coat: Interzone 954 (2 x 350 micron, 700 micron DFT minimum)
+
+
+
+ITEM: Sacrificial Anode (PAGE 2)
+- Material: Aluminum Alloy A1, A2 or A6 (AS2239)
+- Design Life: 12.5 years (in seawater)
+- Pile Protection Potential: More negative than -800 mV (wrt Ag/AgCl reference)
+- Minimum Average Current: 0.5 Amps
+- Dimensions: 200x200x750mm (approx. 82kg)
+- Insert Diameter: 20mm minimum
+- Installation: One per pile, vertically, offset 250mm minimum
+- Top Level: RL-0.5mCD (nominal)
+
+ITEM: Coordinates (PAGE 2)
+- MGA Zone: 50
+
+ITEM: Formwork (PAGE 2)
+- Minimum Stripping Time: 3 days
+- Exposed Edge/Corner Treatment: 20mm chamfers or fillets
+
+ITEM: Concrete Work (PAGE 2)
+- Precast Concrete Class: 560
+- Precast Concrete Aggregate Size: 20mm
+- Precast Concrete Initial Slump: 80mm
+- Precast Concrete f't: 60 MPa
+- Precast Concrete Minimum Cementitious Content: 385 kg/m³ (GP) + 43 kg/m³ (Silica Fume)
+- Precast Concrete Maximum W/C Ratio: 0.38
+- Precast Concrete Cement Type: GP Ordinary Portland Cement
+- Precast Concrete Curing: 14 days (exposed surfaces continuously wet)
+- Concrete Free Fall: 2m maximum
+
+ITEM: Tolerances (PAGE 2)
+- Deck Unit Support Bolt Hole Tolerance: -4mm or tolerance in crosshead bolt holes (whichever is lesser)
+- Deck Unit Overall Length Tolerance: -5mm
+- Deck Unit Overall Width Tolerance: -3mm
+- Deck Unit Overall Depth Tolerance: -3mm
+- Deck Unit Longitudinal Edge Straightness: 3mm
+
+
+ITEM: Design Loads (PAGE 2)
+- Vertical Live Load: 5 kPa
+- Importance Level: 2
+- Annual Probability of Exceedance (ULS): 1 in 250
+- Region: B
+- Terrain Category: 2 (ULS), 1 (Serviceability)
+- Ultimate Limit State Wind Speed: 48 m/s (3-second gust)
+- Serviceability Limit State Wind Speed: 39 m/s (3-second gust)
+- Design Wave Load (Hmax): 2.3m (at MHHW)
+- Wave Period (T): 10 seconds
+- Design Vessel: P.V. Houtman (Length: 22m, Beam: 6.2m, Draft: 1.8m, Freeboard: 1.6m, Displacement: 50 [tonnes assumed])
+- Mooring Serviceability Wind Speed: 23 m/s (30-second gust)
+- Beam Area: 95 m²
+- Drag Coefficient (Cd): 1.1
+- Head Area: 30 m²
+- Berthing Velocity: 0.3 m/s
+- Abnormal Berthing Factor: 2.0
+- Abnormal Berthing Energy: 4.98 kNm
+- Coefficient of Friction (Hull/Fender): 0.20
+
+ITEM: Beacon Island Replacement Jetty (PAGE 3)
+- Gap between panels: 10mm
+- Gap between panels: 50mm (PAGE 3)
+- Fender Spacing: 2000mm CRS (PAGE 3)
+- Berthing Line: 335mm offset from edge (PAGE 3)
+- Panel Length: 12m (Precast Panels Type 3 - Page 3)
+
+ITEM: Beacon Island Replacement Jetty Sections (PAGE 4)
+- Handrail Height: +2.320m
+- Top of Steel (TOS): +1.542m
+- Top of Steel (TOS): +1.222m
+- Pile Diameter: 600 mm (implied from berthing face dimension)
+
+ITEM: Alternative Precast Deck Unit Details (PAGE 5)
+- Shear Key Pocket Dimensions: 750mm x 700mm x 800mm
+- Pocket Grout Strength: 50 MPa (non-shrink)
+- Plate Thickness: 50mm
+- Helix Reinforcement: 130mm OD, R12 bars, 5 turns at 40mm pitch
+- Duct Internal Diameter: 590mm
+- Macalloy Bar Diameter: 25mm (Macalloy 1030)
+- Macalloy Bar Tension: 354 kN
+- Denso Tape Thickness: 1.4mm
+- Shear Key Clearance: 5mm (nominal)
+- Grout: Suitable for wet conditions
+
+
+This is a very thorough extraction of technical information from the provided pages.  Remember to consult the full set of drawings and specifications for a complete understanding of the project requirements.

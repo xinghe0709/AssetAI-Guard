@@ -1,0 +1,65 @@
+Design Criteria Extraction - output2
+==================================================
+Pages processed: 5
+Images found: 10
+Relevant sections: 0
+Processed: 2025-08-11T10:54:20.761513
+
+DESIGN CRITERIA:
+--------------------
+ITEM: General Notes (PAGE 2)
+- Vertical Datum: Chart Datum, 0.756m below Australian Height Datum (AHD)
+- Tide Levels: LAT +0.200m, MLLW +0.503m, MSL +0.728m, MHHW -0.972m, HAT +1.400m
+- Formwork Stripping Time: Minimum 3 days
+- Cast-in Items Material: Grade 316 Stainless Steel
+- Reinforcement Cover: Precast Concrete 60mm, Insitu Concrete 60mm (exposed), 30mm (internal)
+- Concrete Class: Insitu Concrete 50 MPa, Precast Concrete 60 MPa
+- Concrete Slump: 50mm pre-super plasticized, 80-150mm post-super plasticized
+- Cement Type: Type LH for large/deep pours, Type GP for others
+- Curing Time: Precast Fender Block 14 days, Precast Concrete 14 days, Insitu Concrete (GP) 7 days
+- Maximum Free Fall of Concrete: 2m
+- Steel Grade: Grade 350 for rolled sections, Grade 8.8 for bolts
+- Welding Standard: AS/NZS 1554
+- Pile Tolerances: ±75mm at pile cutoff level, 1 in 50 rake deviation
+- Grout Strength: Minimum 60 MPa
+
+ITEM: Material Properties (PAGE 3)
+- Insitu Concrete Strength: 50 MPa
+- Precast Concrete Strength: 60 MPa
+- Reinforcing Steel Strength: 500 MPa (fsy), 250 MPa (fsy)
+- Structural Steel Strength: 350 MPa (fsy)
+
+ITEM: Loads and Forces (PAGE 3)
+- Vertical Live Loads: 40 kPa
+- Mooring Loads: Lateral Wind Area 3728m², Longitudinal Wind Area 596m²
+- Berthing Velocity: 0.15 m/s
+- Maximum Berthing Angle: 6 degrees
+- Current Velocity: 0.2 m/s
+- Coefficient of Friction: 0.20
+- Contact Pressure: 350 kN/m²
+- Wind Speed (Ultimate Limit State): 39 m/s
+- Wind Speed (Serviceability Limit State): 32 m/s
+
+ITEM: Design Life and Corrosion Allowances (PAGE 3)
+- Design Life: 50 years
+- Corrosion Allowance for New Piles: 3.0mm
+- Corrosion Allowance for New Steel Work: 10mm
+
+ITEM: Wharf General Arrangement (PAGE 4)
+- Bollards: 2 x 100T
+- Anchor Piles: 1200x16mm, 10m long, 1200mm centers
+- Fender Type: Trelleborg SCN 1600 F1.4
+- Fender Panel Width: 3m
+- King Piles: 1200x16mm, 1.28m centers
+
+ITEM: SW Drainage Layout (PAGE 5)
+- Pipe Sizes: 375 RCP CL-4 (527m), 450 RCP CL-4 (480m), 525 RCP CL-4 (320m), 675 RCP CL-4 (118m)
+
+METADATA:
+- Project: Inner Harbour North Quay Berths 1 & 2 Redevelopment
+- Date: 09.04.24, 22.02.24, 09.02.24, 02.02.24
+- Engineer/Designer: GPI, TS
+- Drawing Number: 4787-019-ST-DRW-001 to 4787-019-ST-DRW-011
+- Revision: A, B, 0, 1
+- Standards: AS 3610, AS 3600, AS/NZS 4671, AS 4100, AS/NZS 1554, AS 1594, AS 3678, AS 3679, AS 1163, AS 1252
+- Document Type: General Notes, Material Properties, Loads and Forces, Wharf General Arrangement, SW Drainage Layout

@@ -1,0 +1,67 @@
+Design Criteria Extraction - output8
+==================================================
+Pages processed: 8
+Images found: 16
+Relevant sections: 6
+Processed: 2025-08-11T11:02:57.214107
+
+DESIGN CRITERIA:
+--------------------
+ITEM: General Structural Components (PAGE 2)
+- Live Loadings: 5 kPa (Vertical Live Loading for Jetties)
+- Berthing Load: 17 tonne displacement vessel at 0.3 m/s (Approach Velocity)
+- Berthing Load: 150 tonne displacement vessel at 0.3 m/s (Approach Velocity for Jetties)
+- Berthing Load: 50 tonne displacement vessel at 0.3 m/s (Approach Velocity for Low Level Landing)
+- Material Standard: AS 4100, AS 1554, AS 3600, AS 3610, AS 3850.3, AS 2159, AS 1720
+- Steel Grade: 300 MPa (Structural Steel)
+- Concrete Strength: 25 MPa (Minimum at removal from moulds)
+- Concrete Type: Type A, B, C, D with various specifications
+- Concrete Grade: N25, 50 MPa, 40 MPa
+- Concrete Slump: 80 mm
+- Maximum Aggregate Size: 20 mm
+- Minimum Cement Content: 440 kg/m³
+- Maximum Water/Cement Ratio: 0.38
+- Timber Stress Grade: F17 (Boardwalk/Small Boat Landing), F11 (Decking, Kerbs & Joists)
+- Fastener Grade: 8.8/S (Snug Tightened), Stainless Steel Grade 316
+- Electrode Classification: E48XX
+- Wind Speed: Vp 41 m/s
+- Terrain Category: 2
+- Reinforcement Grade: Y16, Y20, Y28, Y32, R (Grade 250), F (Grade 450)
+- Pile Compliance: AS 2159
+- Pile Splices: Full Strength Butt Welds Category SP
+- Precast Concrete Compliance: AS 3600, AS 3610, AS 3850.3
+- Precast Concrete Strength: 25 MPa (Minimum at removal from moulds)
+- Precast Concrete Cover: 50 mm
+- Precast Concrete Reinforcement: Y16, Y20, Y28, Y32
+- Precast Concrete Surface Finish: Class 2 (AS 3610)
+- Precast Concrete Roughness: 5 mm Amplitude
+
+ITEM: Piling Layout & Schedule (PAGE 5)
+- Pile Type: P1 EX
+- Pile Size: 610x12.7 mm
+- Cut Off Level (C.O.L.): RL 1.205 m
+- Factored Vertical Capacity: 675 kN
+- Factored Horizontal Capacity: 150 kN
+- Minimum Pile Penetration: 7000 mm
+
+ITEM: Precast Headstock Details (PAGE 7)
+- Precast Headstock Hole: 900x900 mm
+- Reinforcement: 4-Y24, 4-Y16, 6-Y28, 3-Y16 Ligs
+- Surface Finish: Class 2 (AS 3610)
+- Roughness: 5 mm Amplitude
+
+ITEM: Precast Panel & Reinforcement Layout (PAGE 6)
+- Precast Panel Type: PC1, PC2, PC3, PC4, PC5, PC6
+- Reinforcement: Y12 @ 150 mm, Y16 @ 150 mm, Y20 @ 150 mm, Y28
+- Cover: 50 mm
+- Headstock Bars: 4-Y28, 2-Y16, 2-Y12 'U' Bars @ 150 mm
+- Construction Joint: Thoroughly Scabble
+
+METADATA:
+- Project: SWAN RIVER - BARRACK ST JETTIES
+- Date: 16/12/99, 17/01/00, 20/01/00, 24/01/00
+- Engineer/Designer: P. George, J. Wilson, A. Wright, J. Lums, P. Moses, P. Crane
+- Drawing Number: 1041-1-1, 1041-1-2, 1041-3-1, 1041-4-1, 1041-5-1, 1041-5-2
+- Revision: Issue 1, A, B
+- Standards: AS 4100, AS 1554, AS 3600, AS 3610, AS 3850.3, AS 2159, AS 1720
+- Document Type: Drawing List, Standard Notes, Site Plan, Plan & Elevation, Piling Layout & Schedule, Precast Panel & Reinforcement Layout, Precast Headstock Details

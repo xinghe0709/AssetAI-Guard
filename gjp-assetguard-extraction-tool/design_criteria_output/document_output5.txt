@@ -1,0 +1,46 @@
+Design Criteria Extraction - output5
+==================================================
+Pages processed: 5
+Images found: 10
+Relevant sections: 3
+Processed: 2025-08-11T10:57:52.643020
+
+DESIGN CRITERIA:
+--------------------
+ITEM: Southern Breakwater Wharf Extension (PAGE 3)
+- Design Loads: Pavement Design - 15 kPa Localised
+- Design Loads: Stack Loading - 2 kPa Average (for settlement)
+- Design Loads: Truck Loading - Single Unit Truck 12.5m Long, 18 tonne Gross, 14.4 tonne over Dual Rear Axles
+- Design Loads: Crane Load - 10 tonne Mobile Crane with 20 tonne Jack Load (including dynamic effects on a 1.2m x 1.2m pad)
+- Design Loads: Berthing Loads - Based on 150 tonne displacement, 24m long vessel berthing at 0.3 m/s normal to the berth, at maximum approach angle of 15°
+- Design Footing Pressures: Limited to 150 kPa
+
+ITEM: Drainage System (PAGE 3)
+- RC Drainage Pipework: Class 2 Rubber-Ring Jointed
+- Drainage Structures: Fully sealed using an approved sealant
+- Gully Grates: Set down 50mm from surrounding pavement level, provide local grading 1.0m around to suit
+
+ITEM: Sheet Piling and Reclamation (PAGE 5)
+- Weep Hole Pipe: 80 DIA Vinidex Draincoil Slotted Subsoil Pipe x2.0m -9.6m c/c, cap and seal in-board end, allow 50mm projection through sheet piling, seal with Denso Petrolatum Tape and Denso Plastic Overwrap
+- Filter Fabric: Bidim A34 under services trench
+- Initial Rock Fill: RL 2.50 Wharf Level
+- Sand Fill: Compact to RL +1.30
+- Final Rock Fill: RL 0.00
+- Sheet Piling Anchor: Refer DRG 1078-06-01
+
+ITEM: General Construction (PAGE 4)
+- Existing Concrete Footing: Remove existing concrete footing
+- Existing Concrete Blocks: Remove existing concrete blocks from site
+- Existing Timber Stair: Demolish and remove from site
+- Existing Timber Jetties, Timber Pylons, and Timber Walkway: Demolish and remove from site
+
+METADATA:
+- Project: Southern Breakwater Wharf Extension 2000
+- Date: 5 Dec 01 (AS CONSTRUCTED), 4 Jul 01 (ISSUED FOR CONSTRUCTION), 29 Nov 00 (ISSUED FOR TENDER), 29 Sep 00 (ISSUED FOR FINAL REVIEW), 27 Jul 00 (ISSUED FOR REVIEW)
+- Engineer/Designer: P.K.D., D.J.T.
+- Drawing Number: 1078-01-01, 1078-02-01, 1078-03-01, 1078-04-01, 1078-04-03
+- Revision: AS CONSTRUCTED, ISSUED FOR CONSTRUCTION, ISSUED FOR TENDER, ISSUED FOR FINAL REVIEW, ISSUED FOR REVIEW
+- Standards: Not explicitly mentioned
+- Document Type: Engineering Drawings and Plans
+
+This extraction includes all technical specifications, dimensions, and parameters found in the provided document text. If there are any additional pages or documents, further extraction may be necessary.

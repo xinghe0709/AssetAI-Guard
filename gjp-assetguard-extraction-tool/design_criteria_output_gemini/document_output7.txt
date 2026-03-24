@@ -1,0 +1,141 @@
+Design Criteria Extraction - output7 (Gemini)
+==================================================
+Pages processed: 6
+Processed: 2025-08-27T10:46:34.669308
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: SWAN RIVER - BARRACK ST JETTIES - BOARDWALK
+- Date: 14.12.99, 16/12/99, 16/12/29, 17.11.99, 3100}\p©te \ Arath\3013-006/12/59
+- Engineer/Designer: P. GEORGE, J. WILSON, P. HARLOW, CHUTE, LEH
+- Drawing Number: 1043-1-1, 1043-1-2, 1043-1-3, 1043-1-4, 1043-1-5, 1042-3-5
+- Revision: ISSUE 1
+- Standards: AS1302, AS2159, AS1554, AS 4100, AS 2741, AS2319, AS2321, AS3600, AS 3610, AS 3850.3, AS1720, SAA Concrete Structures Code
+- Document Type: Drawing List (Page 1), Standard Notes/General Notes (Page 2), Site Plan (Page 3), Plan & Elevation (Page 4), Deck Layout & Details (Page 5), Ramp Details (Page 6)
+
+
+ITEM: General Notes (PAGE 2)
+- Reinforcement Grades: 250 (Grade of plain round bar), 400 (Grade of deformed bars), 450 (Grade of hard drawn steel wire fabric)
+- Pile Splice Type: Full strength butt welds
+- Pile Splice Category: SP
+- Sharp Edge Radius: 2mm
+- Concrete Mix Design: Contractor to submit for approval
+- Hollow Section Seal Plate Thickness: 10mm
+- Weld Size: 6mm continuous fillet
+- Weld Grade: SP
+- Weld Electrode Classification: E48XX
+- Base Plate Grout: 1:2 cement sand
+- Cleat Thickness: 10mm
+- Shop Drawing Submission Time: 14 days prior to fabrication
+- Live Load (Boardwalk/Small Boat Landing): 5kPa vertical
+- Live Load (Jetties): 7kPa vertical
+- Berthing Load (Boardwalk/Small Boat Landing): 50 tonne displacement vessel at 15° approach angle, 0.3 m/s velocity
+- Berthing Load (Jetties): 150 tonne displacement vessel at 15° approach angle, 0.3 m/s velocity
+- Berthing Load (Low Level Landing): 17 tonne displacement vessel at 15° approach angle, 0.3 m/s velocity
+- Terrain Category: 2
+- Wind Speed (Vp): 41 m/s
+- Structural Steel Strength: 300 MPa
+- Hollow Section Steel Strength: 350 MPa
+- Aluminium Grade: 6061 T6
+- Stainless Steel Grade: 316
+- Concrete Strength (Minimum 28 day): 50 MPa (Type A), 50 MPa (Type B), 40 MPa (Type C), 25 MPa (Type D)
+- Concrete Aggregate Size (Maximum): 20mm (Type A, B, C)
+- Concrete Slump: 80mm (Type A, B, C)
+- Concrete Minimum Cement Content: 440 kg/m³ (Type A, B), 400 kg/m³ (Type C)
+- Concrete Maximum Water Cement Ratio: 0.38 (Type A, B), 0.40 (Type C)
+- Precast Concrete Removal Strength (Minimum): 25 MPa
+- Grout Strength: 40 MPa
+- Fastener Strength Grade: 8.8/S (snug tightened)
+- Stainless Steel Fastener Grade: 316
+- Shackle Type: Dee, Grade AS to AS 2741
+- Turnbuckle Grade: L, Clevis end fittings to AS2319
+- Chain Grade: L short link, to AS2321
+- Deck Spike Coating: Hot dip galvanised
+- Bolt Length Requirement: At least one full thread exposed beyond nut
+- Chart Datum (CD) relative to AHD: 0.756m below AHD
+- Tide Levels (Approximate, to CD): HAT 1.32m, MHHW 0.94m, MSL 0.765m, MLHW 0.75m, MHLW 0.65m, MLLW 0.55m, LAT 0.34m
+- Timber Design and Construction Standard: AS1720
+- Timber Coating: 'PABCO' HYDROSEAL Type 155, 'PABCO' Black HYDROSEAL Type 155, 'PABCO' HYDROSEAL Type 367
+- Timber Stress Grade (Fenders/Chafers): F17 Hardwood
+- Timber Stress Grade (Decking, Kerbs, Joists): F11 Jarrah
+- Timber Hole Size (Bolts up to M20): Bolt diameter + 3mm
+- Timber Hole Size (Bolts M24 and above): Bolt diameter + 4mm
+- Handrail Type: Standard proprietary tubular (Monowills or similar approved)
+- Handrail Coating (Jetties): Galvanised and powder coated
+- Handrail Material (Low Level Landing): Aluminium, powder coated
+- Handrail Stanchion Maximum Centres: 2000mm
+- Handrail Post Location (Change in direction): Max. 500mm from change
+- Pile Minimum Penetration: 7000mm
+
+ITEM: Survey Control Listing (PAGE 3)
+- RL 9000: Easting 42279.718, Northing 262508.513, RL 0.877
+- RL 9100: Easting 42314.162, Northing 262548.157, RL 1.089
+- RL 9101: Easting 42319.325, Northing 262585.324, RL 1.263
+- RL 9102: Easting 42447.387, Northing 262569.716, RL 1.204
+- RL 9103: Easting 42216.932, Northing 262589.086, RL 1.036
+- RL 9104: Easting 42395.490, Northing 262466.753, RL 1.112
+- RL 9105: Easting 42115.526, Northing 262482.347, RL 1.282
+- RL 9106: Easting 42207.096, Northing 262555.950, RL 1.151
+- RL 9107: Easting 42349.442, Northing 262480.726, RL 1.098
+- RL 9108: Easting 42196.912, Northing 262500.734, RL 1.134
+- RL 9109: Easting 42244.330, Northing 262423.421, RL 1.231
+- RL 9110: Easting 42223.195, Northing 262435.027, RL 1.337
+- RL 9111: Easting 42150.938, Northing 262468.644, RL 1.396
+- MRWA960034-02: Easting 42093.194, Northing 262546.957, RL 2.255
+- SSM CITY 47: Easting 42188.325, Northing 262454.175, RL 1.249
+- Dredging Depth (New Jetty West): RL -2.30
+
+ITEM: Boardwalk (PAGE 4)
+- Lamp Power: 70W
+- Lamp Type: MH E/I bulkhead lamp, Thorn Piazza Standard Range
+- Protection Pile Size: 250x200
+- Handrailing: Galvanised
+- RL of Handrailing: 2.70m
+- Chamfer: 45mm (front face, all around)
+- Bolt Hole Diameter: 28mm
+- Counterbore: 125 x 50 deep
+- Bolt Size: M24
+- Washer Size: 100x20 thick round
+- RL of Chafer: 0.30m
+- Ramp Slope: 1 in 14
+- RL of Boardwalk: 2.456
+- Plank Gap: 5mm
+- Sleeve Diameter: 30mm
+- Pile: 457x12.7
+- Pile COL: 1.169m RL
+- Pile Factored Vertical Capacity (ST): 200 kN
+- Pile Factored Horizontal Capacity (ST): 30 kN
+- Pile Factored Vertical Uplift Capacity (ST): 30 kN
+- Minimum Pile Penetration: 7000mm
+- Stair Tread Size: 300 x 50
+- Hollow Section End Plate: 10mm, fully welded
+
+ITEM: Deck Framing (PAGE 5)
+- Plate Size: 700 x 600 x 25
+- Member B1: 250 x 150 x 9.0 RHS
+- Member B2: 250 UB 37
+- Member B3: 100 x 100 x 8 EA
+- Bolt Size (Joist to B2): M12 (2 bolts)
+- Timber Joist Size: 200 x 100
+- Plate Thickness (Cleat): 10mm
+
+ITEM: Ramp Details (PAGE 6)
+- RL of Existing Boardwalk: 2.456
+- Ramp Slope: 1 in 14
+- Handrail Size: 100 x 50
+- Handrail Bolt Size: M10 (2 bolts)
+- Kerb Size: 150 x 100
+- Timber Joist Spacing: 1000mm CRS
+- Decking Size: 200 x 50
+- Cross Bracing Size: 200 x 50 (F11), every 2nd post location
+- Bracing to Joist Bolt Size: M12 (2 bolts)
+- Joist Size: 200 x 100 (F11)
+- Joist Notch: 25mm
+- Joist to Post Bolt Size: M12 (2 bolts)
+- Blocking Width: 100mm
+- Blocking Size: 50mm
+- Post Size: 100 x 100
+
+
+This extraction includes all discernible numerical values with units and associated context from the provided document pages.  Remember that this analysis is based solely on the text provided and doesn't include visual information from drawings. Therefore, it's essential to review the drawings themselves for complete technical details.

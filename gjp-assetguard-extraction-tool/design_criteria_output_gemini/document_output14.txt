@@ -1,0 +1,124 @@
+Design Criteria Extraction - output14 (Gemini)
+==================================================
+Pages processed: 7
+Processed: 2025-08-27T10:50:51.586717
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: Fremantle Ports Victoria Quay - Berth H - Ro-Ro Deck
+- Date: 20 August 2014, 27-5-09, 18.12.08, 11.05.09, 05.02.09, 06.11.08, 3-6-09, 2-6-09
+- Engineer/Designer: SC, DW, KA, IP, WRH, MCD
+- Drawing Number: 60047952-001, 60047952-002, 60047952-003, 60047952-004, 60047952-010, 60047952-013, 60047952-014, 60047952-015, 60047952-019, 60047952-020, 60047952-021, 60047952-022, 60047952-023, 60047952-030, 60047952-032, 60047952-033, 60047952-034, 60047952-035, 60047952-040, 60047952-041, 60047952-042, 60047952-043, 60047952-044, 60047952-050, 60047952-060
+- Revision: R2, R3
+- Standards: ISO 9001-2000, AS2159, AS1170.4, AS 5100.2, AS/NZS 1554 Part 1 2004, AS 3600, AS/NZS 4671, AS 1594, AS 3678, AS 3679, AS 1163, AS 1252, AS 4100, AS3610
+- Document Type: Drawing List, General Notes & Design Criteria, Site Plan, Existing Berth & New Works Layout Plan & Section, Existing Berth Site Services Layout Plan & Details, New Works - General Arrangement Plan, New Works - General Arrangement Sections
+
+ITEM: Berth H - Ro-Ro Deck (PAGE 1)
+- No specific technical parameters on this page, just a drawing list.
+
+ITEM: General Notes and Design Criteria (PAGE 2)
+- Dimensions: Millimeters (mm) unless otherwise noted
+- Datum: Fremantle Chart Datum (CD), 0.756m below Australian Height Datum (AHD)
+- Tide Levels (CD): LAT +0.2m, MLLW +0.4m, MSL +0.7m, MHHW +1.1m, HAT +1.3m
+- Concrete Strength (Precast): f'c = 60 MPa
+- Concrete Strength (Insitu): f'c = 50 MPa
+- Rebar Lap Lengths (N12 - N36): Varies from 300mm to 1300mm (Precast and Insitu) – See table on page
+- Rebar Splice Length Multiplier (Horizontal bars >300mm concrete below): 1.25
+- Pile Tolerance (Position): ±150mm at pile cutoff level after driving
+- Pile Tolerance (Position): ±100mm at pile cutoff level after pull over
+- Pile Tolerance (Plumb): 1% from true vertical
+- Pile Driving Hammer Energy: Minimum 3tm (likely a typo, should be 30tm or similar)
+- Forklift Truck Load (Front Axle): 100 tonnes
+- Forklift Track: 3100mm
+- Forklift Tyre Width: 500mm
+- Forklift Tyre Pressure: 10 bar
+- Wind Load Importance Level: 2
+- Wind Load Annual Probability of Exceedance: 1 in 500
+- Wind Load Region: A1 (Non-Cyclonic)
+- Wind Load Terrain Category: 2
+- Wind Speed (Ultimate Limit State): 45 m/s
+- Wind Speed (Serviceability Limit State): 37 m/s
+- Seismic Load Annual Exceedance Probability: 1:500
+- Seismic Load Probability Factor (Kp): 1.0
+- Seismic Load Site Factor: 1.0
+- Peak Horizontal Ground Acceleration: 0.09 g
+- Structure Response Factor (Rf): 4.5
+- Temperature Range (Thermal Loads): Ambient +20°C to Ambient -15°C
+- Coastal Temperature (Hot Top): +18°C (Region 2)
+- Cold Top Temperature: -7.2°C (Region 2, 0.4T where T is the coastal temperature)
+- Corrosion Allowance (Steel Work/Wharf Piles): 3.0mm (Tidal Zone), 0.0mm (Below Seabed)
+- Welding Standard: AS/NZS 1554 Part 1 2004
+- Grout Compressive Strength: Minimum 50 MPa
+- Concrete Material Properties: See table on page
+- Design Life (Reconstructed Wharf): 25 years
+- Stern Ramp Self Weight: 23 kPa
+- Stern Ramp Load: 50 kPa (includes self weight and 120t SWL capacity trailer) over 35m², plus 23 kPa self weight over remaining 65m²
+- Trailer SWL Capacity: 120 tonnes
+- Trailer Length: 60 feet
+- Dynamic Load Allowance: 10%
+- Mobile Crane Outrigger Load: 88 tonnes
+- Outrigger Pad Dimensions: 1000mm x 1000mm
+- Outrigger Exclusion Zone: 1.825m from berth cope line
+- Crawler Crane Mass: 120 tonnes (approx.)
+- Crawler Crane Track Width: 965mm
+- Crawler Crane Ground Pressure: 85 kPa
+- Formwork Stripping Time: Minimum 3 days
+- Exposed Edges/Corners: 20mm chamfers or fillets
+- Cast-in Bolts/Ferrules: Grade 316 Stainless Steel
+- Protective Coatings: See Table 1.1 on page
+- Reinforcement: Hot rolled deformed bars, Grade D500N, AS/NZS 4671
+- Plain Round Bar: Grade R250N, AS 4671
+- Reinforcement Cover (Precast Beams/Slab): 60mm exposed soffit & sides, 30mm internal surfaces
+- Reinforcement Cover (Insitu Beams/Slabs): 60mm soffits & sides, 30mm internal surfaces
+- Reinforcement Cover (Insitu Deck Top Surface): 60mm
+- Reinforcement Cover (Insitu at Construction Joint): 60mm
+- Secondary Reinforcement (if not shown): N16 bars at 150mm centers
+- Reinforcement at Openings/Re-entrant Edges: N16 bar, 1200mm long, top and bottom
+- Concrete Slump (before admixtures): See table on page
+- Cement Type: GP Ordinary Portland Cement
+- Concrete Curing (Precast): 14 days
+- Concrete Curing (Insitu): 7 days
+- Concrete Free Fall: Maximum 2m (chutes/tremmie tubes beyond)
+- Chamfers (all exposed external edges): 20mm
+- CP Bond Bar Laps: Electrically continuous by welding
+- Pile Reinforcement Cage Welding: Welded to piles at minimum two locations using 6mm x 50mm spot welds
+- Steel Fabrication/Erection Standard: AS 4100
+- Steel Welding Standard: AS/NZS 1554 Part 1, 2004
+- Rolled Steel Sections: Grade 350, AS 1594, AS 3678, AS 3679
+- Tubular Steel Sections: Weldable Grade 350 minimum, AS 1163
+- Bolts, Nuts, Washers: Structural Grade 8.8, AS 1252, Hot Dip Galvanized
+- Welds: 8mm continuous fillet, E48XX electrode, minimum category SP
+- Butt Welds (CP): Prequalified continuous complete penetration butt welds
+- Site Welding Splice: 100% ultrasonic alloy tested
+- Exclusion Zone: 1150
+
+ITEM: Site Plan (PAGE 3)
+- No specific technical parameters on this page, just a site location plan.
+
+ITEM: Existing Berth & New Works Layout Plan & Section (PAGE 4)
+- Dimensions (various): 170, 182, 189, 200, 210, 4572, 23100, 183, 184, 185, 186, 187, 188, 186E, 187E, 188E, 189E, 220, 230, 240, 245, 250, 253, 255, 257, 259, 1373, 2438, 1829, 2160, 762, 5570, 1469
+- Reduced Levels (RL): +3.950, +4.000
+- Bollard SWL: 35T
+- Roadway Width: 8.5m (minimum)
+- Clearance (under new precast planks): Minimum 25mm
+- Kerb Reuse: Existing timber kerbs to be reused.
+
+ITEM: Existing Berth Site Services Layout Plan & Details (PAGE 5)
+- Pipe Sizes: 300mm, 375mm, 150mm, 225mm
+
+ITEM: New Works - General Arrangement Plan (PAGE 6)
+- Slab Thickness: 300mm
+- Roadway Width: 8.5m (for tracked equipment up to 6.5m wide)
+- Dimensions (various): 170, 23100, 2000, 8500, 1150, 182, 2286, 4572, 14200, 6050, 187, 189
+
+ITEM: New Works - General Arrangement Sections (PAGE 7)
+- Dimensions (various): 182E, 2286, 1363, 4572, 4096, 4.095, 20, 45, 4781, 1200, 1900, 3411, 450, 3.505, 2.850, 250, 914, 275, 225, 100, 25, 189E, 203
+- Clearance (between existing headstock and underside of new precast deck planks): Minimum 25mm
+- Polyethylene Backing Strip: 20mm
+- Joint Sealant Recess: As per manufacturer’s recommendation
+- Plank Face Scabbling: 45 (nominal)
+- Concrete Slab Thickness: 300mm (PAGE 6 refers to a 300mm thick slab lay down area)
+- Gap (Detail 6): 25mm minimum
+
+

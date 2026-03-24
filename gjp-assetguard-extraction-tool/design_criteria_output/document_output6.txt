@@ -1,0 +1,75 @@
+Design Criteria Extraction - output6
+==================================================
+Pages processed: 5
+Images found: 10
+Relevant sections: 10
+Processed: 2025-08-11T10:59:08.499660
+
+DESIGN CRITERIA:
+--------------------
+ITEM: General Notes (PAGE 2)
+- Units: All dimensions in millimeters unless noted otherwise
+- Levels: All levels are in meters relative to Chart Datum
+- Tide Levels: HAT +1.20m, MHHW +0.90m, MLHW +0.80m, MSL +0.60m, MHLW +0.30m, MLLW +0.20m, LAT +0.00m
+
+ITEM: Reinforcement (PAGE 2)
+- Reinforcement Symbols: N (Grade D500N), SL (Grade D500L), R (Grade R250N)
+- Cover: Precast Deck Unit - 60mm top, bottom, and sides
+- Lap Lengths: N12 - 400mm, N16 - 500mm, N20 - 600mm, N24 - 850mm, N32 - 1000mm
+- Reinforcement Strength: N Bars fsy 500 MPa, R Bars fsy 250 MPa
+
+ITEM: Structural Steel (PAGE 2)
+- Steel Grade: Grade 350 to AS 1594, AS 3678, AS 3679
+- Bolts: Structural Grade 8.8 to AS 1252, Stainless Steel ISO 3506 Grade A4-70
+- Welding: 8mm continuous fillet, Electrode Classification E48XX
+
+ITEM: Pile Driving (PAGE 2)
+- Tolerances: ±75mm at pile cutoff level, deviation not more than 1% from vertical
+- Testing: 100% ultrasonic testing for pile splices
+
+ITEM: Design Criteria (PAGE 2)
+- Concrete Strength: Precast Concrete f'c 60 MPa
+- Structural Steel Strength: Tubular Steel fsy 350 MPa, Piles fsy 350 MPa
+- Design Life: 25 years
+
+ITEM: Handrail (PAGE 2)
+- System: Standard bolted Monowills galvanized tubular handrail
+- Spacing: Maximum stanchion spacing 1.5m
+- Coating: Safety yellow polyurethane paint
+
+ITEM: Corrosion Protection (PAGE 2)
+- Steelwork: Class 2.5 blast, Interzone 954, 700 micron DFT minimum
+- Sacrificial Anode: Aluminum Alloy A1, A2, A6, design life 12.5 years
+
+ITEM: Concretework (PAGE 2)
+- Concrete Quality: Precast Concrete f'c 60 MPa, max aggregate size 20mm, slump 80mm
+- Curing: 14 days continuously wet
+
+ITEM: Loads (PAGE 2)
+- Vertical Live Loads: 5 kPa
+- Wind Loads: Ultimate Limit State 48 m/s, Serviceability Limit State 39 m/s
+- Wave Loads: Hmax 2.3m, Period T 10 seconds
+- Mooring Loads: Design Vessel P.V. Houtman, Length 22m, Beam 6.2m, Draft 1.8m, Freeboard 1.6m, Displacement 50 tonnes
+- Berthing Loads: Velocity 0.3 m/s, Abnormal Berthing Factor 2.0, Energy 4.98 kNm
+- Corrosion Allowance: 2.0 mm for all steelwork
+
+ITEM: Precast Panel (PAGE 3)
+- Precast Panel Type 1: 12000mm length
+- Fender Spacings: 2000mm centers
+
+ITEM: Typical Section Thru Approach Jetty (PAGE 4)
+- Steel Crosshead: Refer to DRG No. 60290364-MA-DRG-0008
+- Steel Piles: Approximate seabed level varies
+
+ITEM: Alternative Precast Deck Unit Details (PAGE 5)
+- Macalloy Bars: Tensioned to 354 kN
+- Grout: 50 MPa non-shrink grout
+
+METADATA:
+- Project: Abrolhos Island Jetties - Option 1
+- Date: 24 March 2015
+- Engineer/Designer: JJM
+- Drawing Number: Various (e.g., 60290364-MA-DRG-0001, 60290364-MA-DRG-0002)
+- Revision: Issued for Construction
+- Standards: AS/NZS 4671, AS 3600, AS 4100, AS/NZS 1554, AS 1594, AS 3678, AS 3679, AS 1252, ISO 3506, AS 2239, AS 2700
+- Document Type: General Notes & Design Criteria, General Arrangement, Alternative Precast Deck Unit Details

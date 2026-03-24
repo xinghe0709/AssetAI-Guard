@@ -1,0 +1,107 @@
+Design Criteria Extraction - output11 (Gemini)
+==================================================
+Pages processed: 4
+Processed: 2025-08-27T10:48:53.965618
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: EI-DOLPHIN REPLACEMENT - CONTRACTOR LOAD OUT - TEMPORARY JETTY
+- Date: 20.12.24 (Issued for Review), 10.01.25 (Issued for Construction), 03.02.25 (Updated Earthworks Requirements), 21.03.25 (Re-issued for Construction), 02.04.25 (Re-issued for Construction)
+- Engineer/Designer: S.M. (Drawn), A.B (Checked/Engineer Approved), L.C. (Checked), M.R. (Project Manager)
+- Drawing Number: 0002, 0003, 0004, 0005, 0006
+- Revision: 3 (Drawing 0002 & 0003), 2 (Drawing 0004), 0 (Drawing 0006)
+- Standards: AS 1554 (Welding)
+- Document Type: Drawing List, General Notes, Construction Sequence, General Arrangement, Details, RC Details
+
+ITEM: General Notes (PAGE 1)
+- Dimension Units: Millimeters (mm), Meters (m)
+- Design Life: 5 years (Nominal) (Class 2 Structure)
+- Speed Limit: 5 KMPH (on new deck)
+
+ITEM: Concrete (PAGE 1)
+- Concrete Cure Time: 7 days
+- Concrete Grade: N60
+- Compressive Strength: 60 MPa (Nominal 28-day strength)
+- Clear Cover to Reinforcement: 50 mm (+8mm, -0mm tolerance)
+- Reinforcement Bar Type: D500N Deformed bars (500 MPa)
+- Bar Lap Length: 40 times bar diameter (minimum)
+- Chamfer on Precast Edges: 15 mm x 15 mm (minimum)
+- Surface Finish: Broom finish (Precast beams - wearing surface)
+- Shear Key Void Treatment: RUGASOL spray (to expose aggregate)
+
+ITEM: Steel (PAGE 1)
+- Steel Grade: 300 (Hot rolled rounds and plate for shear keys)
+- Welding Standard: AS 1554 (SP Category)
+- Weld Inspection: 100% Visual, 20% Ultrasonic (Shear keys), 100% Ultrasonic (Settlement plate weld)
+- Weld Filler Metal Tensile Strength: 490 MPa (minimum)
+- Surface Preparation: Free of oil and grease
+
+ITEM: Grout (PAGE 1)
+- Grout Type: CONBEXTRA CB-C
+- Grout Placement: Flowable mix, No cold joints accepted
+
+ITEM: Design Criteria (PAGE 1)
+- Design Vehicle 1: 25T Franna Pick and Carry Crane (MAC 25-4 Franna Catalogue)
+- Design Vehicle 2: Mobile/Rough Terrain Cranes (13.5T axle load - travel mode)
+- Design Vehicle 3: Mobile/Rough Terrain Cranes (90T outrigger load - on load spreaders/pads/dunnage, min. 1m2 area)
+- Design Vehicle 4: Crawler Cranes (Up to 280T - tracks over existing crane beams, rubber wearing surface required)
+- Crane Load Restriction: No other storage, live, or vehicle loads during crane lifting (except personnel)
+
+ITEM: Construction Sequence (PAGE 1)
+- Steps outlined for removal of tracks, cleaning, shear stud installation, bearing strip installation, precast panel placement, grouting, joint sealing, approach slab construction, track relocation.
+
+ITEM: Earthworks (PAGE 1)
+- Design Life: 5 years
+- Drainage: Adequate drainage and erosion control required.
+- Materials and Construction: Durable materials and construction methods to minimize maintenance.
+- Ramp Grade: Suitable for design vehicle access.
+- Survey Requirements: Topographic survey, Jetty tie-in points and level survey, Utility/service identification.
+- Ground Investigation: Test pits (if required), Reference previous earthworks documentation, Additional investigation (if necessary)
+
+ITEM: Deck Plan (PAGE 2)
+- Dimensions: 6300, 1990, 8000, 10000, 1570, 713 (mm)
+- Gap: 10 mm (TYP)
+- Precast Plank Length: 7725 mm
+- Precast Plank Thickness: 320 mm
+
+ITEM: Typical Section Through Deck (PAGE 2)
+- Scale: 1:25
+
+ITEM: General Arrangement and Details (PAGE 2)
+- Existing elements: Concrete deck panels, Crawler crane conveyor matting, 5 beam crane rail.
+
+ITEM: Shear Studs (PAGE 3)
+- Diameter: 30 mm
+- Material: Grade 300 Round Bar
+- Weld: 8 mm CFW (all around)
+- Quantity: 4 per plank
+
+ITEM: Precast Plank Details (PAGE 3)
+- Capping: 80 mm diameter x 25 mm thick
+- Compressible Closed Cell Foam Strip: 40 mm thick x 50 mm max (both sides)
+- Grout: CONBEXTRA CB-C flowable grout or approved equivalent
+- Bearing Strip: 150 mm x 40 mm unreinforced (both sides)
+- Gap between Planks: 10 mm (filled with fiberboard and NITOSEAL SC600 flexible sealant)
+
+ITEM: Crane Rail (PAGE 3)
+- Existing Crane Rail: 5-700WB173, 5-700WB130
+- Existing Bollard: CHS
+
+ITEM: Approach Slab (PAGE 3)
+- Dimensions: 2400x9000 (approx.), 365 mm depth (approx.)
+- Dowels: 8No. 300 mm long, anchored into existing settlement slab
+- Chamfer: 15 mm x 15 mm (all exposed edges)
+
+ITEM: Approach Slab Reinforcement (PAGE 4)
+- Top Reinforcement: N24-200
+- Bottom Reinforcement: N24-200
+- U-Bars: N16-200
+- Dowel Bar Embedment: 150 mm min. (using HILTI HIT RE 500 or approved equivalent)
+
+ITEM: Dimensions (PAGE 3)
+- 495, 580, 1000, 225, 250, 150, 500, 1200, 1350, 9000 (mm)
+- 20, 50, 100, 150, 30, 8 (mm)
+
+
+This detailed extraction provides a comprehensive overview of the technical information contained within the provided document pages. Remember to always consult the original documents for final design and construction decisions.

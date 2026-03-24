@@ -1,0 +1,207 @@
+Design Criteria Extraction - output4 (Gemini)
+==================================================
+Pages processed: 6
+Processed: 2025-08-27T10:44:49.894524
+
+DESIGN CRITERIA:
+--------------------
+METADATA:
+- Project: Victoria Quay Berth D - Fender Upgrade
+- Date: JAN 2015, 07/04/15, 23/03/15, 20/01/15, 13/01/15, 12/01/15, 01/04/2015, 06/01/16
+- Engineer/Designer: MHS, GP (G. Pikor)
+- Drawing Number: 014-D-139, 014-D-140, 014-D-141, 014-D-142, 014-D-143, 014-D-146, 014-D-144, 014-D-145, 014-D-147, 014-D-148, 014-D-149, 014-D-150, 014-D-151, 014-D-152, 014-D-153, 014-D-154, 014-D-155, 014-D-156, 014-D-157, 014-D-158, 014-D-159, 014-E-095
+- Revision: 0, 1
+- Standards: AS 3610, AS 3600, AS/NZS 4671, AS 1594, AS 3678, AS 3679, AS 1163, AS 1252, AS 4100, AS/NZS 1554 PART 1, AS/NZS 1554 PART 1 2004, AS1170.4 -2007
+- Document Type: Drawing List, General Notes, Design Criteria, Existing Plan & Sections, New Works - Plan & Sections, Pile Schedule
+
+ITEM: Berth D (PAGE 1)
+- Declared Depth: 13.0 metres
+
+ITEM: Berth 6 (PAGE 1)
+- Declared Depth: 13.0 metres
+
+ITEM: Tide Levels (PAGE 2)
+- LAT: +0.200 m
+- MLLW: +0.503 m
+- MSL: +0.728 m
+- MHHW: +0.972 m
+- HAT: +1.400 m
+
+ITEM: Formwork (PAGE 2)
+- Chamfer/Fillet: 20mm
+- Minimum Stripping Time: 3 days
+
+ITEM: Reinforcement (PAGE 2)
+- Bar Grade: D500N (AS/NZS 4671)
+- Cover - Precast Concrete: 60mm (generally, exposed face)
+- Cover - Precast Concrete: 30mm (internal surfaces)
+- Cover - In situ Concrete: 60mm
+- Secondary Reinforcement: N12 bars at 200 centres
+- Corner Reinforcement: 1-N16 bar, 1200 long (top and bottom)
+- Epoxy Grouting: Required for crack control bars in reinstated slabs.
+
+ITEM: Reinforcement Lap Lengths (PAGE 2)
+- N12: 400mm (Precast & In situ, f'c=50MPa & 60MPa)
+- N16: 500mm (Precast & In situ, f'c=50MPa & 60MPa)
+- N20: 650mm (Precast & In situ, f'c=50MPa & 60MPa)
+- N24: 800mm (Precast, f'c=60MPa), 850mm (In situ, f'c=50MPa)
+- N28: 1000mm (Precast, f'c=60MPa), 1100mm (In situ, f'c=50MPa)
+- N32: 1250mm (Precast, f'c=60MPa), 1350mm (In situ, f'c=50MPa)
+- N36: 1500mm (Precast, f'c=60MPa), 1600mm (In situ, f'c=50MPa)
+- Horizontal Bars (>300mm concrete below): 1.25 x table values
+
+ITEM: Concrete (PAGE 2)
+- Standard: AS 3600
+- In situ Concrete: Class 550, 20mm Aggregate, 80mm Slump (min), 50mm Slump (max, initial), 400 kg/m³ (min),  f'c=50 MPa, w/c = 0.38 max
+- Precast Concrete: Class 560, 20mm Aggregate, 80mm Slump (min), 60mm Slump (min, pre-superplasticized), 150mm Slump (max),  385 kg/m³ (min), f'c=60 MPa, w/c = 0.38 max, GP + 35 Silica Fume
+- Cement Type (Large Pours >0.5m thick): LH
+- Cement Type (Other Pours): GP Ordinary Portland Cement
+- Curing Time (Precast Fender Block, Precast Concrete, In situ Concrete (GP), In situ Concrete (LH)): 7 days
+- Maximum Concrete Free Fall: 2m (Chutes/Tremies required beyond)
+- Finishing: Aliphatic alcohol application when air temperature exceeds 32°C.
+
+
+ITEM: Structural Steel (PAGE 2)
+- Standard: AS 4100, AS/NZS 1554 PART 1
+- Grade: 350 (or as nominated)
+- Standards: AS 1594, AS 3678, AS 3679
+- Tubular Sections: Weldable Grade 350 minimum (AS 1163)
+- Bolts, Nuts, Washers: Structural Grade 8.8 (AS 1252) unless noted otherwise.
+- Welding Standard: AS/NZS 1554
+- Weld Size: 8mm continuous fillet unless noted otherwise
+- Electrode Classification: E48XX
+- Weld Category: SP (unless noted otherwise)
+- Steelwork above RL +1.00: Corrosion protected (see Section 12, Specification)
+- Plates > 32mm thick: Grade 350Z steel
+- Stainless Steel Bolts: Conform to joint type as shown in Section 5.4 Marine Steelwork Specification
+
+ITEM: Pile Driving (PAGE 2)
+- Pile Deviation: Max 275mm at pile cutoff level, 1% inclination from vertical, 1 in 50 from specified rake
+- Rake Direction Tolerance: ±2 degrees from specified plan direction
+- Pile Testing: As per specification
+- Driving Record: Required, to be submitted as per specification
+
+ITEM: Grout (PAGE 2)
+- Type: Non-shrink proprietary, f'c=60MPa minimum
+- Grout details and installation method statements with manufacturer's certification required for approval.
+
+ITEM: Cathodic Protection (PAGE 2)
+- By others
+
+ITEM: Protective Coatings (PAGE 2)
+- Nuts, Bolts, Washers: Hot dipped galvanized
+- Steelwork: Painted (refer to spec)
+- Exposed Timber Ends/Cut Surfaces/Bolt Holes: Tremco Heavy Grade Hydroseal or approved equivalent.
+- Bolts, Nuts, Washers (after installation): Tremco Heavy Grade Hydroseal or approved equivalent
+- Between Bolted Steel Plates: Tremco Hydroseal or similar
+
+ITEM: Temporary Works (PAGE 2)
+- Contractor to design temporary supports for unsupported slab
+- Calculations to be provided if requested
+- Demolition works specification to be referenced for additional details
+
+ITEM: Demolition (PAGE 2)
+- Contractor to verify existing structure & service information prior to demolition
+
+ITEM: Material Properties (PAGE 3)
+- In situ Concrete: f'c = 50 MPa
+- Precast Concrete: f'c = 60 MPa
+- Reinforcing Steel (N bars): fsy = 500 MPa
+- Reinforcing Steel (R bars): fsy = 250 MPa
+- Structural Steel: fsy = 350 MPa
+- Tubular Steel: fsy = 350 MPa
+
+ITEM: Live Loads (PAGE 3)
+- Construction Live Loads: Refer to specifications
+
+ITEM: Mooring Loads (PAGE 3)
+- Lateral Wind Area: 3728 m²
+- Longitudinal Wind Area: 596 m²
+
+ITEM: Berthing Loads - Berth D (PAGE 3)
+- Design Vessel: Combi Dock II
+- DWT: 10608 tonnes
+- Displacement: 17341 tonnes
+- LOA: 169 m
+- LBP: 147 m
+- Beam: 24.7 m
+- Moulded Depth: 16.6 m
+- Laden Draft: 6.0 m
+- Berthing Method: Quarter Point Berthing
+- Berthing Velocity: 0.1 m/s
+- Maximum Berthing Angle: 10° from berthing line (except for Christina Scan vessel)
+- Current Velocity: 0.2 m/s
+- Coefficient of Friction (hull/fender): 0.20
+- Maximum Contact Pressure (hull/fender): 350 kN/m²
+
+ITEM: Wind Loads (PAGE 3)
+- Importance Level: 2
+- Annual Probability of Exceedance: 1 in 500
+- Region: A1 (Non-Cyclonic)
+- Terrain Category: 2
+- Ultimate Limit State Wind Speed (fixed structures): 45 m/s (3-second gust)
+- Serviceability Limit State Wind Speed (fixed structures): 22 m/s (3-second gust)
+- Ultimate Limit State Wind Speed (vessels): 39 m/s (30-second gust)
+- Serviceability Limit State Wind Speed (vessels): 19 m/s (30-second gust)
+- Area Reduction Factor: 0.8
+
+ITEM: Seismic Forces (PAGE 3)
+- Standard: AS1170.4 -2007
+- Importance Level: 3
+- Annual Exceedance Probability: 1:500
+- Probability Factor (Kp): 1.0
+- Hazard Factor (Z): 0.09
+- Site Subsoil Class: Be Ce
+- Structure Height (hn): < 50m
+- Earthquake Design Category: EDC
+
+ITEM: Corrosion Allowances (PAGE 3)
+- New Piles: 3.0mm
+- New Steelwork: 1.0mm
+
+ITEM: Design Life (PAGE 3)
+- New Structures: 50 years
+
+ITEM: Datums (PAGE 3)
+- HAT: +1.400 m
+- MHWS: +1.130 m
+- MHHW: +0.972 m
+- AHD: 0.00 m
+- MSL: +0.728 m
+- MLLW: +0.503 m
+- LAT: +0.200 m
+- LWM (Chart Datum): 0.000 m
+
+ITEM: Existing Berth D (PAGE 4)
+- Shed Dimensions: 4572 (unit not specified, assumed mm based on context) x 2743 (unit not specified, assumed mm based on context)
+- Concrete Deck Thickness: Approx. 250mm (Contractor to confirm)
+- BP Oil Pipeline Diameter: 225 (unit not specified, assumed mm based on context)
+- Water Pipe Diameter: 180 (unit not specified, assumed mm based on context)
+- Caltex Oil Pipeline Diameter: 280 (unit not specified, assumed mm based on context)
+
+ITEM: New Works - Berth D (PAGE 5)
+- Berth D Coordinates: N-6453252, E-381437
+- New Piles: 21
+- Fender Blocks: 6
+- New Fender Line: To match existing Fender Line on E Berth
+- Pile Cut-off Level: RL +1.990
+- Precast Concrete Panel Top Level: RL -2.610
+- Walkway Support: 355x19 CHS
+
+ITEM: Pile Schedule (PAGE 6)
+- Pile Diameter: 610 (unit not specified, assumed mm based on context)
+- Pile Plug Reinforcement: N12-300 ties, welded plug cage
+- Internal Shear Rings: 2-N16, fully welded (top only) to pile
+- Pile Cap Plate: 45mm thick, Grade 350Z
+- Pile Reinforcement: 8 x 2-N32 bars, equispaced
+- Concrete Strength (prior to remaining in situ concrete pour): 32 MPa minimum
+- Cover to Top of Concrete: 60mm
+- Fender Block FB21: Dim "X" = 1780mm,  Pile FP37: Dim "Y" = 700mm
+- Fender Block FB22: Dim "X" = 1790mm
+- Fender Block FB23: Dim "X" = 1760mm, Pile FP40: Dim "Y" = 700mm
+- Fender Block FB24: Dim "X" = 1820mm
+- Fender Block FB25: Dim "X" = 1790mm,  Pile FP43: Dim "Y" = 740mm
+
+
+
+
