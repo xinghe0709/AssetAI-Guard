@@ -48,17 +48,14 @@ class ApiFlowTestCase(unittest.TestCase):
         return payload["data"]["token"]
 
     def test_full_api_flow(self):
-        # 1) health
         health = self.client.get("/api/v1/health")
         self.assertEqual(health.status_code, 200)
         self.assertEqual(health.get_json(), {"status": "ok"})
 
-        # 2) login by 3 roles
         admin_token = self._login("admin@demo.com", "admin123")
         manager_token = self._login("manager@demo.com", "manager123")
         contractor_token = self._login("contractor@demo.com", "contractor123")
 
-        # 3) admin creates a user
         create_user = self.client.post(
             "/api/v1/auth/users",
             headers={"Authorization": f"Bearer {admin_token}"},
@@ -69,70 +66,219 @@ class ApiFlowTestCase(unittest.TestCase):
             },
         )
         self.assertEqual(create_user.status_code, 201, create_user.get_json())
-        self.assertTrue(create_user.get_json()["success"])
 
-        # 4) manager creates an asset (English unit only)
-        create_asset = self.client.post(
+        loc_res = self.client.get(
+            "/api/v1/locations/",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+        )
+        self.assertEqual(loc_res.status_code, 200, loc_res.get_json())
+        locations = loc_res.get_json()["data"]
+        self.assertGreaterEqual(len(locations), 1)
+        location_id = locations[0]["id"]
+
+        create_asset_ok = self.client.post(
             "/api/v1/assets/",
             headers={"Authorization": f"Bearer {manager_token}"},
             json={
-                "assetName": "Crane A1",
-                "maxLoadCapacity": 10,
-                "equipmentType": "Crane",
-                "unit": "ton",
-                "sourceFile": "manual",
+                "locationId": location_id,
+                "name": "Test Asset A",
+                "loadCapacities": [
+                    {"name": "max point load", "metric": "kN", "maxLoad": 1000, "details": "outrigger"},
+                    {"name": "max axle load", "metric": "t", "maxLoad": 80, "details": "vehicle"},
+                    {"name": "max point load", "metric": "kN", "maxLoad": 950, "details": "wheel"},
+                    {"name": "max uniform distributor load", "metric": "kPa", "maxLoad": 40},
+                    {"name": "max displacement size", "metric": "t", "maxLoad": 70000},
+                ],
             },
         )
-        self.assertEqual(create_asset.status_code, 201, create_asset.get_json())
-        asset_payload = create_asset.get_json()["data"]
-        asset_id = asset_payload["id"]
-        self.assertEqual(asset_payload["unit"], "ton")
+        self.assertEqual(create_asset_ok.status_code, 201, create_asset_ok.get_json())
+        created_asset_id = create_asset_ok.get_json()["data"]["id"]
+        self.assertEqual(create_asset_ok.get_json()["data"]["name"], "Test Asset A")
 
-        # 5) asset list with contractor token
         list_assets = self.client.get(
-            "/api/v1/assets/?page=1&pageSize=20",
+            f"/api/v1/assets/?locationId={location_id}&page=1&pageSize=20",
             headers={"Authorization": f"Bearer {contractor_token}"},
         )
         self.assertEqual(list_assets.status_code, 200, list_assets.get_json())
-        self.assertTrue(list_assets.get_json()["success"])
+        items = list_assets.get_json()["data"]["items"]
+        berth5 = next((a for a in items if a["name"] == "Berth 5"), None)
+        self.assertIsNotNone(berth5)
+        asset_id = berth5["id"]
+        self.assertGreaterEqual(len(berth5["loadCapacities"]), 1)
 
-        # 6) evaluation check with unit conversion + remark
+        all_assets = self.client.get(
+            "/api/v1/assets/all?page=1&pageSize=50",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+        )
+        self.assertEqual(all_assets.status_code, 200, all_assets.get_json())
+        all_items = all_assets.get_json()["data"]["items"]
+        self.assertTrue(any(a["name"] == "Berth 5" for a in all_items))
+        self.assertTrue(any(a["name"] == "Test Asset A" for a in all_items))
+
+        list_caps = self.client.get(
+            f"/api/v1/assets/{asset_id}/load-capacities",
+            headers={"Authorization": f"Bearer {manager_token}"},
+        )
+        self.assertEqual(list_caps.status_code, 200, list_caps.get_json())
+        self.assertEqual(list_caps.get_json()["data"]["asset"]["name"], "Berth 5")
+        caps = list_caps.get_json()["data"]["items"]
+        self.assertGreaterEqual(len(caps), 1)
+        first_cap_id = caps[0]["id"]
+
+        create_cap = self.client.post(
+            f"/api/v1/assets/{asset_id}/load-capacities",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={"name": "max point load", "metric": "kN", "maxLoad": 800, "details": "temp cap"},
+        )
+        self.assertEqual(create_cap.status_code, 201, create_cap.get_json())
+        self.assertEqual(create_cap.get_json()["data"]["asset"]["name"], "Berth 5")
+        created_cap = create_cap.get_json()["data"]["capacity"]
+        created_cap_id = created_cap["id"]
+        self.assertEqual(created_cap["name"], "max point load")
+
+        update_cap = self.client.put(
+            f"/api/v1/assets/{asset_id}/load-capacities/{created_cap_id}",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={"maxLoad": 850, "details": "updated"},
+        )
+        self.assertEqual(update_cap.status_code, 200, update_cap.get_json())
+        self.assertEqual(update_cap.get_json()["data"]["asset"]["name"], "Berth 5")
+        self.assertEqual(update_cap.get_json()["data"]["capacity"]["maxLoad"], 850.0)
+
+        delete_cap = self.client.delete(
+            f"/api/v1/assets/{asset_id}/load-capacities/{created_cap_id}",
+            headers={"Authorization": f"Bearer {manager_token}"},
+        )
+        self.assertEqual(delete_cap.status_code, 200, delete_cap.get_json())
+        self.assertTrue(delete_cap.get_json()["data"]["deleted"])
+
+        forbidden_caps = self.client.get(
+            f"/api/v1/assets/{asset_id}/load-capacities",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+        )
+        self.assertEqual(forbidden_caps.status_code, 403, forbidden_caps.get_json())
+
+        opt = self.client.get(
+            "/api/v1/evaluations/equipment-options",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+        )
+        self.assertEqual(opt.status_code, 200, opt.get_json())
+        self.assertGreaterEqual(len(opt.get_json()["data"]), 6)
+
         eval_res = self.client.post(
             "/api/v1/evaluations/check",
             headers={"Authorization": f"Bearer {contractor_token}"},
             json={
+                "locationId": location_id,
                 "assetId": asset_id,
-                "plannedLoad": 9500,
-                "evaluationUnit": "kg",
+                "equipment": "Crane with outriggers",
+                "equipmentModel": "Test crane",
+                "loadParameterValue": 500,
                 "remark": "Pre-lift check",
             },
         )
         self.assertEqual(eval_res.status_code, 200, eval_res.get_json())
         eval_data = eval_res.get_json()["data"]
-        self.assertIn(eval_data["status"], {"Compliant", "Non-Compliant"})
-        self.assertEqual(eval_data["evaluationUnit"], "kg")
+        self.assertEqual(eval_data["status"], "Compliant")
+        self.assertEqual(eval_data["loadParameterMetric"], "kN")
         self.assertEqual(eval_data["remark"], "Pre-lift check")
 
-        # 7) evaluation history
+        eval_non = self.client.post(
+            "/api/v1/evaluations/check",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+            json={
+                "locationId": location_id,
+                "assetId": asset_id,
+                "equipment": "Crane with outriggers",
+                "equipmentModel": "Test crane",
+                "loadParameterValue": 5000,
+                "remark": "Overload case",
+            },
+        )
+        self.assertEqual(eval_non.status_code, 200, eval_non.get_json())
+        self.assertEqual(eval_non.get_json()["data"]["status"], "Non-Compliant")
+
+        eval_storage_ok = self.client.post(
+            "/api/v1/evaluations/check",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+            json={
+                "locationId": location_id,
+                "assetId": asset_id,
+                "equipment": "Storage Load",
+                "loadParameterValue": 35,
+                "remark": "Storage compliant",
+            },
+        )
+        self.assertEqual(eval_storage_ok.status_code, 200, eval_storage_ok.get_json())
+        self.assertEqual(eval_storage_ok.get_json()["data"]["status"], "Compliant")
+        self.assertEqual(eval_storage_ok.get_json()["data"]["loadParameterMetric"], "kPa")
+
+        eval_storage_non = self.client.post(
+            "/api/v1/evaluations/check",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+            json={
+                "locationId": location_id,
+                "assetId": asset_id,
+                "equipment": "Storage Load",
+                "loadParameterValue": 55,
+            },
+        )
+        self.assertEqual(eval_storage_non.status_code, 200, eval_storage_non.get_json())
+        self.assertEqual(eval_storage_non.get_json()["data"]["status"], "Non-Compliant")
+
+        eval_vessel_ok = self.client.post(
+            "/api/v1/evaluations/check",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+            json={
+                "locationId": location_id,
+                "assetId": asset_id,
+                "equipment": "Vessel",
+                "loadParameterValue": 68000,
+            },
+        )
+        self.assertEqual(eval_vessel_ok.status_code, 200, eval_vessel_ok.get_json())
+        self.assertEqual(eval_vessel_ok.get_json()["data"]["status"], "Compliant")
+        self.assertEqual(eval_vessel_ok.get_json()["data"]["loadParameterMetric"], "t")
+
+        wrong_location_eval = self.client.post(
+            "/api/v1/evaluations/check",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+            json={
+                "locationId": location_id + 999,
+                "assetId": asset_id,
+                "equipment": "Crane with outriggers",
+                "loadParameterValue": 100,
+            },
+        )
+        self.assertEqual(wrong_location_eval.status_code, 400, wrong_location_eval.get_json())
+
         hist = self.client.get(
+            "/api/v1/evaluations/history?page=1&pageSize=20",
+            headers={"Authorization": f"Bearer {manager_token}"},
+        )
+        self.assertEqual(hist.status_code, 200, hist.get_json())
+        hist_items = hist.get_json()["data"]["items"]
+        self.assertGreaterEqual(len(hist_items), 1)
+        self.assertIn("loadParameterMetric", hist_items[0])
+        self.assertIn("matchedCapacityName", hist_items[0])
+
+        contractor_hist = self.client.get(
             "/api/v1/evaluations/history?page=1&pageSize=20",
             headers={"Authorization": f"Bearer {contractor_token}"},
         )
-        self.assertEqual(hist.status_code, 200, hist.get_json())
-        items = hist.get_json()["data"]["items"]
-        self.assertGreaterEqual(len(items), 1)
-        self.assertIn("submittedUnit", items[0])
-        self.assertIn("remark", items[0])
+        self.assertEqual(contractor_hist.status_code, 403, contractor_hist.get_json())
 
-        # 8) RBAC: contractor cannot create asset
         forbidden_asset = self.client.post(
             "/api/v1/assets/",
             headers={"Authorization": f"Bearer {contractor_token}"},
-            json={"assetName": "Should Fail", "maxLoadCapacity": 1},
+            json={
+                "locationId": location_id,
+                "name": "Should Fail",
+                "loadCapacities": [{"name": "max point load", "metric": "kN", "maxLoad": 1}],
+            },
         )
         self.assertEqual(forbidden_asset.status_code, 403, forbidden_asset.get_json())
 
-        # 9) RBAC: contractor cannot create user
         forbidden_user = self.client.post(
             "/api/v1/auth/users",
             headers={"Authorization": f"Bearer {contractor_token}"},
@@ -144,38 +290,77 @@ class ApiFlowTestCase(unittest.TestCase):
         )
         self.assertEqual(forbidden_user.status_code, 403, forbidden_user.get_json())
 
-        # 10) validation: invalid asset unit must fail
-        invalid_unit = self.client.post(
+        bad_metric = self.client.post(
             "/api/v1/assets/",
             headers={"Authorization": f"Bearer {manager_token}"},
-            json={"assetName": "Bad Unit", "maxLoadCapacity": 1, "unit": "grams"},
+            json={
+                "locationId": location_id,
+                "name": "Bad Metric Asset",
+                "loadCapacities": [{"name": "max point load", "metric": "grams", "maxLoad": 1}],
+            },
         )
-        self.assertEqual(invalid_unit.status_code, 400, invalid_unit.get_json())
+        self.assertEqual(bad_metric.status_code, 400, bad_metric.get_json())
 
-        # 11) validation: missing evaluationUnit
-        missing_eval_unit = self.client.post(
+        bad_capacity_name = self.client.post(
+            "/api/v1/assets/",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={
+                "locationId": location_id,
+                "name": "Bad Capacity Name Asset",
+                "loadCapacities": [{"name": "custom load", "metric": "kN", "maxLoad": 1}],
+            },
+        )
+        self.assertEqual(bad_capacity_name.status_code, 400, bad_capacity_name.get_json())
+
+        bad_metric_capacity_create = self.client.post(
+            f"/api/v1/assets/{created_asset_id}/load-capacities",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={
+                "name": "max point load",
+                "metric": "kg",
+                "maxLoad": 10,
+            },
+        )
+        self.assertEqual(bad_metric_capacity_create.status_code, 400, bad_metric_capacity_create.get_json())
+
+        bad_capacity_update = self.client.put(
+            f"/api/v1/assets/{asset_id}/load-capacities/{first_cap_id}",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={"name": "custom load"},
+        )
+        self.assertEqual(bad_capacity_update.status_code, 400, bad_capacity_update.get_json())
+
+        missing_load = self.client.post(
             "/api/v1/evaluations/check",
             headers={"Authorization": f"Bearer {contractor_token}"},
-            json={"assetId": asset_id, "plannedLoad": 100},
+            json={"locationId": location_id, "assetId": asset_id, "equipment": "Crane with outriggers"},
         )
-        self.assertEqual(missing_eval_unit.status_code, 400, missing_eval_unit.get_json())
+        self.assertEqual(missing_load.status_code, 400, missing_load.get_json())
 
-        # 12) validation: unsupported evaluation unit
-        bad_eval_unit = self.client.post(
+        bad_equipment = self.client.post(
             "/api/v1/evaluations/check",
             headers={"Authorization": f"Bearer {contractor_token}"},
-            json={"assetId": asset_id, "plannedLoad": 100, "evaluationUnit": "kN"},
+            json={
+                "locationId": location_id,
+                "assetId": asset_id,
+                "equipment": "Not a real equipment",
+                "loadParameterValue": 100,
+            },
         )
-        self.assertEqual(bad_eval_unit.status_code, 400, bad_eval_unit.get_json())
+        self.assertEqual(bad_equipment.status_code, 400, bad_equipment.get_json())
 
-        # 13) validation: invalid pagination
+        no_loc = self.client.get(
+            "/api/v1/assets/?page=1&pageSize=20",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+        )
+        self.assertEqual(no_loc.status_code, 400, no_loc.get_json())
+
         bad_page = self.client.get(
-            "/api/v1/assets/?page=0&pageSize=20",
+            f"/api/v1/assets/?locationId={location_id}&page=0&pageSize=20",
             headers={"Authorization": f"Bearer {contractor_token}"},
         )
         self.assertEqual(bad_page.status_code, 400, bad_page.get_json())
 
-        # 14) placeholder endpoint
         bulk_import = self.client.post(
             "/api/v1/assets/bulk-import",
             headers={"Authorization": f"Bearer {manager_token}"},

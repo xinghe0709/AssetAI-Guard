@@ -18,8 +18,9 @@ Suggested order: follow the **Controller → Service → Model** flow.
 
 ## 4) Main flows
 
-- **Evaluation:** `evaluation_controller.py` → `evaluation_service.py` → `asset.py`, `evaluation_log.py`
-- **Assets:** `asset_controller.py` → `asset_service.py`
+- **Evaluation:** `evaluation_controller.py` → `evaluation_service.py` → `asset.py`, `evaluation_log.py`, `equipment_mapping.py`
+- **Assets / capacities:** `asset_controller.py` → `asset_service.py` → `asset.py`, `load_capacity.py`
+- **Locations:** `location_controller.py` → `location_service.py` → `location.py`
 - **Auth:** `auth_controller.py` → `auth_service.py` → `user.py`
 
 ## 5) Demo data
@@ -28,5 +29,5 @@ Suggested order: follow the **Controller → Service → Model** flow.
 
 ## 6) Practice
 
-- Log in → create asset (manager/admin) → `POST /evaluations/check` with `evaluationUnit` (English: `kg`, `ton`, `lb`) → `GET /evaluations/history`
-- Try missing token (401), contractor creating asset (403), invalid unit (400)
+- Log in → `GET /locations/` → `GET /assets/?locationId=…` → `POST /evaluations/check` with `equipment` + `loadParameterValue` (metrics `kN` / `t` / `kPa` from mapping) → `GET /evaluations/history`
+- Try missing token (401), contractor creating asset (403), invalid `loadCapacities[].metric` or unknown `equipment` (400)

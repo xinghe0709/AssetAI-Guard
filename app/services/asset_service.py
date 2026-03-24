@@ -1,41 +1,77 @@
 from sqlalchemy import select
 
 from app.extensions import db
-from app.models import Asset
+from app.models import Asset, LoadCapacity, Location
+from app.utils.equipment_mapping import normalize_capacity_name, normalize_metric
 from app.utils.errors import ApiError
-from app.utils.load_units import normalize_load_unit
 
 
 class AssetService:
     @staticmethod
-    def list_assets(*, company_id: int, page: int, page_size: int, q: str | None):
-        """
-        List assets for a tenant with optional name search.
+    def _get_owned_asset(*, company_id: int, asset_id: int) -> Asset:
+        asset = Asset.query.filter_by(id=asset_id, company_id=company_id).first()
+        if asset is None:
+            raise ApiError("Asset not found or access denied", 404, code="asset_not_found")
+        return asset
 
-        - company_id is the tenant boundary; every query must include it.
-        - q uses ilike for fuzzy match (DB collation rules apply on MySQL).
-        - Pagination via db.paginate (Flask-SQLAlchemy 3.x).
-        """
-        stmt = select(Asset).where(Asset.company_id == company_id)
+    @staticmethod
+    def list_assets(*, company_id: int, location_id: int, page: int, page_size: int, q: str | None):
+        loc = Location.query.filter_by(id=location_id).first()
+        if loc is None:
+            raise ApiError("Location not found", 404, code="location_not_found")
+
+        stmt = select(Asset).where(Asset.company_id == company_id, Asset.location_id == location_id)
         if q:
             like = f"%{q}%"
-            stmt = stmt.where(Asset.asset_name.ilike(like))
-
+            stmt = stmt.where(Asset.name.ilike(like))
         stmt = stmt.order_by(Asset.id.desc())
         pagination = db.paginate(stmt, page=page, per_page=page_size, error_out=False)
 
+        items = []
+        for a in pagination.items:
+            caps = [
+                {
+                    "id": c.id,
+                    "name": c.name.value,
+                    "metric": c.metric.value,
+                    "maxLoad": c.max_load,
+                    "details": c.details,
+                }
+                for c in sorted(a.load_capacities, key=lambda x: x.id)
+            ]
+            items.append(
+                {
+                    "id": a.id,
+                    "name": a.name,
+                    "locationId": a.location_id,
+                    "loadCapacities": caps,
+                }
+            )
+
+        return {
+            "items": items,
+            "page": pagination.page,
+            "pageSize": pagination.per_page,
+            "total": pagination.total,
+            "pages": pagination.pages,
+        }
+
+    @staticmethod
+    def list_company_assets(*, company_id: int, page: int, page_size: int, q: str | None):
+        stmt = select(Asset).where(Asset.company_id == company_id)
+        if q:
+            like = f"%{q}%"
+            stmt = stmt.where(Asset.name.ilike(like))
+        stmt = stmt.order_by(Asset.id.desc())
+        pagination = db.paginate(stmt, page=page, per_page=page_size, error_out=False)
         items = [
             {
                 "id": a.id,
-                "assetName": a.asset_name,
-                "equipmentType": a.equipment_type,
-                "maxLoadCapacity": a.max_load_capacity,
-                "unit": a.unit,
-                "sourceFile": a.source_file,
+                "name": a.name,
+                "locationId": a.location_id,
             }
             for a in pagination.items
         ]
-
         return {
             "items": items,
             "page": pagination.page,
@@ -48,43 +84,178 @@ class AssetService:
     def create_asset(
         *,
         company_id: int,
-        asset_name: str,
-        equipment_type: str | None,
-        max_load_capacity: float,
-        unit: str | None,
-        source_file: str | None,
+        location_id: int,
+        name: str,
+        load_capacities: list[dict],
     ):
-        """
-        Create an asset.
+        loc = Location.query.filter_by(id=location_id).first()
+        if loc is None:
+            raise ApiError("Location not found", 404, code="location_not_found")
 
-        - max_load_capacity must be > 0.
-        - unit must be English (kg, ton/t, lb) if provided; defaults to kg.
-        - RBAC is enforced in the controller; company_id comes from the token.
-        """
-        if max_load_capacity <= 0:
-            raise ApiError("maxLoadCapacity must be greater than 0", 400, code="invalid_max_load_capacity")
+        n = (name or "").strip()
+        if not n:
+            raise ApiError("name is required", 400, code="validation_error")
+        if not load_capacities:
+            raise ApiError("loadCapacities must contain at least one entry", 400, code="validation_error")
 
-        unit_raw = (unit or "").strip() or "kg"
-        try:
-            unit_canon = normalize_load_unit(unit_raw)
-        except ValueError as e:
-            raise ApiError(str(e), 400, code="invalid_asset_unit") from e
-
-        asset = Asset(
-            company_id=company_id,
-            asset_name=asset_name,
-            equipment_type=equipment_type,
-            max_load_capacity=max_load_capacity,
-            unit=unit_canon,
-            source_file=source_file,
-        )
+        asset = Asset(company_id=company_id, location_id=location_id, name=n)
         db.session.add(asset)
+        db.session.flush()
+
+        for row in load_capacities:
+            cap_name = (row.get("name") or "").strip()
+            metric_raw = row.get("metric")
+            max_load = row.get("maxLoad")
+            details = row.get("details")
+            if not cap_name or max_load is None or metric_raw is None:
+                raise ApiError("Each load capacity needs name, metric, and maxLoad", 400, code="validation_error")
+            try:
+                max_f = float(max_load)
+            except (TypeError, ValueError) as e:
+                raise ApiError("maxLoad must be a number", 400, code="validation_error") from e
+            if max_f <= 0:
+                raise ApiError("maxLoad must be greater than 0", 400, code="validation_error")
+            cap_name = normalize_capacity_name(cap_name)
+            metric = normalize_metric(str(metric_raw))
+            db.session.add(
+                LoadCapacity(
+                    asset_id=asset.id,
+                    name=cap_name,
+                    metric=metric,
+                    max_load=max_f,
+                    details=(str(details).strip() if details is not None else None) or None,
+                )
+            )
+
+        db.session.commit()
+        db.session.refresh(asset)
+        return AssetService._asset_to_dict(asset)
+
+    @staticmethod
+    def list_load_capacities(*, company_id: int, asset_id: int) -> dict:
+        asset = AssetService._get_owned_asset(company_id=company_id, asset_id=asset_id)
+        items = [
+            {
+                "id": c.id,
+                "name": c.name.value,
+                "metric": c.metric.value,
+                "maxLoad": c.max_load,
+                "details": c.details,
+            }
+            for c in sorted(asset.load_capacities, key=lambda x: x.id)
+        ]
+        return {
+            "asset": {"id": asset.id, "name": asset.name, "locationId": asset.location_id},
+            "items": items,
+        }
+
+    @staticmethod
+    def create_load_capacity(
+        *,
+        company_id: int,
+        asset_id: int,
+        name: str,
+        metric_raw: str,
+        max_load: float,
+        details: str | None,
+    ) -> dict:
+        asset = AssetService._get_owned_asset(company_id=company_id, asset_id=asset_id)
+        cap_name = normalize_capacity_name(name)
+        metric = normalize_metric(metric_raw)
+        try:
+            max_f = float(max_load)
+        except (TypeError, ValueError) as e:
+            raise ApiError("maxLoad must be a number", 400, code="validation_error") from e
+        if max_f <= 0:
+            raise ApiError("maxLoad must be greater than 0", 400, code="validation_error")
+
+        cap = LoadCapacity(
+            asset_id=asset.id,
+            name=cap_name,
+            metric=metric,
+            max_load=max_f,
+            details=(str(details).strip() if details is not None else None) or None,
+        )
+        db.session.add(cap)
         db.session.commit()
         return {
+            "asset": {"id": asset.id, "name": asset.name, "locationId": asset.location_id},
+            "capacity": {
+                "id": cap.id,
+                "name": cap.name.value,
+                "metric": cap.metric.value,
+                "maxLoad": cap.max_load,
+                "details": cap.details,
+            },
+        }
+
+    @staticmethod
+    def update_load_capacity(
+        *,
+        company_id: int,
+        asset_id: int,
+        capacity_id: int,
+        name: str | None,
+        metric_raw: str | None,
+        max_load: float | None,
+        details: str | None,
+    ) -> dict:
+        asset = AssetService._get_owned_asset(company_id=company_id, asset_id=asset_id)
+        cap = LoadCapacity.query.filter_by(id=capacity_id, asset_id=asset_id).first()
+        if cap is None:
+            raise ApiError("Load capacity not found", 404, code="capacity_not_found")
+
+        if name is not None:
+            cap.name = normalize_capacity_name(name)
+        if metric_raw is not None:
+            cap.metric = normalize_metric(metric_raw)
+        if max_load is not None:
+            try:
+                max_f = float(max_load)
+            except (TypeError, ValueError) as e:
+                raise ApiError("maxLoad must be a number", 400, code="validation_error") from e
+            if max_f <= 0:
+                raise ApiError("maxLoad must be greater than 0", 400, code="validation_error")
+            cap.max_load = max_f
+        if details is not None:
+            cap.details = (str(details).strip() or None)
+
+        db.session.commit()
+        return {
+            "asset": {"id": asset.id, "name": asset.name, "locationId": asset.location_id},
+            "capacity": {
+                "id": cap.id,
+                "name": cap.name.value,
+                "metric": cap.metric.value,
+                "maxLoad": cap.max_load,
+                "details": cap.details,
+            },
+        }
+
+    @staticmethod
+    def delete_load_capacity(*, company_id: int, asset_id: int, capacity_id: int) -> None:
+        _ = AssetService._get_owned_asset(company_id=company_id, asset_id=asset_id)
+        cap = LoadCapacity.query.filter_by(id=capacity_id, asset_id=asset_id).first()
+        if cap is None:
+            raise ApiError("Load capacity not found", 404, code="capacity_not_found")
+        db.session.delete(cap)
+        db.session.commit()
+
+    @staticmethod
+    def _asset_to_dict(asset: Asset) -> dict:
+        caps = [
+            {
+                "id": c.id,
+                "name": c.name.value,
+                "metric": c.metric.value,
+                "maxLoad": c.max_load,
+                "details": c.details,
+            }
+            for c in sorted(asset.load_capacities, key=lambda x: x.id)
+        ]
+        return {
             "id": asset.id,
-            "assetName": asset.asset_name,
-            "equipmentType": asset.equipment_type,
-            "maxLoadCapacity": asset.max_load_capacity,
-            "unit": asset.unit,
-            "sourceFile": asset.source_file,
+            "name": asset.name,
+            "locationId": asset.location_id,
+            "loadCapacities": caps,
         }

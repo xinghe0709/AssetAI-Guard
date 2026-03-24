@@ -1,7 +1,6 @@
 # AssetGuard AI (Flask backend)
 
-REST API for asset load compliance checks, multi-tenant by `company_id`, RBAC roles, and signed Bearer tokens (itsdangerous).  
-**Load units in the API and database are English only:** `kg`, `ton` (metric ton; aliases `t`, `tons`), `lb` (aliases `lbs`, `pound`, `pounds`).
+REST API for asset load compliance checks aligned with the customer **GJP** data model: **Location → Asset → Load capacity** rows, plus evaluations keyed by **equipment type** (six PDF options) and **load parameter** (`kN` / `t` / `kPa` per mapping). Multi-tenant by `company_id`, RBAC roles, and signed Bearer tokens (itsdangerous).
 
 Stack: **Flask**, **Flask-SQLAlchemy**, **Flask-Migrate** (Alembic).  
 `bulk-import` and async email are intentionally not implemented (placeholders).
@@ -29,7 +28,7 @@ python -m pip --version
 | `app/controllers/` | HTTP routes (Blueprints) |
 | `app/services/` | Business logic |
 | `app/models/` | SQLAlchemy models |
-| `app/utils/` | Auth, responses, errors, unit conversion |
+| `app/utils/` | Auth, responses, errors, equipment mapping (PDF) |
 | `migrations/` | Alembic revisions |
 | `assetguard_app.py` | WSGI entry (`app` for Flask CLI) |
 | `LEARNING_GUIDE.md` | Short reading order |
@@ -68,13 +67,13 @@ git pull origin main
 ### 2) Create your working branch
 
 ```bash
-git checkout -b <yourname>/<feature-name>
+git checkout -b <yourname>
 ```
 
 Example:
 
 ```bash
-git checkout -b xinghe/feature-bulk-import
+git checkout -b xinghe
 ```
 
 ### 3) Commit changes
@@ -88,7 +87,7 @@ git commit -m "feat: add bulk import integration skeleton"
 ### 4) Push your branch
 
 ```bash
-git push -u origin <yourname>/<feature-name>
+git push -u origin <yourname>
 ```
 
 ### 5) Create Pull Request
@@ -126,7 +125,7 @@ git log --oneline --graph --decorate -20
 
 ## Database schema overview
 
-The system currently uses five core tables:
+Core tables (plus `alembic_version`):
 
 ### 1) `companies`
 
@@ -134,7 +133,7 @@ The system currently uses five core tables:
 - Key columns:
   - `id` (PK)
   - `name` (unique)
-- Purpose: multi-tenant boundary for users and assets.
+- Purpose: multi-tenant boundary for users, locations, and assets.
 
 ### 2) `users`
 
@@ -147,48 +146,69 @@ The system currently uses five core tables:
   - `company_id` (FK -> `companies.id`, indexed)
 - Purpose: authentication, authorization, and tenant scoping.
 
-### 3) `assets`
+### 3) `locations`
 
-- Asset master data used for compliance checks.
+- Named site / area under a tenant (e.g. port).
 - Key columns:
   - `id` (PK)
-  - `asset_name` (indexed)
-  - `equipment_type` (indexed, optional)
-  - `max_load_capacity` (float, > 0 in service validation)
-  - `unit` (English only: canonical `kg` / `ton` / `lb`)
-  - `source_file` (optional)
   - `company_id` (FK -> `companies.id`, indexed)
-- Purpose: stores threshold data for load evaluation.
+  - `name` (unique per company)
+- Purpose: groups assets (berths, pads, etc.).
 
-### 4) `evaluation_logs`
+### 4) `assets`
 
-- Immutable-ish audit trail for evaluations.
+- Asset row under a location (name only at asset level).
+- Key columns:
+  - `id` (PK)
+  - `company_id` (FK -> `companies.id`, indexed)
+  - `location_id` (FK -> `locations.id`, indexed)
+  - `name`
+- Purpose: identity of the structure being evaluated; capacities live in child rows.
+
+### 5) `load_capacities`
+
+- Named limits for an asset (PDF “load capacity” lines).
 - Key columns:
   - `id` (PK)
   - `asset_id` (FK -> `assets.id`, indexed)
-  - `user_id` (FK -> `users.id`, indexed)
-  - `planned_load` (converted to asset unit before persistence)
-  - `submitted_planned_load` (raw user input value)
-  - `submitted_unit` (normalized input unit)
-  - `remark` (optional note from evaluator)
+  - `name` (e.g. `max point load`, `max wheel load`)
+  - `metric` (`kN`, `t`, or `kPa`)
+  - `max_load` (float, > 0)
+  - `details` (optional text)
+- Purpose: thresholds matched by equipment → capacity name mapping during evaluation.
+
+### 6) `evaluation_logs`
+
+- Audit trail for each check.
+- Key columns:
+  - `id` (PK)
+  - `asset_id`, `user_id` (FKs, indexed)
+  - `equipment` (one of the six PDF equipment strings)
+  - `equipment_model` (optional)
+  - `load_parameter_value`, `load_parameter_metric` (from mapping + user input)
+  - `matched_capacity_name` (which `load_capacities.name` was used)
   - `status` (`Compliant` / `Non-Compliant`)
   - `overload_percentage`
-  - `evaluated_at` (UTC timestamp, indexed)
-- Purpose: traceability, history UI, and future notification/audit use.
+  - `remark` (optional)
+  - `evaluated_at` (UTC, indexed)
 
-### 5) `alembic_version`
+### 7) `alembic_version`
 
-- Migration bookkeeping table managed by Alembic.
-- Key column:
-  - `version_num`
-- Purpose: tracks which migrations are applied.
+- Migration bookkeeping (Alembic).
 
 ### Relationships summary
 
 - `companies (1) -> (N) users`
-- `companies (1) -> (N) assets`
+- `companies (1) -> (N) locations`
+- `locations (1) -> (N) assets`
+- `companies (1) -> (N) assets` (tenant FK on asset)
+- `assets (1) -> (N) load_capacities`
 - `users (1) -> (N) evaluation_logs`
 - `assets (1) -> (N) evaluation_logs`
+
+### Migration note (upgrade from older revisions)
+
+Revision `e1f2a3b4c5d6_gjp_pdf_schema_locations_capacities` **drops and recreates** legacy `assets` and `evaluation_logs` to match the GJP model. **Back up** or accept data loss on those tables before `flask db upgrade` on an existing database.
 
 ### Tenant isolation model
 
@@ -337,7 +357,7 @@ The repo includes an end-to-end automated API flow test:
 
 - Test file: `tests/test_api_flow.py`
 - Framework: Python built-in `unittest` + Flask `test_client`
-- Scope: health, login, create user, create/list asset, evaluate, history, RBAC, validation errors, bulk-import placeholder
+- Scope: health, login, create user, list locations, list assets by `locationId`, equipment options, evaluate (`equipment` + `loadParameterValue`), history, RBAC, validation errors, bulk-import placeholder
 
 ### Run on Windows (PowerShell)
 
@@ -450,18 +470,56 @@ Expect: `201`
 
 ---
 
-### 5 — List assets (any logged-in user)
+### 5 — List locations (any logged-in user)
 
 ```http
-GET {{BASE}}/assets/?page=1&pageSize=20
+GET {{BASE}}/locations/
 Authorization: Bearer {{contractor_token}}
 ```
 
-Expect: `200`, `data.items` array
+Expect: `200`, `data` is an array; copy first `id` → `{{location_id}}` (seed includes **Port of Bunbury**).
 
 ---
 
-### 6 — Create asset (manager or admin) — **English unit only**
+### 6 — Create location (manager or admin)
+
+```http
+POST {{BASE}}/locations/
+Authorization: Bearer {{manager_token}}
+Content-Type: application/json
+
+{
+  "name": "Another site"
+}
+```
+
+Expect: `201`, body includes new location `id`.
+
+---
+
+### 7 — List assets (any logged-in user; `locationId` required)
+
+```http
+GET {{BASE}}/assets/?locationId={{location_id}}&page=1&pageSize=20
+Authorization: Bearer {{contractor_token}}
+```
+
+Expect: `200`, `data.items` array; each item has `name`, `loadCapacities`, etc. Seed includes **Berth 5** / **Berth 8** under the demo location.
+
+---
+
+### 8 — Equipment options (for UI / mapping)
+
+```http
+GET {{BASE}}/evaluations/equipment-options
+Authorization: Bearer {{contractor_token}}
+```
+
+Expect: `200`, `data` array with the six PDF equipment labels and parameter metadata.
+
+---
+
+### 9 — Create asset (manager or admin)
 
 ```http
 POST {{BASE}}/assets/
@@ -469,27 +527,31 @@ Authorization: Bearer {{manager_token}}
 Content-Type: application/json
 
 {
-  "assetName": "Crane A1",
-  "maxLoadCapacity": 10,
-  "equipmentType": "Crane",
-  "unit": "ton",
-  "sourceFile": "manual"
+  "locationId": {{location_id}},
+  "name": "Berth 9",
+  "loadCapacities": [
+    { "name": "max point load", "metric": "kN", "maxLoad": 1000, "details": "per spec" }
+  ]
 }
 ```
 
 Expect: `201`, copy `data.id` → `{{asset_id}}`
 
-Invalid unit example (expect `400`, code `invalid_asset_unit`):
+Invalid capacity `metric` (expect `400`, code `invalid_metric`):
 
 ```json
-{ "assetName": "X", "maxLoadCapacity": 1, "unit": "grams" }
+{
+  "locationId": 1,
+  "name": "X",
+  "loadCapacities": [{ "name": "max point load", "metric": "grams", "maxLoad": 1 }]
+}
 ```
 
 ---
 
-### 7 — Evaluate load (conversion + remark)
+### 10 — Evaluate load (equipment + parameter value)
 
-Asset `unit` is `ton`; submit planned load in **kg** (converted internally):
+Use an `equipment` string exactly as returned by **equipment-options**. Example with seed **Berth 5** capacities:
 
 ```http
 POST {{BASE}}/evaluations/check
@@ -498,40 +560,41 @@ Content-Type: application/json
 
 {
   "assetId": {{asset_id}},
-  "plannedLoad": 9500,
-  "evaluationUnit": "kg",
+  "equipment": "Crane with outriggers",
+  "equipmentModel": "Mobile crane 50t",
+  "loadParameterValue": 500,
   "remark": "Pre-lift check"
 }
 ```
 
-Expect: `200`, `data.status` `Compliant` or `Non-Compliant`
+Expect: `200`, `data.status` `Compliant` or `Non-Compliant`, plus `loadParameterMetric`, `matchedCapacityName`, etc.
 
-Missing `evaluationUnit` (expect `400`):
+Missing `loadParameterValue` (expect `400`):
 
 ```json
-{ "assetId": 1, "plannedLoad": 100 }
+{ "assetId": 1, "equipment": "Crane with outriggers" }
 ```
 
-Unsupported unit (expect `400`, `invalid_evaluation_unit`):
+Unknown `equipment` (expect `400`, `invalid_equipment`):
 
 ```json
-{ "assetId": 1, "plannedLoad": 100, "evaluationUnit": "kN" }
+{ "assetId": 1, "equipment": "Not a real equipment", "loadParameterValue": 100 }
 ```
 
 ---
 
-### 8 — Evaluation history
+### 11 — Evaluation history
 
 ```http
 GET {{BASE}}/evaluations/history?page=1&pageSize=20
 Authorization: Bearer {{contractor_token}}
 ```
 
-Expect: `200`, each item includes `plannedLoad`, `submittedPlannedLoad`, `submittedUnit`, `remark`, `evaluatedAt`
+Expect: `200`, each item includes `equipment`, `loadParameterValue`, `loadParameterMetric`, `matchedCapacityName`, `status`, `remark`, `evaluatedAt`.
 
 ---
 
-### 9 — RBAC: contractor must not create assets (expect `403`)
+### 12 — RBAC: contractor must not create assets (expect `403`)
 
 ```http
 POST {{BASE}}/assets/
@@ -539,14 +602,15 @@ Authorization: Bearer {{contractor_token}}
 Content-Type: application/json
 
 {
-  "assetName": "Should Fail",
-  "maxLoadCapacity": 1
+  "locationId": {{location_id}},
+  "name": "Should Fail",
+  "loadCapacities": [{ "name": "max point load", "metric": "kN", "maxLoad": 1 }]
 }
 ```
 
 ---
 
-### 10 — RBAC: contractor must not create users (expect `403`)
+### 13 — RBAC: contractor must not create users (expect `403`)
 
 ```http
 POST {{BASE}}/auth/users
@@ -562,7 +626,7 @@ Content-Type: application/json
 
 ---
 
-### 11 — Bulk import placeholder (expect `501`)
+### 14 — Bulk import placeholder (expect `501`)
 
 ```http
 POST {{BASE}}/assets/bulk-import
@@ -571,36 +635,29 @@ Authorization: Bearer {{manager_token}}
 
 ---
 
-### 12 — Validation samples
+### 15 — Validation samples
 
-**12a** Invalid pagination (expect `400`):
+**15a** List assets without `locationId` (expect `400`):
 
 ```http
-GET {{BASE}}/assets/?page=0&pageSize=20
+GET {{BASE}}/assets/?page=1&pageSize=20
 Authorization: Bearer {{contractor_token}}
 ```
 
-**12b** Login missing fields (expect `400`):
+**15b** Invalid pagination (expect `400`):
+
+```http
+GET {{BASE}}/assets/?locationId={{location_id}}&page=0&pageSize=20
+Authorization: Bearer {{contractor_token}}
+```
+
+**15c** Login missing fields (expect `400`):
 
 ```http
 POST {{BASE}}/auth/login
 Content-Type: application/json
 
 { "email": "a@b.com" }
-```
-
-**12c** Negative planned load after passing type checks (expect `400`):
-
-```http
-POST {{BASE}}/evaluations/check
-Authorization: Bearer {{contractor_token}}
-Content-Type: application/json
-
-{
-  "assetId": {{asset_id}},
-  "plannedLoad": -1,
-  "evaluationUnit": "kg"
-}
 ```
 
 ---
