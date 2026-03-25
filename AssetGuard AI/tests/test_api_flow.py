@@ -1,3 +1,4 @@
+# pylint: disable=import-error,no-name-in-module
 import tempfile
 import unittest
 import json
@@ -97,7 +98,7 @@ class ApiFlowTestCase(unittest.TestCase):
             },
         )
         self.assertEqual(create_asset_ok.status_code, 201, create_asset_ok.get_json())
-        created_asset_id = create_asset_ok.get_json()["data"]["id"]
+        self.assertIn("id", create_asset_ok.get_json()["data"])
         self.assertEqual(create_asset_ok.get_json()["data"]["name"], "Test Asset A")
 
         duplicate_asset = self.client.post(
@@ -138,6 +139,7 @@ class ApiFlowTestCase(unittest.TestCase):
             },
         )
         self.assertEqual(create_asset_new_location.status_code, 201, create_asset_new_location.get_json())
+        new_loc_asset_id = create_asset_new_location.get_json()["data"]["id"]
 
         updated_locations_res = self.client.get(
             "/api/v1/locations/",
@@ -177,27 +179,25 @@ class ApiFlowTestCase(unittest.TestCase):
         first_cap_id = caps[0]["id"]
 
         create_cap = self.client.post(
-            f"/api/v1/assets/{asset_id}/load-capacities",
+            f"/api/v1/assets/{new_loc_asset_id}/load-capacities",
             headers={"Authorization": f"Bearer {manager_token}"},
-            json={"name": "max point load", "metric": "t", "maxLoad": 800, "details": "temp cap"},
+            json={"name": "max axle load", "metric": "t", "maxLoad": 80, "details": "temp cap"},
         )
         self.assertEqual(create_cap.status_code, 201, create_cap.get_json())
-        self.assertEqual(create_cap.get_json()["data"]["asset"]["name"], "Berth 5")
         created_cap = create_cap.get_json()["data"]["capacity"]
         created_cap_id = created_cap["id"]
-        self.assertEqual(created_cap["name"], "max point load")
+        self.assertEqual(created_cap["name"], "max axle load")
 
         update_cap = self.client.put(
-            f"/api/v1/assets/{asset_id}/load-capacities/{created_cap_id}",
+            f"/api/v1/assets/{new_loc_asset_id}/load-capacities/{created_cap_id}",
             headers={"Authorization": f"Bearer {manager_token}"},
-            json={"maxLoad": 850, "details": "updated"},
+            json={"maxLoad": 85, "details": "updated"},
         )
         self.assertEqual(update_cap.status_code, 200, update_cap.get_json())
-        self.assertEqual(update_cap.get_json()["data"]["asset"]["name"], "Berth 5")
-        self.assertEqual(update_cap.get_json()["data"]["capacity"]["maxLoad"], 850.0)
+        self.assertEqual(update_cap.get_json()["data"]["capacity"]["maxLoad"], 85.0)
 
         delete_cap = self.client.delete(
-            f"/api/v1/assets/{asset_id}/load-capacities/{created_cap_id}",
+            f"/api/v1/assets/{new_loc_asset_id}/load-capacities/{created_cap_id}",
             headers={"Authorization": f"Bearer {manager_token}"},
         )
         self.assertEqual(delete_cap.status_code, 200, delete_cap.get_json())
@@ -386,8 +386,16 @@ class ApiFlowTestCase(unittest.TestCase):
         self.assertEqual(duplicate_cap_single.status_code, 409, duplicate_cap_single.get_json())
         self.assertEqual(duplicate_cap_single.get_json()["code"], "duplicate_capacity")
 
+        bad_pair = self.client.post(
+            f"/api/v1/assets/{new_loc_asset_id}/load-capacities",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={"name": "max point load", "metric": "t", "maxLoad": 100},
+        )
+        self.assertEqual(bad_pair.status_code, 400, bad_pair.get_json())
+        self.assertEqual(bad_pair.get_json()["code"], "invalid_capacity_metric_pair")
+
         bad_metric_capacity_create = self.client.post(
-            f"/api/v1/assets/{created_asset_id}/load-capacities",
+            f"/api/v1/assets/{new_loc_asset_id}/load-capacities",
             headers={"Authorization": f"Bearer {manager_token}"},
             json={
                 "name": "max point load",

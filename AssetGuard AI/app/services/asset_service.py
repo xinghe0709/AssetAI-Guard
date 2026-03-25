@@ -7,7 +7,11 @@ from sqlalchemy import select
 
 from app.extensions import db
 from app.models import Asset, LoadCapacity, Location
-from app.utils.equipment_mapping import normalize_capacity_name, normalize_metric
+from app.utils.equipment_mapping import (
+    normalize_capacity_name,
+    normalize_metric,
+    validate_capacity_metric_pair,
+)
 from app.utils.errors import ApiError
 
 
@@ -182,7 +186,7 @@ class AssetService:
         db.session.add(asset)
         db.session.flush()
 
-        seen_keys: set[tuple[str, str]] = set()
+        seen_keys: set[str] = set()
         for row in load_capacities:
             cap_name = (row.get("name") or "").strip()
             metric_raw = row.get("metric")
@@ -198,10 +202,11 @@ class AssetService:
                 raise ApiError("maxLoad must be greater than 0", 400, code="validation_error")
             cap_name = normalize_capacity_name(cap_name)
             metric = normalize_metric(str(metric_raw))
-            key = (cap_name, metric)
+            validate_capacity_metric_pair(cap_name, metric)
+            key = cap_name
             if key in seen_keys:
                 raise ApiError(
-                    f"Duplicate load capacity: {cap_name} ({metric})",
+                    f"Duplicate load capacity: {cap_name}",
                     409,
                     code="duplicate_capacity",
                 )
@@ -332,6 +337,7 @@ class AssetService:
         asset = AssetService._get_owned_asset(company_id=company_id, asset_id=asset_id)
         cap_name = normalize_capacity_name(name)
         metric = normalize_metric(metric_raw)
+        validate_capacity_metric_pair(cap_name, metric)
         try:
             max_f = float(max_load)
         except (TypeError, ValueError) as e:
@@ -340,11 +346,11 @@ class AssetService:
             raise ApiError("maxLoad must be greater than 0", 400, code="validation_error")
 
         existing = LoadCapacity.query.filter_by(
-            asset_id=asset.id, name=cap_name, metric=metric
+            asset_id=asset.id, name=cap_name,
         ).first()
         if existing is not None:
             raise ApiError(
-                f"Load capacity {cap_name} ({metric}) already exists for this asset",
+                f"Load capacity '{cap_name}' already exists for this asset",
                 409,
                 code="duplicate_capacity",
             )
