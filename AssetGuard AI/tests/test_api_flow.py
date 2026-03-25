@@ -91,7 +91,6 @@ class ApiFlowTestCase(unittest.TestCase):
                 "loadCapacities": [
                     {"name": "max point load", "metric": "kN", "maxLoad": 1000, "details": "outrigger"},
                     {"name": "max axle load", "metric": "t", "maxLoad": 80, "details": "vehicle"},
-                    {"name": "max point load", "metric": "kN", "maxLoad": 950, "details": "wheel"},
                     {"name": "max uniform distributor load", "metric": "kPa", "maxLoad": 40},
                     {"name": "max displacement size", "metric": "t", "maxLoad": 70000},
                 ],
@@ -180,7 +179,7 @@ class ApiFlowTestCase(unittest.TestCase):
         create_cap = self.client.post(
             f"/api/v1/assets/{asset_id}/load-capacities",
             headers={"Authorization": f"Bearer {manager_token}"},
-            json={"name": "max point load", "metric": "kN", "maxLoad": 800, "details": "temp cap"},
+            json={"name": "max point load", "metric": "t", "maxLoad": 800, "details": "temp cap"},
         )
         self.assertEqual(create_cap.status_code, 201, create_cap.get_json())
         self.assertEqual(create_cap.get_json()["data"]["asset"]["name"], "Berth 5")
@@ -363,6 +362,29 @@ class ApiFlowTestCase(unittest.TestCase):
             },
         )
         self.assertEqual(bad_capacity_name.status_code, 400, bad_capacity_name.get_json())
+
+        duplicate_cap_in_batch = self.client.post(
+            "/api/v1/assets/",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={
+                "locationName": location_name,
+                "name": "Dup Cap Asset",
+                "loadCapacities": [
+                    {"name": "max point load", "metric": "kN", "maxLoad": 100},
+                    {"name": "max point load", "metric": "kN", "maxLoad": 200},
+                ],
+            },
+        )
+        self.assertEqual(duplicate_cap_in_batch.status_code, 409, duplicate_cap_in_batch.get_json())
+        self.assertEqual(duplicate_cap_in_batch.get_json()["code"], "duplicate_capacity")
+
+        duplicate_cap_single = self.client.post(
+            f"/api/v1/assets/{asset_id}/load-capacities",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={"name": "max point load", "metric": "kN", "maxLoad": 999},
+        )
+        self.assertEqual(duplicate_cap_single.status_code, 409, duplicate_cap_single.get_json())
+        self.assertEqual(duplicate_cap_single.get_json()["code"], "duplicate_capacity")
 
         bad_metric_capacity_create = self.client.post(
             f"/api/v1/assets/{created_asset_id}/load-capacities",

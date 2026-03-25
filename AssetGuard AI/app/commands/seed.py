@@ -84,47 +84,39 @@ def register_seed_command(app: Flask) -> None:
             db.session.commit()
             return asset
 
-        # Keep 5 rows per asset for easier frontend form testing.
-        # The second "max point load" mirrors the PDF table's repeated capacity row.
         berth5_caps = [
-            {"name": "max point load", "metric": "kN", "max_load": 1000.0, "details": "for crane outriggers"},
+            {"name": "max point load", "metric": "kN", "max_load": 1000.0, "details": "for crane outriggers / EWP wheels"},
             {"name": "max axle load", "metric": "t", "max_load": 87.4, "details": "for heavy vehicles"},
-            {"name": "max point load", "metric": "kN", "max_load": 1000.0, "details": "for elevated work platform wheels"},
             {"name": "max uniform distributor load", "metric": "kPa", "max_load": 40.0},
             {"name": "max displacement size", "metric": "t", "max_load": 68100.0},
         ]
         berth8_caps = [
-            {"name": "max point load", "metric": "kN", "max_load": 2642.0, "details": "for crane outriggers"},
+            {"name": "max point load", "metric": "kN", "max_load": 2642.0, "details": "for crane outriggers / EWP wheels"},
             {"name": "max axle load", "metric": "t", "max_load": 87.4, "details": "for heavy vehicles"},
-            {"name": "max point load", "metric": "kN", "max_load": 2642.0, "details": "for elevated work platform wheels"},
             {"name": "max uniform distributor load", "metric": "kPa", "max_load": 40.0},
             {"name": "max displacement size", "metric": "t", "max_load": 72000.0},
         ]
         berth2_caps = [
-            {"name": "max point load", "metric": "kN", "max_load": 1200.0, "details": "for crane outriggers"},
+            {"name": "max point load", "metric": "kN", "max_load": 1200.0, "details": "for crane outriggers / EWP wheels"},
             {"name": "max axle load", "metric": "t", "max_load": 90.0, "details": "for heavy vehicles"},
-            {"name": "max point load", "metric": "kN", "max_load": 1200.0, "details": "for elevated work platform wheels"},
             {"name": "max uniform distributor load", "metric": "kPa", "max_load": 42.0},
             {"name": "max displacement size", "metric": "t", "max_load": 65000.0},
         ]
         berth3_caps = [
-            {"name": "max point load", "metric": "kN", "max_load": 1500.0, "details": "for crane outriggers"},
+            {"name": "max point load", "metric": "kN", "max_load": 1500.0, "details": "for crane outriggers / EWP wheels"},
             {"name": "max axle load", "metric": "t", "max_load": 95.0, "details": "for heavy vehicles"},
-            {"name": "max point load", "metric": "kN", "max_load": 1500.0, "details": "for elevated work platform wheels"},
             {"name": "max uniform distributor load", "metric": "kPa", "max_load": 45.0},
             {"name": "max displacement size", "metric": "t", "max_load": 70000.0},
         ]
         berth9_caps = [
-            {"name": "max point load", "metric": "kN", "max_load": 2200.0, "details": "for crane outriggers"},
+            {"name": "max point load", "metric": "kN", "max_load": 2200.0, "details": "for crane outriggers / EWP wheels"},
             {"name": "max axle load", "metric": "t", "max_load": 100.0, "details": "for heavy vehicles"},
-            {"name": "max point load", "metric": "kN", "max_load": 2200.0, "details": "for elevated work platform wheels"},
             {"name": "max uniform distributor load", "metric": "kPa", "max_load": 48.0},
             {"name": "max displacement size", "metric": "t", "max_load": 76000.0},
         ]
         hardstand_a_caps = [
-            {"name": "max point load", "metric": "kN", "max_load": 800.0, "details": "for crane outriggers"},
+            {"name": "max point load", "metric": "kN", "max_load": 800.0, "details": "for crane outriggers / EWP wheels"},
             {"name": "max axle load", "metric": "t", "max_load": 70.0, "details": "for heavy vehicles"},
-            {"name": "max point load", "metric": "kN", "max_load": 800.0, "details": "for elevated work platform wheels"},
             {"name": "max uniform distributor load", "metric": "kPa", "max_load": 35.0},
             {"name": "max displacement size", "metric": "t", "max_load": 30000.0},
         ]
@@ -141,4 +133,4 @@ def register_seed_command(app: Flask) -> None:
         click.echo(f"Admin: {admin.email} ({'created' if admin_created else 'updated'})")
         click.echo(f"Manager: {manager.email} ({'created' if manager_created else 'updated'})")
         click.echo(f"Contractor: {contractor.email} ({'created' if contractor_created else 'updated'})")
-        click.echo("Assets seeded: Berth 2/3/5/8/9, Hardstand A (each with 5 capacity rows)")
+        click.echo("Assets seeded: Berth 2/3/5/8/9, Hardstand A (each with 4 capacity rows)")
