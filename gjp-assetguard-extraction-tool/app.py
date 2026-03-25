@@ -162,27 +162,31 @@ def annotate_design_criteria_with_diagrams(design_criteria_text, load_diagrams):
     return '\n'.join(annotated_lines)
 
 
+CAPACITY_METRIC_PAIRS = {
+    "max point load": "kN",
+    "max axle load": "t",
+    "max uniform distributor load": "kPa",
+    "max displacement size": "t",
+}
+
+ALLOWED_CAPACITY_NAMES = set(CAPACITY_METRIC_PAIRS.keys())
+ALLOWED_CAPACITY_METRICS = set(CAPACITY_METRIC_PAIRS.values())
+
+
 def _infer_capacity_name(parameter_name, metric):
+    """Infer capacity name from parameter text and metric, enforcing strict pairing."""
     p = (parameter_name or "").lower()
-    if "axle" in p:
+    if "axle" in p and metric == "t":
         return "max axle load"
-    if "uniform" in p or "udl" in p or "distributed" in p:
+    if ("uniform" in p or "udl" in p or "distributed" in p) and metric == "kPa":
         return "max uniform distributor load"
-    if "displacement" in p or "vessel" in p:
+    if ("displacement" in p or "vessel" in p) and metric == "t":
         return "max displacement size"
     if metric == "kPa":
         return "max uniform distributor load"
-    return "max point load"
-
-
-ALLOWED_CAPACITY_NAMES = {
-    "max point load",
-    "max axle load",
-    "max uniform distributor load",
-    "max displacement size",
-}
-
-ALLOWED_CAPACITY_METRICS = {"kN", "t", "kPa"}
+    if metric == "kN":
+        return "max point load"
+    return None
 
 
 def _extract_metric(value_text):
@@ -234,10 +238,11 @@ def build_assetguard_create_asset_payload(design_criteria_text, original_filenam
             continue
 
         capacity_name = _infer_capacity_name(param, metric)
-        if capacity_name not in ALLOWED_CAPACITY_NAMES:
+        if capacity_name is None:
             continue
 
-        key = (capacity_name, metric)
+        paired_metric = CAPACITY_METRIC_PAIRS[capacity_name]
+        key = capacity_name
         detail_text = f"{param}: {value}"
         if key in seen:
             existing = seen[key]
@@ -247,7 +252,7 @@ def build_assetguard_create_asset_payload(design_criteria_text, original_filenam
         else:
             seen[key] = {
                 "name": capacity_name,
-                "metric": metric,
+                "metric": paired_metric,
                 "maxLoad": max_load,
                 "_details_parts": [detail_text],
             }

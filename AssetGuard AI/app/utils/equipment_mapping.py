@@ -20,6 +20,13 @@ EQUIPMENT_RULES: dict[str, tuple[str, str, str]] = {
 ALLOWED_METRICS = frozenset(m.value for m in CapacityMetric)
 ALLOWED_CAPACITY_NAMES = frozenset(n.value for n in CapacityName)
 
+CAPACITY_METRIC_PAIRS: dict[str, str] = {
+    "max point load": "kN",
+    "max axle load": "t",
+    "max uniform distributor load": "kPa",
+    "max displacement size": "t",
+}
+
 
 def normalize_metric(raw: str) -> str:
     m = (raw or "").strip()
@@ -37,6 +44,18 @@ def normalize_capacity_name(raw: str) -> str:
             code="invalid_capacity_name",
         )
     return n
+
+
+def validate_capacity_metric_pair(name: str, metric: str) -> None:
+    expected = CAPACITY_METRIC_PAIRS.get(name)
+    if expected is None:
+        raise ApiError(f"Unknown capacity name {name!r}", 400, code="invalid_capacity_name")
+    if metric != expected:
+        raise ApiError(
+            f"'{name}' must use metric '{expected}', got '{metric}'",
+            400,
+            code="invalid_capacity_metric_pair",
+        )
 
 
 def resolve_equipment(equipment: str) -> tuple[str, str, str]:

@@ -21,7 +21,7 @@ class LoadCapacity(db.Model):
 
     __tablename__ = "load_capacities"
     __table_args__ = (
-        db.UniqueConstraint("asset_id", "name", "metric", name="uq_capacity_asset_name_metric"),
+        db.UniqueConstraint("asset_id", "name", name="uq_capacity_asset_name"),
     )
 
     id = db.Column(db.Integer, primary_key=True)
