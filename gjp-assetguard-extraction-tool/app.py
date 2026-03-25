@@ -208,7 +208,9 @@ def build_assetguard_create_asset_payload(design_criteria_text, original_filenam
     fallback_name = os.path.splitext(os.path.basename(original_filename or "Extracted Asset"))[0]
     asset_name = project_name if project_name and project_name.lower() != "not specified" else fallback_name
 
-    capacities = []
+    # Collect raw capacities, then deduplicate by (name, metric).
+    # When duplicates exist, keep the highest maxLoad and merge details.
+    seen: dict[tuple[str, str], dict] = {}
     for raw_line in text.splitlines():
         line = raw_line.strip()
         if not line.startswith("-") or ":" not in line:
@@ -235,12 +237,26 @@ def build_assetguard_create_asset_payload(design_criteria_text, original_filenam
         if capacity_name not in ALLOWED_CAPACITY_NAMES:
             continue
 
-        capacities.append({
-            "name": capacity_name,
-            "metric": metric,
-            "maxLoad": max_load,
-            "details": f"{param}: {value}"
-        })
+        key = (capacity_name, metric)
+        detail_text = f"{param}: {value}"
+        if key in seen:
+            existing = seen[key]
+            if max_load > existing["maxLoad"]:
+                existing["maxLoad"] = max_load
+            existing["_details_parts"].append(detail_text)
+        else:
+            seen[key] = {
+                "name": capacity_name,
+                "metric": metric,
+                "maxLoad": max_load,
+                "_details_parts": [detail_text],
+            }
+
+    capacities = []
+    for entry in seen.values():
+        parts = entry.pop("_details_parts")
+        entry["details"] = " | ".join(parts)
+        capacities.append(entry)
 
     if not capacities:
         capacities = [{
