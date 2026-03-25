@@ -20,6 +20,9 @@ class LoadCapacity(db.Model):
     """Threshold row for an asset (name + metric + max load), per client PDF."""
 
     __tablename__ = "load_capacities"
+    __table_args__ = (
+        db.UniqueConstraint("asset_id", "name", "metric", name="uq_capacity_asset_name_metric"),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     asset_id = db.Column(db.Integer, db.ForeignKey("assets.id"), nullable=False, index=True)

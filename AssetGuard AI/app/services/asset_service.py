@@ -182,6 +182,7 @@ class AssetService:
         db.session.add(asset)
         db.session.flush()
 
+        seen_keys: set[tuple[str, str]] = set()
         for row in load_capacities:
             cap_name = (row.get("name") or "").strip()
             metric_raw = row.get("metric")
@@ -197,6 +198,14 @@ class AssetService:
                 raise ApiError("maxLoad must be greater than 0", 400, code="validation_error")
             cap_name = normalize_capacity_name(cap_name)
             metric = normalize_metric(str(metric_raw))
+            key = (cap_name, metric)
+            if key in seen_keys:
+                raise ApiError(
+                    f"Duplicate load capacity: {cap_name} ({metric})",
+                    409,
+                    code="duplicate_capacity",
+                )
+            seen_keys.add(key)
             db.session.add(
                 LoadCapacity(
                     asset_id=asset.id,
@@ -329,6 +338,16 @@ class AssetService:
             raise ApiError("maxLoad must be a number", 400, code="validation_error") from e
         if max_f <= 0:
             raise ApiError("maxLoad must be greater than 0", 400, code="validation_error")
+
+        existing = LoadCapacity.query.filter_by(
+            asset_id=asset.id, name=cap_name, metric=metric
+        ).first()
+        if existing is not None:
+            raise ApiError(
+                f"Load capacity {cap_name} ({metric}) already exists for this asset",
+                409,
+                code="duplicate_capacity",
+            )
 
         cap = LoadCapacity(
             asset_id=asset.id,
