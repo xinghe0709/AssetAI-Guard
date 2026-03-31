@@ -6,6 +6,11 @@ from datetime import datetime
 import numpy as np
 from PIL import Image
 import re
+from dotenv import load_dotenv  # 加这行
+
+
+load_dotenv()  # Load env variables from .env (call before OpenAI init)
+
 
 client = OpenAI()
 
