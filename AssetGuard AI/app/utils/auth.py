@@ -14,10 +14,9 @@ from app.utils.errors import ApiError
 
 @dataclass(frozen=True)
 class AuthContext:
-    """Current user context parsed from the Bearer token (includes tenant id)."""
+    """Current user context parsed from the Bearer token."""
 
     user_id: int
-    company_id: int
     role: str
     email: str
 
@@ -28,10 +27,9 @@ def _serializer() -> URLSafeTimedSerializer:
 
 
 def issue_token(*, user: User) -> str:
-    """Issue a token whose payload includes user_id, company_id, role, and email."""
+    """Issue a token whose payload includes user_id, role, and email."""
     payload = {
         "user_id": user.id,
-        "company_id": user.company_id,
         "role": user.role.value if isinstance(user.role, UserRole) else str(user.role),
         "email": user.email,
     }
@@ -54,13 +52,12 @@ def verify_token(token: str) -> AuthContext:
     except BadSignature as e:
         raise ApiError("Invalid token", 401, code="token_invalid") from e
 
-    for k in ("user_id", "company_id", "role", "email"):
+    for k in ("user_id", "role", "email"):
         if k not in payload:
             raise ApiError("Invalid token payload", 401, code="token_invalid")
 
     return AuthContext(
         user_id=int(payload["user_id"]),
-        company_id=int(payload["company_id"]),
         role=str(payload["role"]),
         email=str(payload["email"]),
     )

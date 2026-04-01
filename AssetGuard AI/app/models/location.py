@@ -2,7 +2,7 @@ from app.extensions import db
 
 
 class Location(db.Model):
-    """Global site (e.g. port). Shared across tenant assets."""
+    """Global site (e.g. port). Shared across all assets."""
 
     __tablename__ = "locations"
     __table_args__ = (db.UniqueConstraint("name", name="uq_location_name"),)

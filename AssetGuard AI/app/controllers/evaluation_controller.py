@@ -61,10 +61,7 @@ def check():
     model_str = equipment_model if isinstance(equipment_model, str) else None
     remark_str = remark if isinstance(remark, str) else None
 
-    # pylint cannot infer keyword-only signature reliably across staticmethod lookup here.
-    # pylint: disable=unexpected-keyword-arg
     data = EvaluationService.evaluate_load(
-        company_id=ctx.company_id,
         user_id=ctx.user_id,
         location_id=location_id_i,
         asset_id=asset_id_i,
@@ -79,11 +76,11 @@ def check():
 @evaluations_bp.get("/history")
 @require_roles(UserRole.SYSTEM_ADMIN.value, UserRole.ASSET_MANAGER.value)
 def history():
-    ctx = get_auth_context()
+    _ = get_auth_context()
     page = int(request.args.get("page", 1))
     page_size = int(request.args.get("pageSize", 20))
     if page < 1 or page_size < 1 or page_size > 200:
         raise ApiError("Invalid pagination parameters", 400, code="validation_error")
 
-    data = EvaluationService.history(company_id=ctx.company_id, page=page, page_size=page_size)
+    data = EvaluationService.history(page=page, page_size=page_size)
     return ok(data)

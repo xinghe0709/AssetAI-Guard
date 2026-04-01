@@ -1,50 +1,66 @@
-# AssetGuard AI API Documentation
+# AssetGuard AI — API Documentation
 
 ## Overview
 
-AssetGuard AI is a Flask-based backend for:
+AssetGuard AI is a Flask-based REST backend that provides:
 
-- user authentication and role-based access control
-- shared location management
-- asset and load-capacity management
-- engineering load evaluation
-- importing AI-generated asset JSON payloads into the database
+- User authentication and role-based access control
+- Shared location management
+- Asset and load-capacity management
+- Engineering load compliance evaluation
+- Bulk import of AI-generated asset JSON payloads
 
-Base path for all application APIs:
+**Base path** for all application APIs:
 
-```text
+```
 /api/v1
 ```
 
-Health check endpoint:
+---
 
-```text
-/api/v1/health
-```
+## Table of Contents
+
+1. [Authentication](#authentication)
+2. [Roles & Permissions](#roles--permissions)
+3. [Standard Response Format](#standard-response-format)
+4. [HTTP Status Codes](#http-status-codes)
+5. [Enum Reference](#enum-reference)
+6. [Health](#health)
+7. [Auth APIs](#auth-apis)
+8. [Location APIs](#location-apis)
+9. [Asset APIs](#asset-apis)
+10. [Evaluation APIs](#evaluation-apis)
+11. [AI JSON Import Workflow](#ai-json-import-workflow)
+
+---
 
 ## Authentication
 
-The API uses Bearer token authentication.
+The API uses **Bearer token** authentication.
 
-1. Call `POST /api/v1/auth/login`
-2. Copy the returned `token`
-3. Send it in the `Authorization` header:
+1. Call `POST /api/v1/auth/login` with your credentials.
+2. Copy the `token` from the response.
+3. Include it in every subsequent request:
 
 ```http
 Authorization: Bearer <token>
 ```
 
-## Roles
+---
 
-Supported roles:
+## Roles & Permissions
 
-- `System_Admin`
-- `Asset_Manager`
-- `Contractors`
+| Role | Description |
+|------|-------------|
+| `System_Admin` | Full access, including user management and AI import |
+| `Asset_Manager` | Can create and manage assets and load capacities |
+| `Contractors` | Read-only access; can run load evaluations |
+
+---
 
 ## Standard Response Format
 
-Successful responses use this envelope:
+### Success
 
 ```json
 {
@@ -53,7 +69,7 @@ Successful responses use this envelope:
 }
 ```
 
-Some successful responses may also include a `message`:
+Some success responses also include a `message` field:
 
 ```json
 {
@@ -63,36 +79,82 @@ Some successful responses may also include a `message`:
 }
 ```
 
-Error responses use this envelope:
+### Error
 
 ```json
 {
   "success": false,
-  "message": "Human readable error message",
+  "message": "Human-readable error description",
   "code": "machine_readable_error_code"
 }
 ```
 
-Some error responses may also include `details`.
+Some error responses include an additional `details` field with more context.
 
-## Common HTTP Status Codes
+---
 
-- `200 OK` for successful reads or successful operations without new resource creation
-- `201 Created` for successful creation/import that produced new records
-- `400 Bad Request` for validation errors
-- `401 Unauthorized` for missing or invalid credentials
-- `403 Forbidden` for insufficient permissions
-- `404 Not Found` for missing resources
-- `409 Conflict` for duplicate resources
-- `500 Internal Server Error` for unexpected failures
+## HTTP Status Codes
+
+| Code | Meaning |
+|------|---------|
+| `200 OK` | Successful read or operation without new resource creation |
+| `201 Created` | Successful creation that produced a new record |
+| `400 Bad Request` | Validation error or business rule violation |
+| `401 Unauthorized` | Missing or invalid credentials |
+| `403 Forbidden` | Insufficient role permissions |
+| `404 Not Found` | Resource does not exist |
+| `409 Conflict` | Duplicate resource violation |
+| `500 Internal Server Error` | Unexpected server failure |
+
+---
+
+## Enum Reference
+
+### Load Capacity Names
+
+Each capacity name is bound to exactly one allowed metric (enforced at creation and update).
+
+| `name` | Required `metric` |
+|--------|-------------------|
+| `max point load` | `kN` |
+| `max axle load` | `t` |
+| `max uniform distributor load` | `kPa` |
+| `max displacement size` | `t` |
+
+### Load Metrics
+
+- `kN`
+- `t`
+- `kPa`
+
+### User Roles
+
+- `System_Admin`
+- `Asset_Manager`
+- `Contractors`
+
+### Equipment Types
+
+Equipment types are mapped internally to the relevant load capacity.
+
+| `equipment` | Load Parameter Label | Metric | Matched Capacity Name |
+|-------------|----------------------|--------|-----------------------|
+| `Crane with outriggers` | Max Outrigger Load | `kN` | `max point load` |
+| `Mobile crane` | Max Axle Load | `t` | `max axle load` |
+| `Heavy vehicle` | Max Axle Load | `t` | `max axle load` |
+| `Elevated Work Platform` | Max Wheel Load | `kN` | `max point load` |
+| `Storage Load` | Uniform Distributor Load | `kPa` | `max uniform distributor load` |
+| `Vessel` | Displacement | `t` | `max displacement size` |
+
+---
 
 ## Health
 
-### GET `/health`
+### GET `/api/v1/health`
 
-Simple server health check.
+Simple server liveness check. No authentication required.
 
-Response:
+**Response `200`:**
 
 ```json
 {
@@ -100,13 +162,15 @@ Response:
 }
 ```
 
+---
+
 ## Auth APIs
 
-### POST `/auth/login`
+### POST `/api/v1/auth/login`
 
-Sign in using email and password.
+Sign in with email and password.
 
-Request body:
+**Request body:**
 
 ```json
 {
@@ -115,7 +179,7 @@ Request body:
 }
 ```
 
-Response:
+**Response `200`:**
 
 ```json
 {
@@ -125,23 +189,28 @@ Response:
     "user": {
       "id": 1,
       "email": "admin@demo.com",
-      "role": "System_Admin",
-      "companyId": 1
+      "role": "System_Admin"
     }
   }
 }
 ```
 
-Possible errors:
+**Possible errors:**
 
-- `400 validation_error` if email or password is missing
-- `401 invalid_credentials` if login fails
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | `email` or `password` is missing |
+| `401` | `invalid_credentials` | Email not found or password incorrect |
 
-### POST `/auth/users`
+---
 
-Create a user in the current tenant. `System_Admin` only.
+### POST `/api/v1/auth/users`
 
-Request body:
+Create a new user account.
+
+**Permissions:** `System_Admin` only.
+
+**Request body:**
 
 ```json
 {
@@ -151,7 +220,13 @@ Request body:
 }
 ```
 
-Response:
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `email` | string | Yes | Must be unique |
+| `password` | string | Yes | |
+| `role` | string | Yes | One of `System_Admin`, `Asset_Manager`, `Contractors` |
+
+**Response `201`:**
 
 ```json
 {
@@ -159,56 +234,91 @@ Response:
   "data": {
     "id": 5,
     "email": "manager2@demo.com",
-    "role": "Asset_Manager",
-    "companyId": 1
+    "role": "Asset_Manager"
   }
 }
 ```
 
-Possible errors:
+**Possible errors:**
 
-- `400 validation_error` if required fields are missing or role is invalid
-- `403` if caller is not `System_Admin`
-- `409 email_exists` if the email already exists
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | Required field missing or role value is invalid |
+| `403` | — | Caller is not `System_Admin` |
+| `409` | `email_exists` | Email address already registered |
+
+---
+
+### POST `/api/v1/auth/change-password`
+
+Change the password of the currently authenticated user.
+
+**Permissions:** Any authenticated user.
+
+**Request body:**
+
+```json
+{
+  "currentPassword": "admin123",
+  "newPassword": "newSecurePassword456"
+}
+```
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `currentPassword` | string | Yes | Must match the user's existing password |
+| `newPassword` | string | Yes | Must not be empty or identical to `currentPassword` |
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "message": "Password changed successfully"
+  }
+}
+```
+
+**Possible errors:**
+
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | `currentPassword` or `newPassword` is missing, blank, or new equals current |
+| `401` | `missing_token` | No Bearer token provided |
+| `401` | `invalid_credentials` | `currentPassword` does not match the user's actual password |
+
+---
 
 ## Location APIs
 
-### GET `/locations/`
+### GET `/api/v1/locations/`
 
-List all shared locations.
+Return all shared locations.
 
-Authentication:
+**Permissions:** Any authenticated user.
 
-- any authenticated user
-
-Response:
+**Response `200`:**
 
 ```json
 {
   "success": true,
   "data": [
-    {
-      "id": 1,
-      "name": "Berth 5"
-    },
-    {
-      "id": 2,
-      "name": "Berth 8"
-    }
+    { "id": 1, "name": "Berth 5" },
+    { "id": 2, "name": "Berth 8" }
   ]
 }
 ```
 
-### POST `/locations/`
+---
+
+### POST `/api/v1/locations/`
 
 Create a new location.
 
-Permissions:
+**Permissions:** `System_Admin`, `Asset_Manager`.
 
-- `System_Admin`
-- `Asset_Manager`
-
-Request body:
+**Request body:**
 
 ```json
 {
@@ -216,7 +326,7 @@ Request body:
 }
 ```
 
-Response:
+**Response `201`:**
 
 ```json
 {
@@ -228,33 +338,41 @@ Response:
 }
 ```
 
-Possible errors:
+**Possible errors:**
 
-- `400 validation_error` if `name` is missing
-- `403` if caller lacks permission
-- `409 location_exists` if the location name already exists
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | `name` is missing or blank |
+| `403` | — | Caller lacks permission |
+| `409` | `location_exists` | Location name already exists |
+
+---
 
 ## Asset APIs
 
-### GET `/assets/`
+### GET `/api/v1/assets/`
 
-List assets for a specific location in the current tenant.
+List assets for a specific location, including their load capacities.
 
-Query parameters:
+**Permissions:** Any authenticated user.
 
-- `locationId` required integer
-- `page` optional integer, default `1`
-- `pageSize` optional integer, default `20`, max `200`
-- `q` optional asset name search string
+**Query parameters:**
 
-Example:
+| Parameter | Type | Required | Default | Notes |
+|-----------|------|----------|---------|-------|
+| `locationId` | integer | Yes | — | |
+| `page` | integer | No | `1` | Must be ≥ 1 |
+| `pageSize` | integer | No | `20` | Must be 1–200 |
+| `q` | string | No | — | Case-insensitive substring filter on asset name |
+
+**Example request:**
 
 ```http
 GET /api/v1/assets/?locationId=1&page=1&pageSize=20
 Authorization: Bearer <token>
 ```
 
-Response:
+**Response `200`:**
 
 ```json
 {
@@ -284,22 +402,30 @@ Response:
 }
 ```
 
-Possible errors:
+**Possible errors:**
 
-- `400 validation_error` if `locationId` is missing or pagination is invalid
-- `404 location_not_found` if the location does not exist
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | `locationId` missing or pagination parameters out of range |
+| `404` | `location_not_found` | No location with the given ID |
 
-### GET `/assets/all`
+---
 
-List all assets visible to the current company.
+### GET `/api/v1/assets/all`
 
-Query parameters:
+List all assets across all locations (without load capacities).
 
-- `page` optional integer, default `1`
-- `pageSize` optional integer, default `20`, max `200`
-- `q` optional asset name search string
+**Permissions:** Any authenticated user.
 
-Response:
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Notes |
+|-----------|------|----------|---------|-------|
+| `page` | integer | No | `1` | Must be ≥ 1 |
+| `pageSize` | integer | No | `20` | Must be 1–200 |
+| `q` | string | No | — | Case-insensitive substring filter on asset name |
+
+**Response `200`:**
 
 ```json
 {
@@ -320,16 +446,21 @@ Response:
 }
 ```
 
-### POST `/assets/`
+**Possible errors:**
 
-Create an asset with load capacities.
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | Pagination parameters out of range |
 
-Permissions:
+---
 
-- `System_Admin`
-- `Asset_Manager`
+### POST `/api/v1/assets/`
 
-Request body:
+Create an asset with one or more load capacities.
+
+**Permissions:** `System_Admin`, `Asset_Manager`.
+
+**Request body:**
 
 ```json
 {
@@ -352,30 +483,30 @@ Request body:
 }
 ```
 
-Location behavior:
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `locationName` | string | Yes | See location-resolution behaviour below |
+| `name` | string | Yes | Must be unique within the resolved location |
+| `loadCapacities` | array | Yes | At least one entry required |
+| `loadCapacities[].name` | string | Yes | See [Load Capacity Names](#load-capacity-names) enum |
+| `loadCapacities[].metric` | string | Yes | Must match the required metric for the given name |
+| `loadCapacities[].maxLoad` | number | Yes | Must be > 0 |
+| `loadCapacities[].details` | string | No | Free-text annotation |
 
-- the service tries to match `locationName` against existing location names
-- small differences such as spacing, punctuation, or casing may still resolve to an existing location
-- if no sufficiently close match is found, a new location is created automatically
+**Location resolution:**
 
-Duplicate protection:
+The service attempts to fuzzy-match `locationName` against existing locations (normalised whitespace, punctuation, and casing). If the best-match score reaches the internal threshold, the existing location is reused. Otherwise a new location is created automatically.
 
-- if an asset with the same `company_id + location_id + name` already exists, the API returns `409 conflict`
+**Capacity-metric pairing:**
 
-Allowed `loadCapacities[].name` values:
+Each `loadCapacities[].name` is bound to a single allowed metric. Providing a mismatched pair (e.g. `"max point load"` with metric `"t"`) returns a `400 invalid_capacity_metric_pair` error. See the [Enum Reference](#enum-reference) table.
 
-- `max point load`
-- `max axle load`
-- `max uniform distributor load`
-- `max displacement size`
+**Duplicate protection:**
 
-Allowed `loadCapacities[].metric` values:
+- Duplicate `name` values within the same `loadCapacities` array → `409 duplicate_capacity`.
+- An asset with the same `(locationId, name)` already exists → `409 asset_already_exists`.
 
-- `kN`
-- `t`
-- `kPa`
-
-Response:
+**Response `201`:**
 
 ```json
 {
@@ -391,42 +522,40 @@ Response:
         "metric": "kN",
         "maxLoad": 1200.0,
         "details": "Max Outrigger Load: 1200 kN"
+      },
+      {
+        "id": 32,
+        "name": "max axle load",
+        "metric": "t",
+        "maxLoad": 85.0,
+        "details": "Max Axle Load: 85 t"
       }
     ]
   }
 }
 ```
 
-Possible errors:
+**Possible errors:**
 
-- `400 validation_error` if required fields are missing
-- `400 invalid_metric` if a metric is outside the enum
-- `400 invalid_capacity_name` if a capacity name is outside the enum
-- `403` if caller lacks permission
-- `409 asset_already_exists` if the same asset already exists in the same company and location
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | Required field missing or `maxLoad` is not a positive number |
+| `400` | `invalid_metric` | Metric value outside the allowed enum |
+| `400` | `invalid_capacity_name` | Capacity name outside the allowed enum |
+| `400` | `invalid_capacity_metric_pair` | Metric does not match the required metric for the capacity name |
+| `403` | — | Caller lacks permission |
+| `409` | `asset_already_exists` | Asset with same name already exists at the resolved location |
+| `409` | `duplicate_capacity` | Same capacity name appears more than once in `loadCapacities` |
 
-### POST `/assets/import-json-uploads`
+---
 
-Import every JSON asset payload found in the configured AI uploads directory.
+### POST `/api/v1/assets/import-json-uploads`
 
-Permissions:
+Batch-import all `*.json` asset-payload files found in the configured AI uploads directory.
 
-- `System_Admin` only
+**Permissions:** `System_Admin` only.
 
-Purpose:
-
-- reads JSON files exported by the AI extraction module
-- validates each file
-- creates assets one by one
-- returns created and rejected items in one batch response
-
-Request body:
-
-```json
-{}
-```
-
-Optional request body with explicit directory:
+**Request body (optional):**
 
 ```json
 {
@@ -434,12 +563,16 @@ Optional request body with explicit directory:
 }
 ```
 
-Default directory:
+If `directoryPath` is omitted, the server uses the value of `AI_JSON_UPLOADS_DIR` from its configuration (defaults to the `gjp-assetguard-extraction-tool/uploads` folder alongside the server).
 
-- configured by `AI_JSON_UPLOADS_DIR`
-- by default points to `gjp-assetguard-extraction-tool/uploads`
+**How it works:**
 
-Response:
+1. Scans the directory for `*.json` files, sorted alphabetically.
+2. Parses each file and validates the payload structure.
+3. Attempts to create each asset via the same logic as `POST /assets/`.
+4. Returns a summary of created and rejected files in one batch response.
+
+**Response `201`** (when at least one asset was created) **or `200`** (when no new assets were created):
 
 ```json
 {
@@ -472,7 +605,7 @@ Response:
       {
         "file": "02_design_criteria_asset_payload_duplicate.json",
         "reason": "asset_already_exists",
-        "message": "Asset with the same company, location, and name already exists",
+        "message": "Asset with the same location and name already exists",
         "assetName": "Imported From Uploads A"
       },
       {
@@ -485,27 +618,37 @@ Response:
 }
 ```
 
-Status code behavior:
+**Rejection reasons in `rejected[]`:**
 
-- `201` if at least one asset was created
-- `200` if no new assets were created but the request itself completed
+| `reason` | Description |
+|----------|-------------|
+| `invalid_json` | File is not valid JSON |
+| `invalid_payload` | Top-level JSON is not an object |
+| `invalid_asset_payload` | Object is missing `locationName`, `name`, or `loadCapacities` |
+| `asset_already_exists` | Asset with the same name already exists at the resolved location |
+| `invalid_metric` | A metric value in the file is not in the allowed enum |
+| `invalid_capacity_name` | A capacity name in the file is not in the allowed enum |
+| `invalid_capacity_metric_pair` | Metric does not match the required metric for the capacity name |
+| `duplicate_capacity` | Same capacity name appears more than once in `loadCapacities` |
+| `validation_error` | Other validation failure (e.g. blank name, non-positive maxLoad) |
 
-Possible errors:
+**Possible errors:**
 
-- `400 validation_error` if `directoryPath` is invalid or missing when required
-- `403` if caller is not `System_Admin`
-- `404 json_uploads_dir_not_found` if the directory does not exist
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | `directoryPath` is required but not provided and no default is configured |
+| `403` | — | Caller is not `System_Admin` |
+| `404` | `json_uploads_dir_not_found` | The specified directory does not exist |
 
-### GET `/assets/<asset_id>/load-capacities`
+---
+
+### GET `/api/v1/assets/<asset_id>/load-capacities`
 
 List all load capacities for a single asset.
 
-Permissions:
+**Permissions:** `System_Admin`, `Asset_Manager`.
 
-- `System_Admin`
-- `Asset_Manager`
-
-Response:
+**Response `200`:**
 
 ```json
 {
@@ -529,32 +672,40 @@ Response:
 }
 ```
 
-Possible errors:
+**Possible errors:**
 
-- `403` if caller lacks permission
-- `404 asset_not_found` if the asset does not belong to the caller's company
+| Status | Code | Description |
+|--------|------|-------------|
+| `403` | — | Caller lacks permission |
+| `404` | `asset_not_found` | No asset with the given ID |
 
-### POST `/assets/<asset_id>/load-capacities`
+---
 
-Create a new load capacity row for an asset.
+### POST `/api/v1/assets/<asset_id>/load-capacities`
 
-Permissions:
+Add a new load capacity row to an existing asset.
 
-- `System_Admin`
-- `Asset_Manager`
+**Permissions:** `System_Admin`, `Asset_Manager`.
 
-Request body:
+**Request body:**
 
 ```json
 {
-  "name": "max point load",
-  "metric": "kN",
-  "maxLoad": 800,
-  "details": "temporary cap"
+  "name": "max axle load",
+  "metric": "t",
+  "maxLoad": 80,
+  "details": "temp cap"
 }
 ```
 
-Response:
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `name` | string | Yes | See [Load Capacity Names](#load-capacity-names) enum |
+| `metric` | string | Yes | Must match the required metric for the given name |
+| `maxLoad` | number | Yes | Must be > 0 |
+| `details` | string | No | Free-text annotation |
+
+**Response `201`:**
 
 ```json
 {
@@ -567,41 +718,56 @@ Response:
     },
     "capacity": {
       "id": 42,
-      "name": "max point load",
-      "metric": "kN",
-      "maxLoad": 800.0,
-      "details": "temporary cap"
+      "name": "max axle load",
+      "metric": "t",
+      "maxLoad": 80.0,
+      "details": "temp cap"
     }
   }
 }
 ```
 
-### PUT `/assets/<asset_id>/load-capacities/<capacity_id>`
+**Possible errors:**
 
-Update one or more fields on a load capacity row.
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | Required field missing or `maxLoad` is not a positive number |
+| `400` | `invalid_metric` | Metric value outside the allowed enum |
+| `400` | `invalid_capacity_name` | Capacity name outside the allowed enum |
+| `400` | `invalid_capacity_metric_pair` | Metric does not match the required metric for the capacity name |
+| `403` | — | Caller lacks permission |
+| `404` | `asset_not_found` | No asset with the given ID |
+| `409` | `duplicate_capacity` | This capacity name already exists on the asset |
 
-Permissions:
+---
 
-- `System_Admin`
-- `Asset_Manager`
+### PUT `/api/v1/assets/<asset_id>/load-capacities/<capacity_id>`
 
-Allowed update fields:
+Update one or more fields on an existing load capacity row.
 
-- `name`
-- `metric`
-- `maxLoad`
-- `details`
+**Permissions:** `System_Admin`, `Asset_Manager`.
 
-Request body example:
+At least one of `name`, `metric`, `maxLoad`, or `details` must be present in the request body.
+
+**Request body (partial update):**
 
 ```json
 {
   "maxLoad": 850,
-  "details": "updated"
+  "details": "updated cap"
 }
 ```
 
-Response:
+**Updatable fields:**
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `name` | string | Must be a valid capacity name; metric compatibility is **not** re-validated when only `name` changes |
+| `metric` | string | Must be a valid metric value |
+| `maxLoad` | number | Must be > 0 |
+| `details` | string | Set to `null` or empty to clear |
+
+**Response `200`:**
 
 ```json
 {
@@ -614,25 +780,35 @@ Response:
     },
     "capacity": {
       "id": 42,
-      "name": "max point load",
-      "metric": "kN",
+      "name": "max axle load",
+      "metric": "t",
       "maxLoad": 850.0,
-      "details": "updated"
+      "details": "updated cap"
     }
   }
 }
 ```
 
-### DELETE `/assets/<asset_id>/load-capacities/<capacity_id>`
+**Possible errors:**
 
-Delete one load capacity row from an asset.
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | No updatable field provided, or `maxLoad` is not a positive number |
+| `400` | `invalid_metric` | Metric value outside the allowed enum |
+| `400` | `invalid_capacity_name` | Capacity name outside the allowed enum |
+| `403` | — | Caller lacks permission |
+| `404` | `asset_not_found` | No asset with the given ID |
+| `404` | `capacity_not_found` | No load capacity with the given ID on this asset |
 
-Permissions:
+---
 
-- `System_Admin`
-- `Asset_Manager`
+### DELETE `/api/v1/assets/<asset_id>/load-capacities/<capacity_id>`
 
-Response:
+Remove a load capacity row from an asset.
+
+**Permissions:** `System_Admin`, `Asset_Manager`.
+
+**Response `200`:**
 
 ```json
 {
@@ -643,17 +819,25 @@ Response:
 }
 ```
 
+**Possible errors:**
+
+| Status | Code | Description |
+|--------|------|-------------|
+| `403` | — | Caller lacks permission |
+| `404` | `asset_not_found` | No asset with the given ID |
+| `404` | `capacity_not_found` | No load capacity with the given ID on this asset |
+
+---
+
 ## Evaluation APIs
 
-### GET `/evaluations/equipment-options`
+### GET `/api/v1/evaluations/equipment-options`
 
-Return the supported equipment list with the expected load parameter label and metric.
+Return the full list of supported equipment types with their expected load parameter label and metric. Use this endpoint to populate form dropdowns dynamically.
 
-Authentication:
+**Permissions:** Any authenticated user.
 
-- any authenticated user
-
-Response:
+**Response `200`:**
 
 ```json
 {
@@ -665,23 +849,43 @@ Response:
       "metric": "kN"
     },
     {
+      "equipment": "Mobile crane",
+      "loadParameterLabel": "Max Axle Load",
+      "metric": "t"
+    },
+    {
+      "equipment": "Heavy vehicle",
+      "loadParameterLabel": "Max Axle Load",
+      "metric": "t"
+    },
+    {
+      "equipment": "Elevated Work Platform",
+      "loadParameterLabel": "Max Wheel Load",
+      "metric": "kN"
+    },
+    {
       "equipment": "Storage Load",
       "loadParameterLabel": "Uniform Distributor Load",
       "metric": "kPa"
+    },
+    {
+      "equipment": "Vessel",
+      "loadParameterLabel": "Displacement",
+      "metric": "t"
     }
   ]
 }
 ```
 
-### POST `/evaluations/check`
+---
 
-Evaluate whether a user-supplied load complies with the selected asset's stored capacity.
+### POST `/api/v1/evaluations/check`
 
-Authentication:
+Evaluate whether a proposed load complies with the selected asset's stored capacity. The result is logged and can be retrieved via the history endpoint.
 
-- any authenticated user
+**Permissions:** Any authenticated user.
 
-Request body:
+**Request body:**
 
 ```json
 {
@@ -694,7 +898,23 @@ Request body:
 }
 ```
 
-Response:
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `locationId` | integer | Yes | Must match the asset's location |
+| `assetId` | integer | Yes | |
+| `equipment` | string | Yes | Must be a valid equipment type (see [Equipment Types](#equipment-types)) |
+| `loadParameterValue` | number | Yes | Must be > 0 |
+| `equipmentModel` | string | No | Free-text model/identifier |
+| `remark` | string | No | Free-text note saved with the log entry |
+
+**Evaluation logic:**
+
+The service maps the `equipment` string to the required capacity name and metric, then looks up the matching `LoadCapacity` row on the asset. It compares `loadParameterValue` against `maxLoad`:
+
+- If `loadParameterValue ≤ maxLoad` → **`Compliant`**, `overloadPercentage = 0.0`
+- If `loadParameterValue > maxLoad` → **`Non-Compliant`**, `overloadPercentage = (value − maxLoad) / maxLoad`
+
+**Response `200`:**
 
 ```json
 {
@@ -718,30 +938,49 @@ Response:
 }
 ```
 
-Possible errors:
+**Response fields:**
 
-- `400 validation_error` for missing fields or bad numeric values
-- `400 invalid_load_value` if the value is zero or negative
-- `400 asset_location_mismatch` if the asset is not in the given location
-- `400 capacity_not_found` if the asset does not have the required capacity row
-- `400 capacity_metric_mismatch` if stored metric conflicts with the selected equipment type
-- `404 asset_not_found` if the asset does not belong to the current company
+| Field | Type | Description |
+|-------|------|-------------|
+| `asset` | object | Asset summary |
+| `equipment` | string | Equipment type used |
+| `equipmentModel` | string \| null | Equipment model/identifier |
+| `loadParameterValue` | number | Submitted load value |
+| `loadParameterMetric` | string | Metric derived from equipment type |
+| `matchedCapacityName` | string | The capacity name that was checked |
+| `capacityMaxLoad` | number | The stored maximum load |
+| `status` | string | `"Compliant"` or `"Non-Compliant"` |
+| `overloadPercentage` | number | `0.0` when compliant; ratio of excess over max load otherwise (e.g. `0.25` = 25% over limit) |
+| `remark` | string \| null | Remark as saved |
 
-### GET `/evaluations/history`
+**Possible errors:**
 
-List evaluation history for the current company.
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | Required field missing or value is not a valid number |
+| `400` | `invalid_load_value` | `loadParameterValue` is zero or negative |
+| `400` | `invalid_equipment` | `equipment` is not one of the supported types |
+| `400` | `asset_location_mismatch` | The asset does not belong to the supplied `locationId` |
+| `400` | `capacity_not_found` | The asset has no capacity row for the equipment's required capacity name |
+| `400` | `capacity_metric_mismatch` | Stored capacity metric does not match the equipment's expected metric |
+| `404` | `asset_not_found` | No asset with the given ID |
 
-Permissions:
+---
 
-- `System_Admin`
-- `Asset_Manager`
+### GET `/api/v1/evaluations/history`
 
-Query parameters:
+List all past evaluation log entries, most recent first.
 
-- `page` optional integer, default `1`
-- `pageSize` optional integer, default `20`, max `200`
+**Permissions:** `System_Admin`, `Asset_Manager`.
 
-Response:
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Notes |
+|-----------|------|----------|---------|-------|
+| `page` | integer | No | `1` | Must be ≥ 1 |
+| `pageSize` | integer | No | `20` | Must be 1–200 |
+
+**Response `200`:**
 
 ```json
 {
@@ -771,53 +1010,45 @@ Response:
 }
 ```
 
-Possible errors:
+**Possible errors:**
 
-- `400 validation_error` if pagination is invalid
-- `403` if caller lacks permission
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | Pagination parameters out of range |
+| `403` | — | Caller is `Contractors` (insufficient permission) |
 
-## Notes for AI JSON Import Workflow
+---
 
-The AI extraction module is expected to generate JSON files in this shape:
+## AI JSON Import Workflow
+
+The AI extraction module (`gjp-assetguard-extraction-tool`) generates one JSON file per detected asset. Each file must conform to this schema:
 
 ```json
 {
   "locationName": "Berth 5",
-  "name": "Imported Deck Asset",
+  "name": "Berth 5 Deck",
   "loadCapacities": [
     {
       "name": "max point load",
       "metric": "kN",
       "maxLoad": 1200,
       "details": "Max Outrigger Load: 1200 kN"
+    },
+    {
+      "name": "max axle load",
+      "metric": "t",
+      "maxLoad": 85,
+      "details": "Max Axle Load: 85 t"
     }
   ]
 }
 ```
 
-The main server will:
+When `POST /api/v1/assets/import-json-uploads` is called:
 
-- validate enum values for `name` and `metric`
-- resolve or create a location using `locationName`
-- reject duplicate assets in the same company and location
+1. All `*.json` files in the uploads directory are read in alphabetical order.
+2. Each file is validated (structure, enum values, metric–name pairing, positive `maxLoad`).
+3. Valid files that are not duplicates are imported as new assets.
+4. A single batch response is returned with per-file outcomes.
 
-## Current Enum Constraints
-
-Load capacity names:
-
-- `max point load`
-- `max axle load`
-- `max uniform distributor load`
-- `max displacement size`
-
-Load metrics:
-
-- `kN`
-- `t`
-- `kPa`
-
-User roles:
-
-- `System_Admin`
-- `Asset_Manager`
-- `Contractors`
+The server's `AI_JSON_UPLOADS_DIR` configuration key sets the default directory. This can be overridden per-request using the `directoryPath` body field.

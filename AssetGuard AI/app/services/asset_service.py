@@ -82,19 +82,19 @@ class AssetService:
         return new_location
 
     @staticmethod
-    def _get_owned_asset(*, company_id: int, asset_id: int) -> Asset:
-        asset = Asset.query.filter_by(id=asset_id, company_id=company_id).first()
+    def _get_asset(*, asset_id: int) -> Asset:
+        asset = Asset.query.filter_by(id=asset_id).first()
         if asset is None:
-            raise ApiError("Asset not found or access denied", 404, code="asset_not_found")
+            raise ApiError("Asset not found", 404, code="asset_not_found")
         return asset
 
     @staticmethod
-    def list_assets(*, company_id: int, location_id: int, page: int, page_size: int, q: str | None):
+    def list_assets(*, location_id: int, page: int, page_size: int, q: str | None):
         loc = Location.query.filter_by(id=location_id).first()
         if loc is None:
             raise ApiError("Location not found", 404, code="location_not_found")
 
-        stmt = select(Asset).where(Asset.company_id == company_id, Asset.location_id == location_id)
+        stmt = select(Asset).where(Asset.location_id == location_id)
         if q:
             like = f"%{q}%"
             stmt = stmt.where(Asset.name.ilike(like))
@@ -131,8 +131,8 @@ class AssetService:
         }
 
     @staticmethod
-    def list_company_assets(*, company_id: int, page: int, page_size: int, q: str | None):
-        stmt = select(Asset).where(Asset.company_id == company_id)
+    def list_all_assets(*, page: int, page_size: int, q: str | None):
+        stmt = select(Asset)
         if q:
             like = f"%{q}%"
             stmt = stmt.where(Asset.name.ilike(like))
@@ -157,7 +157,6 @@ class AssetService:
     @staticmethod
     def create_asset(
         *,
-        company_id: int,
         location_name: str,
         name: str,
         load_capacities: list[dict],
@@ -171,18 +170,17 @@ class AssetService:
             raise ApiError("loadCapacities must contain at least one entry", 400, code="validation_error")
 
         existing_asset = Asset.query.filter_by(
-            company_id=company_id,
             location_id=loc.id,
             name=n,
         ).first()
         if existing_asset is not None:
             raise ApiError(
-                "Asset with the same company, location, and name already exists",
+                "Asset with the same location and name already exists",
                 409,
                 code="asset_already_exists",
             )
 
-        asset = Asset(company_id=company_id, location_id=loc.id, name=n)
+        asset = Asset(location_id=loc.id, name=n)
         db.session.add(asset)
         db.session.flush()
 
@@ -228,7 +226,6 @@ class AssetService:
     @staticmethod
     def import_assets_from_json_directory(
         *,
-        company_id: int,
         directory_path: str,
     ) -> dict:
         root = Path(directory_path).expanduser()
@@ -280,7 +277,6 @@ class AssetService:
 
             try:
                 created = AssetService.create_asset(
-                    company_id=company_id,
                     location_name=str(location_name),
                     name=str(name),
                     load_capacities=load_capacities,
@@ -307,8 +303,8 @@ class AssetService:
         }
 
     @staticmethod
-    def list_load_capacities(*, company_id: int, asset_id: int) -> dict:
-        asset = AssetService._get_owned_asset(company_id=company_id, asset_id=asset_id)
+    def list_load_capacities(*, asset_id: int) -> dict:
+        asset = AssetService._get_asset(asset_id=asset_id)
         items = [
             {
                 "id": c.id,
@@ -327,14 +323,13 @@ class AssetService:
     @staticmethod
     def create_load_capacity(
         *,
-        company_id: int,
         asset_id: int,
         name: str,
         metric_raw: str,
         max_load: float,
         details: str | None,
     ) -> dict:
-        asset = AssetService._get_owned_asset(company_id=company_id, asset_id=asset_id)
+        asset = AssetService._get_asset(asset_id=asset_id)
         cap_name = normalize_capacity_name(name)
         metric = normalize_metric(metric_raw)
         validate_capacity_metric_pair(cap_name, metric)
@@ -378,7 +373,6 @@ class AssetService:
     @staticmethod
     def update_load_capacity(
         *,
-        company_id: int,
         asset_id: int,
         capacity_id: int,
         name: str | None,
@@ -386,7 +380,7 @@ class AssetService:
         max_load: float | None,
         details: str | None,
     ) -> dict:
-        asset = AssetService._get_owned_asset(company_id=company_id, asset_id=asset_id)
+        asset = AssetService._get_asset(asset_id=asset_id)
         cap = LoadCapacity.query.filter_by(id=capacity_id, asset_id=asset_id).first()
         if cap is None:
             raise ApiError("Load capacity not found", 404, code="capacity_not_found")
@@ -419,8 +413,8 @@ class AssetService:
         }
 
     @staticmethod
-    def delete_load_capacity(*, company_id: int, asset_id: int, capacity_id: int) -> None:
-        _ = AssetService._get_owned_asset(company_id=company_id, asset_id=asset_id)
+    def delete_load_capacity(*, asset_id: int, capacity_id: int) -> None:
+        _ = AssetService._get_asset(asset_id=asset_id)
         cap = LoadCapacity.query.filter_by(id=capacity_id, asset_id=asset_id).first()
         if cap is None:
             raise ApiError("Load capacity not found", 404, code="capacity_not_found")
