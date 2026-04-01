@@ -47,6 +47,28 @@ def change_password():
     return ok({"message": "Password changed successfully"})
 
 
+@auth_bp.post("/set-initial-password")
+def set_initial_password():
+    """
+    Set a personal password on first login and clear the is_first_login flag.
+
+    No old password required — the caller is already authenticated via token.
+    Returns 400 if is_first_login is already False (use /change-password instead).
+    """
+    ctx = get_auth_context()
+    body = request.get_json(silent=True) or {}
+
+    new_password = body.get("newPassword") or ""
+    if not new_password:
+        raise ApiError("newPassword is required", 400, code="validation_error")
+
+    AuthService.set_initial_password(
+        user_id=ctx.user_id,
+        new_password=new_password,
+    )
+    return ok({"message": "Password set successfully. You can now use your new password."})
+
+
 @auth_bp.post("/users")
 @require_roles(UserRole.SYSTEM_ADMIN.value)
 def create_user():
@@ -85,6 +107,7 @@ def create_user():
             "id": user.id,
             "email": user.email,
             "role": user.role.value,
+            "isFirstLogin": user.is_first_login,
         },
         status_code=201,
     )

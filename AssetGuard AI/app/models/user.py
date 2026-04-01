@@ -22,6 +22,7 @@ class User(db.Model):
     email = db.Column(db.String(255), nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.Enum(UserRole), nullable=False, default=UserRole.CONTRACTORS)
+    is_first_login = db.Column(db.Boolean, nullable=False, default=True)
 
     def set_password(self, password: str) -> None:
         self.password_hash = generate_password_hash(password)

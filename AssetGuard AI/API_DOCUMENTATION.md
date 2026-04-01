@@ -189,8 +189,51 @@ Sign in with email and password.
     "user": {
       "id": 1,
       "email": "admin@demo.com",
-      "role": "System_Admin"
+      "role": "System_Admin",
+      "isFirstLogin": false
     }
+  }
+}
+```
+
+When `isFirstLogin` is `true`, the client should redirect the user to the initial password-setup screen and call `POST /auth/set-initial-password` before allowing access to the rest of the application.
+
+**Possible errors:**
+
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | `email` or `password` is missing |
+| `401` | `invalid_credentials` | Email not found or password incorrect |
+
+---
+
+### POST `/api/v1/auth/set-initial-password`
+
+Set a personal password on the user's first login and clear the `isFirstLogin` flag.
+
+**Permissions:** Any authenticated user whose `isFirstLogin` is `true`.
+
+No old password is required because the caller is already authenticated via the Bearer token issued at login. Use `POST /auth/change-password` for all subsequent password changes.
+
+**Request body:**
+
+```json
+{
+  "newPassword": "myNewSecurePassword123"
+}
+```
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `newPassword` | string | Yes | Must not be empty |
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "message": "Password set successfully. You can now use your new password."
   }
 }
 ```
@@ -199,8 +242,9 @@ Sign in with email and password.
 
 | Status | Code | Description |
 |--------|------|-------------|
-| `400` | `validation_error` | `email` or `password` is missing |
-| `401` | `invalid_credentials` | Email not found or password incorrect |
+| `400` | `validation_error` | `newPassword` is missing or blank |
+| `400` | `not_first_login` | `isFirstLogin` is already `false`; use `/auth/change-password` instead |
+| `401` | `missing_token` | No Bearer token provided |
 
 ---
 
@@ -234,10 +278,13 @@ Create a new user account.
   "data": {
     "id": 5,
     "email": "manager2@demo.com",
-    "role": "Asset_Manager"
+    "role": "Asset_Manager",
+    "isFirstLogin": true
   }
 }
 ```
+
+All admin-created users start with `isFirstLogin: true`. They must call `POST /auth/set-initial-password` after their first login.
 
 **Possible errors:**
 

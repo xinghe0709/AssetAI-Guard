@@ -10,8 +10,8 @@ class AuthService:
         """
         Validate credentials and issue a signed token.
 
-        The controller handles HTTP parsing; this layer loads the user,
-        checks the password, and builds the token + minimal user payload.
+        Returns is_first_login so the client can redirect to the
+        initial password-setup screen when True.
         """
         user = User.query.filter_by(email=email).first()
         if user is None or not user.check_password(password):
@@ -24,6 +24,7 @@ class AuthService:
                 "id": user.id,
                 "email": user.email,
                 "role": user.role.value,
+                "isFirstLogin": user.is_first_login,
             },
         }
 
@@ -32,11 +33,12 @@ class AuthService:
         """
         Create a user (used by seed and admin API).
 
-        Email uniqueness is enforced in the DB; this check returns a clearer API error.
+        New users created by an admin always start with is_first_login=True
+        so that they are forced to set a personal password on first login.
         """
         if User.query.filter_by(email=email).first() is not None:
             raise ApiError("Email already exists", 409, code="email_exists")
-        user = User(email=email, role=role)
+        user = User(email=email, role=role, is_first_login=True)
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
@@ -46,6 +48,7 @@ class AuthService:
     def change_password(*, user_id: int, current_password: str, new_password: str) -> None:
         """
         Verify current_password then replace with new_password.
+        Also clears is_first_login regardless of its current value.
 
         Raises 401 if current_password is wrong.
         Raises 400 if new_password is blank or identical to current_password.
@@ -64,4 +67,32 @@ class AuthService:
             raise ApiError("New password must differ from the current password", 400, code="validation_error")
 
         user.set_password(new_password)
+        user.is_first_login = False
+        db.session.commit()
+
+    @staticmethod
+    def set_initial_password(*, user_id: int, new_password: str) -> None:
+        """
+        Set a personal password for a first-time login user and clear the flag.
+
+        Does NOT require the old (temporary) password because the caller is
+        already authenticated via their Bearer token.
+        Raises 400 if the user has already completed first-login setup.
+        """
+        user = User.query.filter_by(id=user_id).first()
+        if user is None:
+            raise ApiError("User not found", 404, code="user_not_found")
+
+        if not user.is_first_login:
+            raise ApiError(
+                "Initial password has already been set. Use /auth/change-password instead.",
+                400,
+                code="not_first_login",
+            )
+
+        if not new_password:
+            raise ApiError("newPassword must not be empty", 400, code="validation_error")
+
+        user.set_password(new_password)
+        user.is_first_login = False
         db.session.commit()
