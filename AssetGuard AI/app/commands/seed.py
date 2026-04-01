@@ -27,13 +27,14 @@ def register_seed_command(app: Flask) -> None:
         def upsert_user(email: str, password: str, role: UserRole):
             user = User.query.filter_by(email=email).first()
             if user is None:
-                user = User(email=email, role=role)
+                user = User(email=email, role=role, is_first_login=False)
                 user.set_password(password)
                 db.session.add(user)
                 db.session.commit()
                 return user, True
 
             user.role = role
+            user.is_first_login = False
             user.set_password(password)
             db.session.commit()
             return user, False

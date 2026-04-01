@@ -498,5 +498,129 @@ class ApiFlowTestCase(unittest.TestCase):
         self.assertTrue(any(item["reason"] == "asset_already_exists" for item in import_data["rejected"]))
         self.assertTrue(any(item["reason"] == "invalid_asset_payload" for item in import_data["rejected"]))
 
+    def test_first_login_flow(self):
+        """
+        Covers:
+        - login response includes isFirstLogin
+        - demo users (seed) have isFirstLogin=False
+        - admin-created user has isFirstLogin=True
+        - set-initial-password succeeds for first-login user
+        - set-initial-password returns 400 not_first_login when already set
+        - set-initial-password returns 400 when newPassword is missing
+        - set-initial-password requires authentication
+        - after set-initial-password, new password works for login
+        - change-password also clears isFirstLogin
+        """
+        admin_token = self._login("admin@demo.com", "admin123")
+
+        # ── 1. Demo users have isFirstLogin=False ────────────────────────────
+        login_res = self.client.post(
+            "/api/v1/auth/login",
+            json={"email": "admin@demo.com", "password": "admin123"},
+        )
+        self.assertEqual(login_res.status_code, 200)
+        user_data = login_res.get_json()["data"]["user"]
+        self.assertIn("isFirstLogin", user_data)
+        self.assertFalse(user_data["isFirstLogin"], "seed user should have isFirstLogin=False")
+
+        # ── 2. Admin-created user has isFirstLogin=True ───────────────────────
+        new_user_res = self.client.post(
+            "/api/v1/auth/users",
+            headers={"Authorization": f"Bearer {admin_token}"},
+            json={
+                "email": "firstlogin_test@demo.com",
+                "password": "temp_pass_123",
+                "role": "Contractors",
+            },
+        )
+        self.assertEqual(new_user_res.status_code, 201, new_user_res.get_json())
+        self.assertTrue(new_user_res.get_json()["data"]["isFirstLogin"])
+
+        # ── 3. New user logs in → isFirstLogin=True in response ──────────────
+        first_login_res = self.client.post(
+            "/api/v1/auth/login",
+            json={"email": "firstlogin_test@demo.com", "password": "temp_pass_123"},
+        )
+        self.assertEqual(first_login_res.status_code, 200)
+        first_login_data = first_login_res.get_json()["data"]
+        self.assertTrue(first_login_data["user"]["isFirstLogin"])
+        new_user_token = first_login_data["token"]
+
+        # ── 4. set-initial-password requires authentication ───────────────────
+        no_auth = self.client.post(
+            "/api/v1/auth/set-initial-password",
+            json={"newPassword": "ShouldFail123"},
+        )
+        self.assertEqual(no_auth.status_code, 401, no_auth.get_json())
+
+        # ── 5. set-initial-password rejects blank newPassword ─────────────────
+        blank_pw = self.client.post(
+            "/api/v1/auth/set-initial-password",
+            headers={"Authorization": f"Bearer {new_user_token}"},
+            json={"newPassword": ""},
+        )
+        self.assertEqual(blank_pw.status_code, 400, blank_pw.get_json())
+        self.assertEqual(blank_pw.get_json()["code"], "validation_error")
+
+        # ── 6. set-initial-password succeeds ─────────────────────────────────
+        set_pw_res = self.client.post(
+            "/api/v1/auth/set-initial-password",
+            headers={"Authorization": f"Bearer {new_user_token}"},
+            json={"newPassword": "MyPersonalPassword99"},
+        )
+        self.assertEqual(set_pw_res.status_code, 200, set_pw_res.get_json())
+        self.assertTrue(set_pw_res.get_json()["success"])
+
+        # ── 7. After set, isFirstLogin=False on next login ────────────────────
+        after_set_res = self.client.post(
+            "/api/v1/auth/login",
+            json={"email": "firstlogin_test@demo.com", "password": "MyPersonalPassword99"},
+        )
+        self.assertEqual(after_set_res.status_code, 200)
+        self.assertFalse(after_set_res.get_json()["data"]["user"]["isFirstLogin"])
+
+        # ── 8. Calling set-initial-password again returns 400 not_first_login ─
+        token_after = after_set_res.get_json()["data"]["token"]
+        again_res = self.client.post(
+            "/api/v1/auth/set-initial-password",
+            headers={"Authorization": f"Bearer {token_after}"},
+            json={"newPassword": "AnotherPassword99"},
+        )
+        self.assertEqual(again_res.status_code, 400, again_res.get_json())
+        self.assertEqual(again_res.get_json()["code"], "not_first_login")
+
+        # ── 9. change-password also clears isFirstLogin ───────────────────────
+        admin2_res = self.client.post(
+            "/api/v1/auth/users",
+            headers={"Authorization": f"Bearer {admin_token}"},
+            json={
+                "email": "firstlogin_test2@demo.com",
+                "password": "temp_pass_456",
+                "role": "Asset_Manager",
+            },
+        )
+        self.assertEqual(admin2_res.status_code, 201)
+        self.assertTrue(admin2_res.get_json()["data"]["isFirstLogin"])
+
+        user2_token = self.client.post(
+            "/api/v1/auth/login",
+            json={"email": "firstlogin_test2@demo.com", "password": "temp_pass_456"},
+        ).get_json()["data"]["token"]
+
+        change_res = self.client.post(
+            "/api/v1/auth/change-password",
+            headers={"Authorization": f"Bearer {user2_token}"},
+            json={"currentPassword": "temp_pass_456", "newPassword": "ChangedPW456"},
+        )
+        self.assertEqual(change_res.status_code, 200, change_res.get_json())
+
+        login_after_change = self.client.post(
+            "/api/v1/auth/login",
+            json={"email": "firstlogin_test2@demo.com", "password": "ChangedPW456"},
+        )
+        self.assertEqual(login_after_change.status_code, 200)
+        self.assertFalse(login_after_change.get_json()["data"]["user"]["isFirstLogin"])
+
+
 if __name__ == "__main__":
     unittest.main()
