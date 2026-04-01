@@ -41,3 +41,27 @@ class AuthService:
         db.session.add(user)
         db.session.commit()
         return user
+
+    @staticmethod
+    def change_password(*, user_id: int, current_password: str, new_password: str) -> None:
+        """
+        Verify current_password then replace with new_password.
+
+        Raises 401 if current_password is wrong.
+        Raises 400 if new_password is blank or identical to current_password.
+        """
+        user = User.query.filter_by(id=user_id).first()
+        if user is None:
+            raise ApiError("User not found", 404, code="user_not_found")
+
+        if not user.check_password(current_password):
+            raise ApiError("Current password is incorrect", 401, code="invalid_credentials")
+
+        if not new_password:
+            raise ApiError("newPassword must not be empty", 400, code="validation_error")
+
+        if current_password == new_password:
+            raise ApiError("New password must differ from the current password", 400, code="validation_error")
+
+        user.set_password(new_password)
+        db.session.commit()

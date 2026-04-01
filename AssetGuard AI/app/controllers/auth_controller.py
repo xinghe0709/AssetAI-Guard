@@ -22,6 +22,31 @@ def login():
     return ok(data)
 
 
+@auth_bp.post("/change-password")
+def change_password():
+    """
+    Change the authenticated user's password.
+
+    JSON body: currentPassword, newPassword.
+    Any authenticated user may call this endpoint.
+    """
+    ctx = get_auth_context()
+    body = request.get_json(silent=True) or {}
+
+    current_password = body.get("currentPassword") or ""
+    new_password = body.get("newPassword") or ""
+
+    if not current_password or not new_password:
+        raise ApiError("currentPassword and newPassword are required", 400, code="validation_error")
+
+    AuthService.change_password(
+        user_id=ctx.user_id,
+        current_password=current_password,
+        new_password=new_password,
+    )
+    return ok({"message": "Password changed successfully"})
+
+
 @auth_bp.post("/users")
 @require_roles(UserRole.SYSTEM_ADMIN.value)
 def create_user():

@@ -249,6 +249,47 @@ Create a new user account.
 
 ---
 
+### POST `/api/v1/auth/change-password`
+
+Change the password of the currently authenticated user.
+
+**Permissions:** Any authenticated user.
+
+**Request body:**
+
+```json
+{
+  "currentPassword": "admin123",
+  "newPassword": "newSecurePassword456"
+}
+```
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `currentPassword` | string | Yes | Must match the user's existing password |
+| `newPassword` | string | Yes | Must not be empty or identical to `currentPassword` |
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "message": "Password changed successfully"
+  }
+}
+```
+
+**Possible errors:**
+
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | `currentPassword` or `newPassword` is missing, blank, or new equals current |
+| `401` | `missing_token` | No Bearer token provided |
+| `401` | `invalid_credentials` | `currentPassword` does not match the user's actual password |
+
+---
+
 ## Location APIs
 
 ### GET `/api/v1/locations/`

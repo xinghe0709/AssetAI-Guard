@@ -11,8 +11,8 @@ from app.utils.errors import ApiError
 
 def _evaluated_at_iso(dt: datetime) -> str:
     if dt.tzinfo is None:
-        return dt.isoformat() + "Z"
-    return dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone().replace(microsecond=0).isoformat()
 
 
 class EvaluationService:

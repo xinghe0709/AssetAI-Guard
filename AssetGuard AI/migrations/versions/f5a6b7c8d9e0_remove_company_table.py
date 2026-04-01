@@ -21,9 +21,11 @@ depends_on = None
 
 def upgrade():
     with op.batch_alter_table("users", schema=None) as batch_op:
+        batch_op.drop_index("ix_users_company_id")
         batch_op.drop_column("company_id")
 
     with op.batch_alter_table("assets", schema=None) as batch_op:
+        batch_op.drop_index("ix_assets_company_id")
         batch_op.drop_column("company_id")
         batch_op.create_unique_constraint(
             "uq_asset_location_name", ["location_id", "name"]

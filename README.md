@@ -347,6 +347,7 @@ Authorization: Bearer <manager_or_admin_token>
 | Method | Path | Permission |
 |--------|------|------------|
 | `POST` | `/api/v1/auth/login` | Public |
+| `POST` | `/api/v1/auth/change-password` | Any authenticated user |
 | `POST` | `/api/v1/auth/users` | `System_Admin` |
 
 ### Locations
