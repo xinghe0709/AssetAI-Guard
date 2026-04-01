@@ -14,7 +14,7 @@ class UserRole(str, enum.Enum):
 
 
 class User(db.Model):
-    """Application user: email login, hashed password, role, tenant (company)."""
+    """Application user: email login, hashed password, role."""
 
     __tablename__ = "users"
 
@@ -22,9 +22,6 @@ class User(db.Model):
     email = db.Column(db.String(255), nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.Enum(UserRole), nullable=False, default=UserRole.CONTRACTORS)
-
-    company_id = db.Column(db.Integer, db.ForeignKey("companies.id"), nullable=False, index=True)
-    company = db.relationship("Company", backref=db.backref("users", lazy=True))
 
     def set_password(self, password: str) -> None:
         self.password_hash = generate_password_hash(password)

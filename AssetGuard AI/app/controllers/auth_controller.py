@@ -26,12 +26,11 @@ def login():
 @require_roles(UserRole.SYSTEM_ADMIN.value)
 def create_user():
     """
-    Create a user in the current tenant (System_Admin only).
+    Create a user (System_Admin only).
 
     JSON body: email, password, role (System_Admin | Asset_Manager | Contractors).
-    company_id is taken from the admin's token.
     """
-    ctx = get_auth_context()
+    _ = get_auth_context()
     body = request.get_json(silent=True) or {}
 
     email = (body.get("email") or "").strip()
@@ -54,7 +53,6 @@ def create_user():
         email=email,
         password=password,
         role=role,
-        company_id=ctx.company_id,
     )
 
     return ok(
@@ -62,7 +60,6 @@ def create_user():
             "id": user.id,
             "email": user.email,
             "role": user.role.value,
-            "companyId": user.company_id,
         },
         status_code=201,
     )

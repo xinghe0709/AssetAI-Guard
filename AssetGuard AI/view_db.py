@@ -48,7 +48,7 @@ def main() -> None:
         print_query(
             cursor,
             "assets",
-            "SELECT id, name, company_id, location_id FROM assets ORDER BY id",
+            "SELECT id, name, location_id FROM assets ORDER BY id",
         )
 
         print_query(
@@ -61,7 +61,7 @@ def main() -> None:
             cursor,
             "assets_with_locations",
             """
-            SELECT a.id, a.name, a.company_id, l.name AS location_name
+            SELECT a.id, a.name, l.name AS location_name
             FROM assets a
             JOIN locations l ON l.id = a.location_id
             ORDER BY a.id

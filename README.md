@@ -2,13 +2,11 @@
 
 This workspace contains **two separate Python projects**:
 
-- `AssetGuard AI/`
-  - the main Flask backend
+- `AssetGuard AI/` — the main Flask backend
   - stores locations, assets, load capacities, and evaluation logs
   - imports AI-generated asset JSON into the main database
-- `gjp-assetguard-extraction-tool/`
-  - the AI extraction tool
-  - converts PDF/image engineering documents into extracted criteria and asset JSON payloads
+- `gjp-assetguard-extraction-tool/` — the AI extraction tool
+  - converts PDF / image engineering documents into extracted criteria and asset JSON payloads
 
 ## Important
 
@@ -18,21 +16,20 @@ These two projects are **independent**.
 - Do **not** run dependency installation from the workspace root
 - Create **one venv per subproject**
 
-## Project docs
+---
 
-### Main backend
+## Project Docs
 
-- `AssetGuard AI/README.md`
-- `AssetGuard AI/API_DOCUMENTATION.md`
--
+| Project | README | API Reference |
+|---------|--------|---------------|
+| Main backend | `AssetGuard AI/README.md` | `AssetGuard AI/API_DOCUMENTATION.md` |
+| AI extraction tool | `gjp-assetguard-extraction-tool/README.md` | — |
 
-### AI extraction tool
-
-- `gjp-assetguard-extraction-tool/README.md`
+---
 
 ## Git Usage Rules
 
-This workspace contains two subprojects, but they are tracked in the same Git repository.
+This workspace contains two subprojects tracked in the same Git repository.
 
 ### Basic rules
 
@@ -62,7 +59,7 @@ git push -u origin <your-branch-name>
 
 ### Virtual environments and generated files
 
-- Do not commit either project's virtual environment
+- Do not commit either project's virtual environment (`venv/`)
 - Do not commit `.env` files
 - Do not commit service-account JSON credentials
 - Do not commit AI-generated files under `gjp-assetguard-extraction-tool/uploads/`
@@ -70,10 +67,10 @@ git push -u origin <your-branch-name>
 
 ### Before opening a Pull Request
 
-- Make sure the correct subproject was changed
-- Make sure both projects still use their own virtual environments
+- Confirm the correct subproject was changed
+- Confirm both projects still use their own virtual environments
 - Re-check `.gitignore` if new local-only files were created
-- Update the relevant README or API docs when behavior changes
+- Update the relevant README or API docs when behaviour changes
 
 ### Avoid
 
@@ -83,6 +80,8 @@ git push -u origin <your-branch-name>
 - Committing large generated artifacts
 - Force-pushing shared branches unless the team explicitly agrees
 
+---
+
 ## Quick Start
 
 ### Requirements
@@ -90,102 +89,134 @@ git push -u origin <your-branch-name>
 - Python 3.11+
 - `pip`
 
-## Virtual Environments
+---
 
-### 1. Main backend: `AssetGuard AI`
+## 1. Main Backend — `AssetGuard AI`
 
-Create the virtual environment inside `AssetGuard AI/`.
+### Set up the virtual environment
 
-Windows:
+**Windows (PowerShell):**
 
 ```powershell
-cd "D:/{your path}/AssetGuard AI group11/AssetGuard AI"
+cd "D:/{your path}/AssetGuard AI"
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 ```
 
-macOS / Linux:
+**macOS / Linux:**
 
 ```bash
-cd "/path/to/AssetGuard AI group11/AssetGuard AI"
+cd "/path/to/AssetGuard AI"
 python3 -m venv venv
 source venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Run the backend:
+### Environment variables (optional)
+
+Create an `.env` file (or export variables) in the `AssetGuard AI/` folder to override defaults:
+
+```env
+# Token signing secret — change in production
+SECRET_KEY=your-strong-secret-key
+
+# SQLite (default) or any SQLAlchemy-compatible URI
+DATABASE_URL=sqlite:///assetguard.db
+
+# Bearer token lifetime in seconds (default 86400 = 24 h)
+TOKEN_EXPIRES_SECONDS=86400
+
+# Directory where the AI tool writes JSON upload files
+# Defaults to ../gjp-assetguard-extraction-tool/uploads relative to this project
+AI_JSON_UPLOADS_DIR=/path/to/gjp-assetguard-extraction-tool/uploads
+```
+
+### Initialise and run
 
 ```bash
+# Apply database migrations
 python -m flask --app assetguard_app.py db upgrade
+
+# Seed demo users and sample assets
 python -m flask --app assetguard_app.py seed
+
+# Start the development server
 python -m flask --app assetguard_app.py run --port 5000
 ```
 
 Backend base URL:
 
-```text
+```
 http://127.0.0.1:5000/api/v1
 ```
 
-Demo users:
+### Demo accounts (created by `seed`)
 
 | Role | Email | Password |
 |------|-------|----------|
-| System_Admin | `admin@demo.com` | `admin123` |
-| Asset_Manager | `manager@demo.com` | `manager123` |
-| Contractors | `contractor@demo.com` | `contractor123` |
+| `System_Admin` | `admin@demo.com` | `admin123` |
+| `Asset_Manager` | `manager@demo.com` | `manager123` |
+| `Contractors` | `contractor@demo.com` | `contractor123` |
 
-### 2. AI extraction tool: `gjp-assetguard-extraction-tool`
+### Seeded data
 
-Create a different virtual environment inside `gjp-assetguard-extraction-tool/`.
+The `seed` command creates one location — **Port of Bunbury** — with six assets, each pre-loaded with four load capacity rows:
 
-Windows:
+| Asset | max point load (kN) | max axle load (t) | max UDL (kPa) | max displacement (t) |
+|-------|--------------------:|------------------:|--------------:|---------------------:|
+| Berth 2 | 1 200 | 90.0 | 42 | 65 000 |
+| Berth 3 | 1 500 | 95.0 | 45 | 70 000 |
+| Berth 5 | 1 000 | 87.4 | 40 | 68 100 |
+| Berth 8 | 2 642 | 87.4 | 40 | 72 000 |
+| Berth 9 | 2 200 | 100.0 | 48 | 76 000 |
+| Hardstand A | 800 | 70.0 | 35 | 30 000 |
+
+Running `seed` a second time is safe — existing records are updated rather than duplicated.
+
+---
+
+## 2. AI Extraction Tool — `gjp-assetguard-extraction-tool`
+
+### Set up the virtual environment
+
+**Windows (PowerShell):**
 
 ```powershell
-cd "D:/{your path}/AssetGuard AI group11/gjp-assetguard-extraction-tool"
+cd "D:/{your path}/gjp-assetguard-extraction-tool"
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 ```
 
-macOS / Linux:
+**macOS / Linux:**
 
 ```bash
-cd "/path/to/AssetGuard AI group11/gjp-assetguard-extraction-tool"
+cd "/path/to/gjp-assetguard-extraction-tool"
 python3 -m venv venv
 source venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Before starting the AI tool, configure its own `.env` file in:
+### Configure `.env`
 
-```text
-gjp-assetguard-extraction-tool/.env
-```
-
-Required environment variables:
+Create `gjp-assetguard-extraction-tool/.env`:
 
 ```env
+# Google Cloud service account JSON path (for OCR / GCS workflow)
 GOOGLE_APPLICATION_CREDENTIALS=./your-service-account.json
+
+# Google Cloud Storage bucket for OCR
 GCP_BUCKET_NAME=your-gcs-bucket-name
+
+# Gemini API key (extraction)
 GEMINI_API_KEY=your-gemini-api-key
-```
 
-Optional when using GPT flow:
-
-```env
+# Optional — only required when using the GPT extraction flow
 OPENAI_API_KEY=your-openai-api-key
 ```
 
-What these are used for:
-
-- `GOOGLE_APPLICATION_CREDENTIALS`: Google Cloud service account JSON path
-- `GCP_BUCKET_NAME`: Google Cloud Storage bucket for OCR workflow
-- `GEMINI_API_KEY`: Gemini extraction
-- `OPENAI_API_KEY`: GPT extraction
-
-Run the AI tool:
+### Run
 
 ```bash
 python app.py
@@ -193,18 +224,22 @@ python app.py
 
 Typical local URL:
 
-```text
+```
 http://127.0.0.1:5001
 ```
 
-## Recommended local workflow
+---
+
+## Recommended Local Workflow
 
 1. Start `AssetGuard AI` in its own virtual environment.
 2. Start `gjp-assetguard-extraction-tool` in its own virtual environment.
-3. Use the AI tool to generate asset JSON into `gjp-assetguard-extraction-tool/uploads/`.
-4. Use the main backend API to import those JSON files into the main SQLite database.
+3. Use the AI tool to process PDF / image documents and generate asset JSON files into `gjp-assetguard-extraction-tool/uploads/`.
+4. Call `POST /api/v1/assets/import-json-uploads` on the main backend to import those files into the database.
 
-## Common API workflow
+---
+
+## Common API Workflow
 
 ### 1. Login
 
@@ -218,7 +253,7 @@ Content-Type: application/json
 }
 ```
 
-Use the returned token in later requests:
+Use the returned `token` in all subsequent requests:
 
 ```http
 Authorization: Bearer <token>
@@ -240,28 +275,26 @@ Authorization: Bearer <manager_or_admin_token>
 Content-Type: application/json
 
 {
-  "locationName": "Berth 5",
-  "name": "Berth 9",
+  "locationName": "Port of Bunbury",
+  "name": "Berth 10",
   "loadCapacities": [
-    {
-      "name": "max point load",
-      "metric": "kN",
-      "maxLoad": 1000,
-      "details": "per spec"
-    }
+    { "name": "max point load",             "metric": "kN",  "maxLoad": 1000, "details": "per spec" },
+    { "name": "max axle load",              "metric": "t",   "maxLoad": 87.4 },
+    { "name": "max uniform distributor load","metric": "kPa", "maxLoad": 40   },
+    { "name": "max displacement size",      "metric": "t",   "maxLoad": 68100 }
   ]
 }
 ```
 
 Notes:
 
-- `locationName` is matched against existing locations using tolerant matching
-- if no close match exists, a new location is created automatically
-- duplicate assets in the same `company + location + name` return `409 asset_already_exists`
+- `locationName` is fuzzy-matched against existing locations (tolerates spacing, casing, and punctuation differences); if no close match is found a new location is created automatically.
+- Duplicate `(location, asset name)` combinations return `409 asset_already_exists`.
+- Each capacity name must be paired with its required metric — see the [Enum Reference](#enum-reference) below.
 
 ### 4. Import AI-generated JSON files
 
-Admin only:
+`System_Admin` only:
 
 ```http
 POST /api/v1/assets/import-json-uploads
@@ -271,11 +304,11 @@ Content-Type: application/json
 {}
 ```
 
-Optional explicit path:
+Optional — override the upload directory:
 
 ```json
 {
-  "directoryPath": "D:/下载/AssetGuard AI group11/gjp-assetguard-extraction-tool/uploads"
+  "directoryPath": "D:/path/to/gjp-assetguard-extraction-tool/uploads"
 }
 ```
 
@@ -290,7 +323,7 @@ Content-Type: application/json
   "locationId": 1,
   "assetId": 1,
   "equipment": "Crane with outriggers",
-  "equipmentModel": "Mobile crane 50t",
+  "equipmentModel": "LTM 1100-5.2",
   "loadParameterValue": 500,
   "remark": "Pre-lift check"
 }
@@ -298,73 +331,111 @@ Content-Type: application/json
 
 ### 6. View evaluation history
 
-Admin or manager:
+`System_Admin` or `Asset_Manager` only:
 
 ```http
 GET /api/v1/evaluations/history?page=1&pageSize=20
 Authorization: Bearer <manager_or_admin_token>
 ```
 
-## Common routes
+---
+
+## API Route Reference
 
 ### Auth
 
-- `POST /api/v1/auth/login`
-- `POST /api/v1/auth/users` (`System_Admin` only)
+| Method | Path | Permission |
+|--------|------|------------|
+| `POST` | `/api/v1/auth/login` | Public |
+| `POST` | `/api/v1/auth/users` | `System_Admin` |
 
 ### Locations
 
-- `GET /api/v1/locations/`
-- `POST /api/v1/locations/` (`System_Admin`, `Asset_Manager`)
+| Method | Path | Permission |
+|--------|------|------------|
+| `GET` | `/api/v1/locations/` | Any authenticated user |
+| `POST` | `/api/v1/locations/` | `System_Admin`, `Asset_Manager` |
 
 ### Assets
 
-- `GET /api/v1/assets/?locationId=...`
-- `GET /api/v1/assets/all?page=1&pageSize=20`
-- `POST /api/v1/assets/` (`System_Admin`, `Asset_Manager`)
-- `POST /api/v1/assets/import-json-uploads` (`System_Admin` only)
-- `GET /api/v1/assets/<asset_id>/load-capacities`
-- `POST /api/v1/assets/<asset_id>/load-capacities`
-- `PUT /api/v1/assets/<asset_id>/load-capacities/<capacity_id>`
-- `DELETE /api/v1/assets/<asset_id>/load-capacities/<capacity_id>`
+| Method | Path | Permission |
+|--------|------|------------|
+| `GET` | `/api/v1/assets/?locationId=...` | Any authenticated user |
+| `GET` | `/api/v1/assets/all` | Any authenticated user |
+| `POST` | `/api/v1/assets/` | `System_Admin`, `Asset_Manager` |
+| `POST` | `/api/v1/assets/import-json-uploads` | `System_Admin` |
+| `GET` | `/api/v1/assets/<id>/load-capacities` | `System_Admin`, `Asset_Manager` |
+| `POST` | `/api/v1/assets/<id>/load-capacities` | `System_Admin`, `Asset_Manager` |
+| `PUT` | `/api/v1/assets/<id>/load-capacities/<cap_id>` | `System_Admin`, `Asset_Manager` |
+| `DELETE` | `/api/v1/assets/<id>/load-capacities/<cap_id>` | `System_Admin`, `Asset_Manager` |
 
 ### Evaluations
 
-- `GET /api/v1/evaluations/equipment-options`
-- `POST /api/v1/evaluations/check`
-- `GET /api/v1/evaluations/history?page=1&pageSize=20`
+| Method | Path | Permission |
+|--------|------|------------|
+| `GET` | `/api/v1/evaluations/equipment-options` | Any authenticated user |
+| `POST` | `/api/v1/evaluations/check` | Any authenticated user |
+| `GET` | `/api/v1/evaluations/history` | `System_Admin`, `Asset_Manager` |
 
-## Validation rules
+---
 
-### Allowed load capacity names
+## Enum Reference
 
-- `max point load`
-- `max axle load`
-- `max uniform distributor load`
-- `max displacement size`
+### Capacity name → required metric
 
-### Allowed metrics
+Each load capacity name is bound to exactly one allowed metric. Mismatching them returns `400 invalid_capacity_metric_pair`.
 
-- `kN`
-- `t`
-- `kPa`
+| Capacity name | Required metric |
+|---------------|-----------------|
+| `max point load` | `kN` |
+| `max axle load` | `t` |
+| `max uniform distributor load` | `kPa` |
+| `max displacement size` | `t` |
 
-## Automated tests
+### Equipment types
 
-Run:
+| `equipment` | Load parameter label | Metric | Matched capacity |
+|-------------|----------------------|--------|-----------------|
+| `Crane with outriggers` | Max Outrigger Load | `kN` | `max point load` |
+| `Mobile crane` | Max Axle Load | `t` | `max axle load` |
+| `Heavy vehicle` | Max Axle Load | `t` | `max axle load` |
+| `Elevated Work Platform` | Max Wheel Load | `kN` | `max point load` |
+| `Storage Load` | Uniform Distributor Load | `kPa` | `max uniform distributor load` |
+| `Vessel` | Displacement | `t` | `max displacement size` |
+
+---
+
+## Automated Tests
+
+Run from inside the `AssetGuard AI/` virtual environment:
 
 ```bash
 python -m unittest tests.test_api_flow -v
 ```
 
-Current expected result:
+Expected result:
 
-- `Ran 2 tests ...`
-- `OK`
+```
+Ran 2 tests in ...s
 
-## Utility scripts
+OK
+```
 
-- `view_db.py` prints the current SQLite tables and key records
+---
+
+## Utility Scripts
+
+### `view_db.py`
+
+Prints the current contents of the SQLite database — tables, locations, assets, load capacities, and asset-location joins.
+
+```bash
+python view_db.py
+```
+
+The script auto-detects the database at `instance/assetguard.db` or `assetguard.db` relative to the project root.
+
+---
 
 ## License
 

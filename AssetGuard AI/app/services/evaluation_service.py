@@ -19,7 +19,6 @@ class EvaluationService:
     @staticmethod
     def evaluate_load(
         *,
-        company_id: int,
         user_id: int,
         location_id: int,
         asset_id: int,
@@ -34,9 +33,9 @@ class EvaluationService:
         if load_parameter_value <= 0:
             raise ApiError("loadParameterValue must be greater than 0", 400, code="invalid_load_value")
 
-        asset = Asset.query.filter_by(id=asset_id, company_id=company_id).first()
+        asset = Asset.query.filter_by(id=asset_id).first()
         if asset is None:
-            raise ApiError("Asset not found or access denied", 404, code="asset_not_found")
+            raise ApiError("Asset not found", 404, code="asset_not_found")
         if asset.location_id != location_id:
             raise ApiError(
                 "Asset does not belong to the provided locationId",
@@ -45,10 +44,8 @@ class EvaluationService:
             )
 
         capacity = (
-            LoadCapacity.query.join(Asset, LoadCapacity.asset_id == Asset.id)
-            .filter(
-                Asset.id == asset_id,
-                Asset.company_id == company_id,
+            LoadCapacity.query.filter(
+                LoadCapacity.asset_id == asset_id,
                 LoadCapacity.name == capacity_name_key,
             )
             .first()
@@ -114,11 +111,9 @@ class EvaluationService:
         }
 
     @staticmethod
-    def history(*, company_id: int, page: int, page_size: int) -> dict:
+    def history(*, page: int, page_size: int) -> dict:
         stmt = (
             select(EvaluationLog)
-            .join(Asset, EvaluationLog.asset_id == Asset.id)
-            .where(Asset.company_id == company_id)
             .order_by(EvaluationLog.evaluated_at.desc(), EvaluationLog.id.desc())
         )
         pagination = db.paginate(stmt, page=page, per_page=page_size, error_out=False)

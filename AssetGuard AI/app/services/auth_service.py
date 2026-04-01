@@ -24,12 +24,11 @@ class AuthService:
                 "id": user.id,
                 "email": user.email,
                 "role": user.role.value,
-                "companyId": user.company_id,
             },
         }
 
     @staticmethod
-    def create_user(*, email: str, password: str, role, company_id: int) -> User:
+    def create_user(*, email: str, password: str, role) -> User:
         """
         Create a user (used by seed and admin API).
 
@@ -37,7 +36,7 @@ class AuthService:
         """
         if User.query.filter_by(email=email).first() is not None:
             raise ApiError("Email already exists", 409, code="email_exists")
-        user = User(email=email, role=role, company_id=company_id)
+        user = User(email=email, role=role)
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
