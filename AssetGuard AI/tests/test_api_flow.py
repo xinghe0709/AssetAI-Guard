@@ -313,6 +313,27 @@ class ApiFlowTestCase(unittest.TestCase):
         self.assertIn("loadParameterMetric", hist_items[0])
         self.assertIn("matchedCapacityName", hist_items[0])
 
+        dashboard_summary = self.client.get(
+            "/api/v1/evaluations/dashboard-summary?limit=5",
+            headers={"Authorization": f"Bearer {manager_token}"},
+        )
+        self.assertEqual(dashboard_summary.status_code, 200, dashboard_summary.get_json())
+        dashboard_data = dashboard_summary.get_json()["data"]
+        self.assertIn("totals", dashboard_data)
+        self.assertIn("recentEvaluations", dashboard_data)
+        self.assertGreaterEqual(dashboard_data["totals"]["evaluations"], 1)
+        self.assertLessEqual(len(dashboard_data["recentEvaluations"]), 5)
+
+        contractor_dashboard = self.client.get(
+            "/api/v1/evaluations/dashboard-summary?limit=5",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+        )
+        self.assertEqual(contractor_dashboard.status_code, 403, contractor_dashboard.get_json())
+
+        dashboard_page = self.client.get("/dashboard")
+        self.assertEqual(dashboard_page.status_code, 200)
+        self.assertIn("Evaluation Dashboard", dashboard_page.get_data(as_text=True))
+
         contractor_hist = self.client.get(
             "/api/v1/evaluations/history?page=1&pageSize=20",
             headers={"Authorization": f"Bearer {contractor_token}"},
