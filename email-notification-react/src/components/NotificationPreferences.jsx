@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function NotificationPreferences({ form, onChange, onSave, saving }) {
   return (
     <section className="card">

@@ -322,6 +322,22 @@ http://127.0.0.1:5001
 3. Use the AI tool to process PDF / image documents and generate asset JSON files into `gjp-assetguard-extraction-tool/uploads/`.
 4. Call `POST /api/v1/assets/import-json-uploads` on the main backend to import those files into the database.
 
+## Where to view results after both services are running
+
+If you already started backend + extraction tool + React email module, check these pages:
+
+- Backend health: `http://127.0.0.1:5000/api/v1/health`
+- Backend built-in dashboard (evaluation summary): `http://127.0.0.1:5000/dashboard`
+- Extraction tool UI: `http://127.0.0.1:5001`
+- React email module UI (Vite): `http://127.0.0.1:5173` (or the URL shown by `npm run dev`)
+
+Suggested quick validation:
+
+1. Login backend with `admin@demo.com / admin123`.
+2. Submit one or more evaluations via API or your frontend form.
+3. Open `/dashboard` to see evaluation totals and recent logs.
+4. Open React email module page to edit template/preferences and view mock/synced communication logs.
+
 ---
 
 ## Common API Workflow

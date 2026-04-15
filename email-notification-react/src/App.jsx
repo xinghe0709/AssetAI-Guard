@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import NotificationPreferences from "./components/NotificationPreferences";
 import EmailTemplateEditor from "./components/EmailTemplateEditor";
 import EmailLogsTable from "./components/EmailLogsTable";

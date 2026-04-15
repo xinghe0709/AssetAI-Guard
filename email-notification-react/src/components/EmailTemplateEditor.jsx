@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function EmailTemplateEditor({ template, onTemplateChange, onSave, saving }) {
   return (
     <section className="card">

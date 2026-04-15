@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function EmailLogsTable({ logs, loading }) {
   return (
     <section className="card">
