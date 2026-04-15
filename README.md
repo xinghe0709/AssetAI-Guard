@@ -24,6 +24,7 @@ These two projects are **independent**.
 |---------|--------|---------------|
 | Main backend | `AssetGuard AI/README.md` | `AssetGuard AI/API_DOCUMENTATION.md` |
 | AI extraction tool | `gjp-assetguard-extraction-tool/README.md` | — |
+| Email React module (UI only) | `email-notification-react/README.md` | — |
 
 ---
 
