@@ -1066,6 +1066,86 @@ List all past evaluation log entries, most recent first.
 
 ---
 
+### GET `/api/v1/evaluations/dashboard-summary`
+
+Return aggregate metrics for dashboard visualization, derived from persisted `evaluation_logs`.
+
+**Permissions:** `System_Admin`, `Asset_Manager`.
+
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Notes |
+|-----------|------|----------|---------|-------|
+| `limit` | integer | No | `10` | Must be 1–100; controls size of `recentEvaluations` and `topAssets` |
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "totals": {
+      "evaluations": 28,
+      "compliant": 21,
+      "nonCompliant": 7,
+      "complianceRatePercentage": 75.0
+    },
+    "overloadStats": {
+      "averageOverloadPercentage": 18.23,
+      "maxOverloadPercentage": 52.4
+    },
+    "equipmentStats": [
+      { "equipment": "Crane with outriggers", "evaluationCount": 12 },
+      { "equipment": "Storage Load", "evaluationCount": 8 }
+    ],
+    "topAssets": [
+      { "assetName": "Berth 5", "evaluationCount": 9 },
+      { "assetName": "Berth 8", "evaluationCount": 7 }
+    ],
+    "recentEvaluations": [
+      {
+        "id": 35,
+        "assetName": "Berth 5",
+        "equipment": "Crane with outriggers",
+        "status": "Compliant",
+        "loadParameterValue": 500.0,
+        "loadParameterMetric": "kN",
+        "overloadPercentage": 0.0,
+        "evaluatedAt": "2026-04-15T09:40:00+00:00"
+      }
+    ]
+  }
+}
+```
+
+**Possible errors:**
+
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `validation_error` | `limit` out of range |
+| `403` | — | Caller is `Contractors` (insufficient permission) |
+
+---
+
+## Built-in Dashboard Page (basic frontend)
+
+The backend serves a minimal dashboard UI at:
+
+```text
+/dashboard
+```
+
+This page logs in via `POST /api/v1/auth/login` and fetches `GET /api/v1/evaluations/dashboard-summary` to show:
+
+- evaluation totals and compliance rate
+- overload statistics
+- equipment and top-asset breakdown
+- recent evaluation records
+
+It is intentionally simple and designed for local/demo usage.
+
+---
+
 ## AI JSON Import Workflow
 
 The AI extraction module (`gjp-assetguard-extraction-tool`) generates one JSON file per detected asset. Each file must conform to this schema:

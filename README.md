@@ -24,6 +24,7 @@ These two projects are **independent**.
 |---------|--------|---------------|
 | Main backend | `AssetGuard AI/README.md` | `AssetGuard AI/API_DOCUMENTATION.md` |
 | AI extraction tool | `gjp-assetguard-extraction-tool/README.md` | — |
+| Email React module (UI only) | `email-notification-react/README.md` | — |
 
 ---
 
@@ -46,6 +47,60 @@ git checkout main
 git pull origin main
 git checkout -b <your-branch-name>
 ```
+
+### How to update your local project from remote
+
+If you only want to sync the newest code to your local machine:
+
+```bash
+cd /path/to/AssetAI-Guard
+git fetch origin
+git checkout main
+git pull --ff-only origin main
+```
+
+If you are currently on a feature branch and want to bring in latest `main`:
+
+```bash
+git checkout <your-feature-branch>
+git fetch origin
+git merge origin/main
+# or: git rebase origin/main
+```
+
+If you have local uncommitted changes before pulling:
+
+```bash
+git status
+git stash push -m "wip before update"
+git pull --ff-only origin main
+git stash pop
+```
+
+### Why changes may not appear on GitHub
+
+If you can see local commits but nothing on GitHub, usually one of these is true:
+
+1. No remote is configured:
+
+```bash
+git remote -v
+```
+
+If empty, add your GitHub repo:
+
+```bash
+git remote add origin <your-github-repo-url>
+```
+
+2. Commits are local but not pushed:
+
+```bash
+git push -u origin <your-branch-name>
+```
+
+3. You pushed to another branch, but GitHub page is showing `main`.
+   Switch to your pushed branch in GitHub UI or open a Pull Request.
 
 After making changes:
 
@@ -88,6 +143,36 @@ git push -u origin <your-branch-name>
 
 - Python 3.11+
 - `pip`
+
+### Chinese quick start (local run)
+
+If you just want to run both services locally as quickly as possible:
+
+```bash
+# Terminal 1: main backend
+cd "AssetGuard AI"
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m flask --app assetguard_app.py db upgrade
+python -m flask --app assetguard_app.py seed
+python -m flask --app assetguard_app.py run --port 5000
+```
+
+```bash
+# Terminal 2: extraction tool
+cd "gjp-assetguard-extraction-tool"
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+# create .env and fill required keys (see section "Configure .env" below)
+python app.py
+```
+
+Then access:
+
+- Backend API: `http://127.0.0.1:5000/api/v1`
+- Extraction tool: `http://127.0.0.1:5001`
 
 ---
 
@@ -237,6 +322,22 @@ http://127.0.0.1:5001
 3. Use the AI tool to process PDF / image documents and generate asset JSON files into `gjp-assetguard-extraction-tool/uploads/`.
 4. Call `POST /api/v1/assets/import-json-uploads` on the main backend to import those files into the database.
 
+## Where to view results after both services are running
+
+If you already started backend + extraction tool + React email module, check these pages:
+
+- Backend health: `http://127.0.0.1:5000/api/v1/health`
+- Backend built-in dashboard (evaluation summary): `http://127.0.0.1:5000/dashboard`
+- Extraction tool UI: `http://127.0.0.1:5001`
+- React email module UI (Vite): `http://127.0.0.1:5173` (or the URL shown by `npm run dev`)
+
+Suggested quick validation:
+
+1. Login backend with `admin@demo.com / admin123`.
+2. Submit one or more evaluations via API or your frontend form.
+3. Open `/dashboard` to see evaluation totals and recent logs.
+4. Open React email module page to edit template/preferences and view mock/synced communication logs.
+
 ---
 
 ## Common API Workflow
@@ -338,6 +439,50 @@ GET /api/v1/evaluations/history?page=1&pageSize=20
 Authorization: Bearer <manager_or_admin_token>
 ```
 
+### 7. Dashboard summary (for tracking/audit)
+
+`System_Admin` or `Asset_Manager` only:
+
+```http
+GET /api/v1/evaluations/dashboard-summary?limit=10
+Authorization: Bearer <manager_or_admin_token>
+```
+
+You can also open a basic built-in dashboard page:
+
+```
+http://127.0.0.1:5000/dashboard
+```
+
+Use an admin/manager account on that page to log in and load:
+- total/compliant/non-compliant evaluation counts
+- overload stats
+- equipment and top-asset breakdown
+- recent evaluation logs
+
+### 8. How to run (backend + dashboard) in 60 seconds
+
+```bash
+# from repository root
+cd "AssetGuard AI"
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m flask --app assetguard_app.py db upgrade
+python -m flask --app assetguard_app.py seed
+python -m flask --app assetguard_app.py run --port 5000
+```
+
+Then open:
+
+- API health check: `http://127.0.0.1:5000/api/v1/health`
+- Dashboard page: `http://127.0.0.1:5000/dashboard`
+
+Demo login (for dashboard):
+
+- Admin: `admin@demo.com / admin123`
+- Manager: `manager@demo.com / manager123`
+
 ---
 
 ## API Route Reference
@@ -377,6 +522,7 @@ Authorization: Bearer <manager_or_admin_token>
 | `GET` | `/api/v1/evaluations/equipment-options` | Any authenticated user |
 | `POST` | `/api/v1/evaluations/check` | Any authenticated user |
 | `GET` | `/api/v1/evaluations/history` | `System_Admin`, `Asset_Manager` |
+| `GET` | `/api/v1/evaluations/dashboard-summary` | `System_Admin`, `Asset_Manager` |
 
 ---
 
