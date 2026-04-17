@@ -26,6 +26,7 @@ These two projects are **independent**.
 | AI extraction tool | `gjp-assetguard-extraction-tool/README.md` | — |
 | Email React module (UI only) | `email-notification-react/README.md` | — |
 | Email notification design note | `AssetGuard AI/EMAIL_NOTIFICATION_DESIGN_CN.md` | — |
+| Full demo guide (CN) | `DEMO_GUIDE_CN.md` | — |
 
 ---
 
