@@ -219,3 +219,127 @@ npm run dev
 
 “本次我们先满足客户最关心的可追溯能力：每次评估都写入 `evaluation_logs`，并提供历史查询与管理看板。其次在邮件部分提供了轻量 demo：非合规评估可触发通知并记录日志，同时支持前端页面维护通知偏好和模板。当前方案适合演示和验证业务流程，后续可平滑升级到持久化邮件日志和生产级发送链路。” 
 
+---
+
+## 8. 邮件系统 Demo（具体演示脚本）
+
+> 目标：在 5 分钟内向客户展示“可配置、可触发、可追踪”。
+
+### 8.1 演示前准备
+
+1. 启动后端（见第 4.1）。
+2. 登录获取管理员 token（`POST /api/v1/auth/login`）。
+3. 准备好一个可以触发 Non-Compliant 的评估请求。
+
+建议先确认默认行为：
+
+- `SMTP_SUPPRESS_SEND=true`：只记录日志，不真实发邮件（最稳妥演示模式）。
+
+### 8.2 第一步：展示“可配置”
+
+#### A) 读取当前偏好
+
+```http
+GET /api/v1/alerts/email-preferences
+Authorization: Bearer <admin_or_manager_token>
+```
+
+你可以讲：
+
+- 可以配置阈值、接收人、是否非合规即时通知。
+
+#### B) 修改偏好（现场操作）
+
+```http
+PUT /api/v1/alerts/email-preferences
+Authorization: Bearer <admin_or_manager_token>
+Content-Type: application/json
+
+{
+  "sendOnNonCompliant": true,
+  "recipientsCsv": "asset.manager@demo.com,safety@demo.com",
+  "digestTimeUtc": "09:30",
+  "escalationThresholdPercent": 20
+}
+```
+
+#### C) 修改模板（现场操作）
+
+```http
+PUT /api/v1/alerts/email-template
+Authorization: Bearer <admin_or_manager_token>
+Content-Type: application/json
+
+{
+  "subject": "[AssetGuard Demo] {status} - {assetName}",
+  "body": "Asset={assetName}\\nStatus={status}\\nOverload={overloadPercent}%"
+}
+```
+
+你可以讲：
+
+- 邮件主题与正文可由业务方自行调整。
+
+### 8.3 第二步：展示“可触发”
+
+调用一次超载评估（Non-Compliant）：
+
+```http
+POST /api/v1/evaluations/check
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "locationId": 1,
+  "assetId": 1,
+  "equipment": "Crane with outriggers",
+  "equipmentModel": "Demo Crane X1",
+  "loadParameterValue": 5000,
+  "remark": "demo non-compliant trigger"
+}
+```
+
+预期：
+
+- 返回 `status = "Non-Compliant"`。
+- 后端触发通知逻辑并生成通知日志记录。
+
+### 8.4 第三步：展示“可追踪”
+
+读取邮件日志：
+
+```http
+GET /api/v1/alerts/email-logs?limit=20
+Authorization: Bearer <admin_or_manager_token>
+```
+
+重点展示字段：
+
+- `sentAt`（触发时间）
+- `assetName`（关联资产）
+- `evaluationStatus`（是否 Non-Compliant）
+- `recipient`（发给谁）
+- `deliveryStatus`（Delivered/Failed）
+- `errorMessage`（失败原因，若有）
+
+你可以讲：
+
+- 即使在 suppress 模式，也能完整保留通知行为轨迹，支持审计回溯。
+
+### 8.5 React 页面演示（可选）
+
+1. 打开 `http://127.0.0.1:5173`。
+2. 在页面中填入 token。
+3. 点 `Sync Logs`，展示日志表格。
+4. 调整偏好和模板并保存，返回后再次触发一条 Non-Compliant，刷新日志。
+
+### 8.6 常见问答（现场应对）
+
+**Q1：现在是真发邮件吗？**  
+A：默认不是（`SMTP_SUPPRESS_SEND=true`），这是为了保证演示稳定；切换配置后可真实外发。  
+
+**Q2：日志会不会重启就没？**  
+A：当前 demo 是内存存储，重启会清空；生产化会落库到 `email_notifications`。  
+
+**Q3：是否支持失败重试？**  
+A：demo 阶段不做复杂重试；生产阶段可加队列与重试策略。  
