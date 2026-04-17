@@ -5,6 +5,7 @@ from sqlalchemy import select
 from app.extensions import db
 from app.models import Asset, EvaluationLog, LoadCapacity
 from app.models.evaluation_log import EvaluationStatus
+from app.services.alert_service import AlertService
 from app.utils.equipment_mapping import normalize_capacity_name, resolve_equipment
 from app.utils.errors import ApiError
 
@@ -92,6 +93,11 @@ class EvaluationService:
         )
         db.session.add(log)
         db.session.commit()
+        AlertService.notify_non_compliant(
+            asset_name=asset.name,
+            status=status.value,
+            overload_percent=float(overload_pct),
+        )
 
         return {
             "asset": {
@@ -140,4 +146,71 @@ class EvaluationService:
             "pageSize": pagination.per_page,
             "total": pagination.total,
             "pages": pagination.pages,
+        }
+
+    @staticmethod
+    def dashboard_summary(*, limit: int = 10) -> dict:
+        logs: list[EvaluationLog] = (
+            EvaluationLog.query.order_by(EvaluationLog.evaluated_at.desc(), EvaluationLog.id.desc()).all()
+        )
+
+        total = len(logs)
+        compliant_count = sum(1 for log in logs if log.status == EvaluationStatus.COMPLIANT)
+        non_compliant_count = total - compliant_count
+        compliance_rate = round((compliant_count / total) * 100, 2) if total else 0.0
+
+        overload_logs = [log for log in logs if log.status == EvaluationStatus.NON_COMPLIANT]
+        avg_overload_percentage = (
+            round((sum(log.overload_percentage for log in overload_logs) / len(overload_logs)) * 100, 2)
+            if overload_logs
+            else 0.0
+        )
+        max_overload_percentage = (
+            round(max(log.overload_percentage for log in overload_logs) * 100, 2) if overload_logs else 0.0
+        )
+
+        equipment_breakdown: dict[str, int] = {}
+        asset_breakdown: dict[str, int] = {}
+        for log in logs:
+            equipment_breakdown[log.equipment] = equipment_breakdown.get(log.equipment, 0) + 1
+            asset_name = log.asset.name if log.asset else f"Asset #{log.asset_id}"
+            asset_breakdown[asset_name] = asset_breakdown.get(asset_name, 0) + 1
+
+        top_assets = [
+            {"assetName": name, "evaluationCount": count}
+            for name, count in sorted(asset_breakdown.items(), key=lambda item: item[1], reverse=True)[:limit]
+        ]
+        equipment_stats = [
+            {"equipment": equipment, "evaluationCount": count}
+            for equipment, count in sorted(equipment_breakdown.items(), key=lambda item: item[1], reverse=True)
+        ]
+
+        recent_evaluations = [
+            {
+                "id": log.id,
+                "assetName": log.asset.name if log.asset else None,
+                "equipment": log.equipment,
+                "status": log.status.value,
+                "loadParameterValue": log.load_parameter_value,
+                "loadParameterMetric": log.load_parameter_metric,
+                "overloadPercentage": round(log.overload_percentage * 100, 2),
+                "evaluatedAt": _evaluated_at_iso(log.evaluated_at),
+            }
+            for log in logs[:limit]
+        ]
+
+        return {
+            "totals": {
+                "evaluations": total,
+                "compliant": compliant_count,
+                "nonCompliant": non_compliant_count,
+                "complianceRatePercentage": compliance_rate,
+            },
+            "overloadStats": {
+                "averageOverloadPercentage": avg_overload_percentage,
+                "maxOverloadPercentage": max_overload_percentage,
+            },
+            "equipmentStats": equipment_stats,
+            "topAssets": top_assets,
+            "recentEvaluations": recent_evaluations,
         }
