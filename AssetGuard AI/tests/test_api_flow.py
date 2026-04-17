@@ -249,6 +249,37 @@ class ApiFlowTestCase(unittest.TestCase):
         self.assertEqual(eval_non.status_code, 200, eval_non.get_json())
         self.assertEqual(eval_non.get_json()["data"]["status"], "Non-Compliant")
 
+        alert_logs = self.client.get(
+            "/api/v1/alerts/email-logs?limit=20",
+            headers={"Authorization": f"Bearer {manager_token}"},
+        )
+        self.assertEqual(alert_logs.status_code, 200, alert_logs.get_json())
+        alert_items = alert_logs.get_json()["data"]["items"]
+        self.assertGreaterEqual(len(alert_items), 1)
+        self.assertEqual(alert_items[0]["evaluationStatus"], "Non-Compliant")
+
+        alert_pref_update = self.client.put(
+            "/api/v1/alerts/email-preferences",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={"sendOnNonCompliant": False, "recipientsCsv": "manager@demo.com"},
+        )
+        self.assertEqual(alert_pref_update.status_code, 200, alert_pref_update.get_json())
+        self.assertFalse(alert_pref_update.get_json()["data"]["sendOnNonCompliant"])
+
+        alert_tpl_update = self.client.put(
+            "/api/v1/alerts/email-template",
+            headers={"Authorization": f"Bearer {manager_token}"},
+            json={"subject": "[Demo] {status}", "body": "Asset={assetName}"},
+        )
+        self.assertEqual(alert_tpl_update.status_code, 200, alert_tpl_update.get_json())
+        self.assertEqual(alert_tpl_update.get_json()["data"]["subject"], "[Demo] {status}")
+
+        alert_logs_forbidden = self.client.get(
+            "/api/v1/alerts/email-logs?limit=20",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+        )
+        self.assertEqual(alert_logs_forbidden.status_code, 403, alert_logs_forbidden.get_json())
+
         eval_storage_ok = self.client.post(
             "/api/v1/evaluations/check",
             headers={"Authorization": f"Bearer {contractor_token}"},
@@ -312,6 +343,27 @@ class ApiFlowTestCase(unittest.TestCase):
         self.assertGreaterEqual(len(hist_items), 1)
         self.assertIn("loadParameterMetric", hist_items[0])
         self.assertIn("matchedCapacityName", hist_items[0])
+
+        dashboard_summary = self.client.get(
+            "/api/v1/evaluations/dashboard-summary?limit=5",
+            headers={"Authorization": f"Bearer {manager_token}"},
+        )
+        self.assertEqual(dashboard_summary.status_code, 200, dashboard_summary.get_json())
+        dashboard_data = dashboard_summary.get_json()["data"]
+        self.assertIn("totals", dashboard_data)
+        self.assertIn("recentEvaluations", dashboard_data)
+        self.assertGreaterEqual(dashboard_data["totals"]["evaluations"], 1)
+        self.assertLessEqual(len(dashboard_data["recentEvaluations"]), 5)
+
+        contractor_dashboard = self.client.get(
+            "/api/v1/evaluations/dashboard-summary?limit=5",
+            headers={"Authorization": f"Bearer {contractor_token}"},
+        )
+        self.assertEqual(contractor_dashboard.status_code, 403, contractor_dashboard.get_json())
+
+        dashboard_page = self.client.get("/dashboard")
+        self.assertEqual(dashboard_page.status_code, 200)
+        self.assertIn("Evaluation Dashboard", dashboard_page.get_data(as_text=True))
 
         contractor_hist = self.client.get(
             "/api/v1/evaluations/history?page=1&pageSize=20",

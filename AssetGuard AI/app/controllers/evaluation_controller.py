@@ -84,3 +84,15 @@ def history():
 
     data = EvaluationService.history(page=page, page_size=page_size)
     return ok(data)
+
+
+@evaluations_bp.get("/dashboard-summary")
+@require_roles(UserRole.SYSTEM_ADMIN.value, UserRole.ASSET_MANAGER.value)
+def dashboard_summary():
+    _ = get_auth_context()
+    limit = int(request.args.get("limit", 10))
+    if limit < 1 or limit > 100:
+        raise ApiError("Invalid limit parameter", 400, code="validation_error")
+
+    data = EvaluationService.dashboard_summary(limit=limit)
+    return ok(data)
