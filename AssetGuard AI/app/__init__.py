@@ -8,6 +8,7 @@ from flask import Flask
 
 from .commands.seed import register_seed_command
 from .config import Config
+from .controllers.alert_controller import alerts_bp
 from .controllers.auth_controller import auth_bp
 from .controllers.asset_controller import assets_bp
 from .controllers.dashboard_controller import dashboard_bp
@@ -26,6 +27,7 @@ def create_app(config_object: type[Config] = Config) -> Flask:
     migrate.init_app(app, db)
 
     app.register_blueprint(auth_bp, url_prefix="/api/v1/auth")
+    app.register_blueprint(alerts_bp, url_prefix="/api/v1/alerts")
     app.register_blueprint(locations_bp, url_prefix="/api/v1/locations")
     app.register_blueprint(assets_bp, url_prefix="/api/v1/assets")
     app.register_blueprint(evaluations_bp, url_prefix="/api/v1/evaluations")

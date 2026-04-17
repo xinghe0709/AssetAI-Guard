@@ -59,4 +59,6 @@ Current API paths expected by this UI:
 - `PUT /alerts/email-preferences`
 - `PUT /alerts/email-template`
 
+Current backend already provides a lightweight demo implementation for these paths.
+By default backend uses `SMTP_SUPPRESS_SEND=true` (records logs without real outbound email).
 If these endpoints are not available yet, the page still works with mock logs and local state.

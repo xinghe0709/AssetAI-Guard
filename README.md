@@ -25,6 +25,7 @@ These two projects are **independent**.
 | Main backend | `AssetGuard AI/README.md` | `AssetGuard AI/API_DOCUMENTATION.md` |
 | AI extraction tool | `gjp-assetguard-extraction-tool/README.md` | — |
 | Email React module (UI only) | `email-notification-react/README.md` | — |
+| Email notification design note | `AssetGuard AI/EMAIL_NOTIFICATION_DESIGN_CN.md` | — |
 
 ---
 
@@ -523,6 +524,20 @@ Demo login (for dashboard):
 | `POST` | `/api/v1/evaluations/check` | Any authenticated user |
 | `GET` | `/api/v1/evaluations/history` | `System_Admin`, `Asset_Manager` |
 | `GET` | `/api/v1/evaluations/dashboard-summary` | `System_Admin`, `Asset_Manager` |
+
+### Alerts (lightweight demo)
+
+| Method | Path | Permission |
+|--------|------|------------|
+| `GET` | `/api/v1/alerts/email-logs` | `System_Admin`, `Asset_Manager` |
+| `GET` | `/api/v1/alerts/email-preferences` | `System_Admin`, `Asset_Manager` |
+| `PUT` | `/api/v1/alerts/email-preferences` | `System_Admin`, `Asset_Manager` |
+| `GET` | `/api/v1/alerts/email-template` | `System_Admin`, `Asset_Manager` |
+| `PUT` | `/api/v1/alerts/email-template` | `System_Admin`, `Asset_Manager` |
+
+Notes:
+- Non-compliant evaluations trigger demo email notification logging.
+- By default `SMTP_SUPPRESS_SEND=true` (no real outbound email); configure SMTP env vars to send real emails.
 
 ---
 
