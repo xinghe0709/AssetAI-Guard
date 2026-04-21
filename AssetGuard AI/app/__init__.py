@@ -4,7 +4,8 @@ Application factory.
 Layers: controllers (HTTP) -> services (business) -> models (ORM).
 """
 
-from flask import Flask
+from flask import Flask, request
+from flask_cors import CORS
 
 from .commands.seed import register_seed_command
 from .config import Config
@@ -22,6 +23,22 @@ def create_app(config_object: type[Config] = Config) -> Flask:
     """Create Flask app, bind extensions, blueprints, errors, and CLI seed."""
     app = Flask(__name__)
     app.config.from_object(config_object)
+    CORS(
+        app,
+        resources={r"/api/.*": {"origins": ["http://localhost:5173", "http://127.0.0.1:5173"]}},
+    )
+
+    @app.after_request
+    def add_api_cors_headers(response):
+        """
+        Add permissive CORS headers for API routes so local UI requests do not fail
+        due to origin/port mismatches during development.
+        """
+        if request.path.startswith("/api/"):
+            response.headers["Access-Control-Allow-Origin"] = "*"
+            response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+        return response
 
     db.init_app(app)
     migrate.init_app(app, db)

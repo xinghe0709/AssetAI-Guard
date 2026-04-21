@@ -106,3 +106,4 @@ gjp-assetguard-extraction-tool/.git_nested_backup/
 
 # mypy
 .mypy_cache/
+.DS_Store

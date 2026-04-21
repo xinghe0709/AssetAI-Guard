@@ -221,14 +221,38 @@ AI_JSON_UPLOADS_DIR=/path/to/gjp-assetguard-extraction-tool/uploads
 
 ### Initialise and run
 
+Recommended: use the workspace bootstrap scripts from the repository root.  
+These scripts start both backend and frontend.
+
+**Windows (PowerShell):**
+
+```powershell
+cd "D:/{your path}/AssetAI-Guard"
+.\start-dev.bat
+```
+
+**macOS / Linux:**
+
 ```bash
-# Apply database migrations
+cd "/path/to/AssetAI-Guard"
+chmod +x ./start-dev.sh
+./start-dev.sh
+```
+
+Bootstrap behavior:
+
+- Always runs `flask db upgrade` first
+- Runs `flask seed` when either:
+  - `.dev_bootstrap_done` is missing, or
+  - `AssetGuard AI/instance/assetguard.db` was missing before startup
+- Skips `seed` only when both marker and pre-existing DB are present
+
+Manual backend-only alternative:
+
+```bash
+# In AssetGuard AI/
 python -m flask --app assetguard_app.py db upgrade
-
-# Seed demo users and sample assets
 python -m flask --app assetguard_app.py seed
-
-# Start the development server
 python -m flask --app assetguard_app.py run --port 5000
 ```
 
@@ -494,6 +518,7 @@ Demo login (for dashboard):
 | Method | Path | Permission |
 |--------|------|------------|
 | `POST` | `/api/v1/auth/login` | Public |
+| `POST` | `/api/v1/auth/set-initial-password` | Any authenticated user (first login only) |
 | `POST` | `/api/v1/auth/change-password` | Any authenticated user |
 | `POST` | `/api/v1/auth/users` | `System_Admin` |
 

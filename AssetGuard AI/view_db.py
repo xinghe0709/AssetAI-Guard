@@ -67,6 +67,21 @@ def main() -> None:
             ORDER BY a.id
             """,
         )
+
+        print_query(
+            cursor,
+            "users_for_testing (password is hashed, not plaintext)",
+            """
+            SELECT
+                id,
+                email,
+                role,
+                is_first_login,
+                password_hash
+            FROM users
+            ORDER BY id
+            """,
+        )
     finally:
         conn.close()
 
