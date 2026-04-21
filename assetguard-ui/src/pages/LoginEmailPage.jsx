@@ -1,8 +1,7 @@
 import { useState } from "react";
 import AuthLayout from "../components/layout/AuthLayout";
 import buildingImage from "../assets/building.png";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api/v1";
+import { API_BASE_URL } from "../services/apiClient";
 
 function LoginEmailPage({ onLoginSuccess }) {
   const [email, setEmail] = useState("");
@@ -90,11 +89,7 @@ function LoginEmailPage({ onLoginSuccess }) {
           />
         </div>
 
-        {errorMessage && (
-          <p style={{ color: "#f87171", marginTop: "-4px", marginBottom: "8px" }}>
-            {errorMessage}
-          </p>
-        )}
+        {errorMessage && <p className="auth-error-message">{errorMessage}</p>}
 
         <button type="submit" className="primary-btn" disabled={isSubmitting}>
           {isSubmitting ? "Signing In..." : "Sign In"} <span>→</span>
