@@ -4,6 +4,7 @@ import DashboardHeader from "../components/dashboard/DashboardHeader";
 import StatCard from "../components/dashboard/StatCard";
 import SectionHeader from "../components/dashboard/SectionHeader";
 import DataTable from "../components/dashboard/DataTable";
+import AlertsPage from "./AlertsPage";
 
 const recentEvaluations = [
   ["Main Turbine G7", "Siemens SGT-800", "Compliant", "14:22 PM"],
@@ -32,14 +33,18 @@ function DashboardPage({ user }) {
   if (activeNav !== "Dashboard") {
     return (
       <AppLayout activeNav={activeNav} onNavChange={setActiveNav} user={user}>
-        <section className="module-placeholder">
-          <h1>{activeNav}</h1>
-          <p>{navDescriptions[activeNav]}</p>
-          <p className="muted-note">
-            This module is now selectable from the sidebar. Detailed screens can be
-            implemented next.
-          </p>
-        </section>
+        {activeNav === "Alerts" ? (
+          <AlertsPage />
+        ) : (
+          <section className="module-placeholder">
+            <h1>{activeNav}</h1>
+            <p>{navDescriptions[activeNav]}</p>
+            <p className="muted-note">
+              This module is now selectable from the sidebar. Detailed screens can be
+              implemented next.
+            </p>
+          </section>
+        )}
       </AppLayout>
     );
   }
