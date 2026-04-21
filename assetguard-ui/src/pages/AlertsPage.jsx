@@ -1,47 +1,173 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SectionHeader from "../components/dashboard/SectionHeader";
+import {
+  getEmailLogs,
+  getEmailPreferences,
+  getEmailTemplate,
+  updateEmailPreferences,
+  updateEmailTemplate,
+} from "../services/alertsApi";
 
-const initialDeliveryLogs = [
-  {
-    id: "DL-10045",
-    recipient: "ops.team@assetguard.io",
-    status: "Delivered",
-    channel: "Threshold Alert",
-    sentAt: "2026-04-21 08:14",
-  },
-  {
-    id: "DL-10044",
-    recipient: "safety.audit@assetguard.io",
-    status: "Failed",
-    channel: "Compliance Alert",
-    sentAt: "2026-04-21 06:42",
-  },
-  {
-    id: "DL-10043",
-    recipient: "field.lead@assetguard.io",
-    status: "Pending",
-    channel: "Daily Digest",
-    sentAt: "2026-04-20 22:17",
-  },
-];
+const defaultPreferences = {
+  thresholdPercent: "85",
+  recipients: "ops.team@assetguard.io, safety.audit@assetguard.io",
+  alertsEnabled: true,
+};
+
+const defaultTemplate = {
+  subject: "[ASSETGUARD] THRESHOLD BREACH DETECTED",
+  body: "A monitored asset has exceeded the configured load threshold. Please review the latest evaluation report immediately.",
+};
 
 function AlertsPage() {
-  const [thresholdPercent, setThresholdPercent] = useState("85");
-  const [recipients, setRecipients] = useState(
-    "ops.team@assetguard.io, safety.audit@assetguard.io"
+  const [thresholdPercent, setThresholdPercent] = useState(
+    defaultPreferences.thresholdPercent
   );
-  const [alertsEnabled, setAlertsEnabled] = useState(true);
+  const [recipients, setRecipients] = useState(defaultPreferences.recipients);
+  const [alertsEnabled, setAlertsEnabled] = useState(defaultPreferences.alertsEnabled);
+  const [preferencesSnapshot, setPreferencesSnapshot] = useState(defaultPreferences);
 
-  const [subject, setSubject] = useState("[ASSETGUARD] THRESHOLD BREACH DETECTED");
-  const [body, setBody] = useState(
-    "A monitored asset has exceeded the configured load threshold. Please review the latest evaluation report immediately."
-  );
+  const [subject, setSubject] = useState(defaultTemplate.subject);
+  const [body, setBody] = useState(defaultTemplate.body);
+  const [templateSnapshot, setTemplateSnapshot] = useState(defaultTemplate);
+
+  const [deliveryLogs, setDeliveryLogs] = useState([]);
+  const [preferencesLoading, setPreferencesLoading] = useState(true);
+  const [preferencesError, setPreferencesError] = useState("");
+  const [templateLoading, setTemplateLoading] = useState(true);
+  const [templateError, setTemplateError] = useState("");
+  const [logsLoading, setLogsLoading] = useState(true);
+  const [logsError, setLogsError] = useState("");
+
+  const [isSavingPreferences, setIsSavingPreferences] = useState(false);
+  const [isSavingTemplate, setIsSavingTemplate] = useState(false);
 
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
 
+  useEffect(() => {
+    const loadAlertsData = async () => {
+      setPreferencesLoading(true);
+      setTemplateLoading(true);
+      setLogsLoading(true);
+      setPreferencesError("");
+      setTemplateError("");
+      setLogsError("");
+
+      const [preferencesResult, templateResult, logsResult] =
+        await Promise.allSettled([
+          getEmailPreferences(),
+          getEmailTemplate(),
+          getEmailLogs(),
+        ]);
+
+      if (preferencesResult.status === "fulfilled") {
+        const preferences = preferencesResult.value || {};
+        const nextPreferences = {
+          thresholdPercent:
+            preferences.thresholdPercent != null
+              ? String(preferences.thresholdPercent)
+              : defaultPreferences.thresholdPercent,
+          recipients: Array.isArray(preferences.recipients)
+            ? preferences.recipients.join(", ")
+            : preferences.recipients || defaultPreferences.recipients,
+          alertsEnabled:
+            preferences.alertsEnabled != null
+              ? Boolean(preferences.alertsEnabled)
+              : defaultPreferences.alertsEnabled,
+        };
+
+        setThresholdPercent(nextPreferences.thresholdPercent);
+        setRecipients(nextPreferences.recipients);
+        setAlertsEnabled(nextPreferences.alertsEnabled);
+        setPreferencesSnapshot(nextPreferences);
+      } else {
+        setPreferencesError(
+          preferencesResult.reason?.message ||
+            "Unable to load email preferences."
+        );
+      }
+      setPreferencesLoading(false);
+
+      if (templateResult.status === "fulfilled") {
+        const template = templateResult.value || {};
+        const nextTemplate = {
+          subject: template.subject || defaultTemplate.subject,
+          body: template.body || defaultTemplate.body,
+        };
+
+        setSubject(nextTemplate.subject);
+        setBody(nextTemplate.body);
+        setTemplateSnapshot(nextTemplate);
+      } else {
+        setTemplateError(
+          templateResult.reason?.message || "Unable to load email template."
+        );
+      }
+      setTemplateLoading(false);
+
+      if (logsResult.status === "fulfilled") {
+        setDeliveryLogs(Array.isArray(logsResult.value) ? logsResult.value : []);
+      } else {
+        setLogsError(logsResult.reason?.message || "Unable to load email logs.");
+      }
+      setLogsLoading(false);
+    };
+
+    loadAlertsData();
+  }, []);
+
+  const isPreferencesDirty =
+    thresholdPercent !== preferencesSnapshot.thresholdPercent ||
+    recipients !== preferencesSnapshot.recipients ||
+    alertsEnabled !== preferencesSnapshot.alertsEnabled;
+
+  const isTemplateDirty =
+    subject !== templateSnapshot.subject || body !== templateSnapshot.body;
+
+  const handleSavePreferences = async () => {
+    if (isSavingPreferences || !isPreferencesDirty) {
+      return;
+    }
+
+    setIsSavingPreferences(true);
+    setPreferencesError("");
+    try {
+      await updateEmailPreferences({
+        thresholdPercent: Number(thresholdPercent),
+        recipients: recipients
+          .split(",")
+          .map((email) => email.trim())
+          .filter(Boolean),
+        alertsEnabled,
+      });
+
+      setPreferencesSnapshot({ thresholdPercent, recipients, alertsEnabled });
+    } catch (error) {
+      setPreferencesError(error.message || "Unable to save email preferences.");
+    } finally {
+      setIsSavingPreferences(false);
+    }
+  };
+
+  const handleSaveTemplate = async () => {
+    if (isSavingTemplate || !isTemplateDirty) {
+      return;
+    }
+
+    setIsSavingTemplate(true);
+    setTemplateError("");
+    try {
+      await updateEmailTemplate({ subject, body });
+      setTemplateSnapshot({ subject, body });
+    } catch (error) {
+      setTemplateError(error.message || "Unable to save email template.");
+    } finally {
+      setIsSavingTemplate(false);
+    }
+  };
+
   const handleSendTestEmail = () => {
-    // Placeholder for future API integration.
     console.log("SEND TEST EMAIL", {
       thresholdPercent,
       recipients,
@@ -52,17 +178,17 @@ function AlertsPage() {
   };
 
   const filteredLogs = useMemo(() => {
-    return initialDeliveryLogs.filter((log) => {
+    return deliveryLogs.filter((log) => {
       const matchesStatus = statusFilter === "All" || log.status === statusFilter;
       const matchesSearch =
         searchTerm.trim() === "" ||
-        log.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        log.recipient.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        log.channel.toLowerCase().includes(searchTerm.toLowerCase());
+        log.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        log.recipient?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        log.channel?.toLowerCase().includes(searchTerm.toLowerCase());
 
       return matchesStatus && matchesSearch;
     });
-  }, [statusFilter, searchTerm]);
+  }, [deliveryLogs, statusFilter, searchTerm]);
 
   return (
     <>
@@ -74,147 +200,180 @@ function AlertsPage() {
       </header>
 
       <section className="dashboard-section">
-        <SectionHeader title="Email Preferences" action="SAVE PREFERENCES" />
+        <SectionHeader
+          title="Email Preferences"
+          action={isSavingPreferences ? "SAVING..." : "SAVE PREFERENCES"}
+          onAction={handleSavePreferences}
+          actionDisabled={isSavingPreferences || !isPreferencesDirty}
+        />
         <div className="alerts-card">
-          <div className="alerts-field-grid">
-            <label className="alerts-field">
-              <span className="alerts-label">THRESHOLD (%)</span>
-              <input
-                type="number"
-                min="1"
-                max="100"
-                value={thresholdPercent}
-                onChange={(event) => setThresholdPercent(event.target.value)}
-              />
-            </label>
+          {preferencesError && (
+            <p className="dashboard-error-message">{preferencesError}</p>
+          )}
+          {preferencesLoading ? (
+            <p className="muted-note">Loading preferences...</p>
+          ) : (
+            <>
+              <div className="alerts-field-grid">
+                <label className="alerts-field">
+                  <span className="alerts-label">THRESHOLD (%)</span>
+                  <input
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={thresholdPercent}
+                    onChange={(event) => setThresholdPercent(event.target.value)}
+                  />
+                </label>
 
-            <label className="alerts-field alerts-field-wide">
-              <span className="alerts-label">RECIPIENTS</span>
-              <input
-                type="text"
-                value={recipients}
-                onChange={(event) => setRecipients(event.target.value)}
-                placeholder="name@company.com, another@company.com"
-              />
-            </label>
-          </div>
+                <label className="alerts-field alerts-field-wide">
+                  <span className="alerts-label">RECIPIENTS</span>
+                  <input
+                    type="text"
+                    value={recipients}
+                    onChange={(event) => setRecipients(event.target.value)}
+                    placeholder="name@company.com, another@company.com"
+                  />
+                </label>
+              </div>
 
-          <div className="alerts-toggle-row">
-            <div>
-              <p className="alerts-label">EMAIL ALERTS</p>
-              <p className="alerts-help">
-                ENABLE OR DISABLE AUTOMATIC NOTIFICATIONS FOR THRESHOLD EVENTS.
-              </p>
-            </div>
-            <button
-              type="button"
-              className={`alerts-toggle ${alertsEnabled ? "active" : ""}`}
-              onClick={() => setAlertsEnabled((previous) => !previous)}
-            >
-              {alertsEnabled ? "ON" : "OFF"}
-            </button>
-          </div>
+              <div className="alerts-toggle-row">
+                <div>
+                  <p className="alerts-label">EMAIL ALERTS</p>
+                  <p className="alerts-help">
+                    ENABLE OR DISABLE AUTOMATIC NOTIFICATIONS FOR THRESHOLD EVENTS.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className={`alerts-toggle ${alertsEnabled ? "active" : ""}`}
+                  onClick={() => setAlertsEnabled((previous) => !previous)}
+                >
+                  {alertsEnabled ? "ON" : "OFF"}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
       <section className="dashboard-section">
-        <SectionHeader title="Template Editor" action="SAVE TEMPLATE" />
+        <SectionHeader
+          title="Template Editor"
+          action={isSavingTemplate ? "SAVING..." : "SAVE TEMPLATE"}
+          onAction={handleSaveTemplate}
+          actionDisabled={isSavingTemplate || !isTemplateDirty}
+        />
         <div className="alerts-card">
-          <label className="alerts-field">
-            <span className="alerts-label">SUBJECT</span>
-            <input
-              type="text"
-              value={subject}
-              onChange={(event) => setSubject(event.target.value)}
-            />
-          </label>
+          {templateError && <p className="dashboard-error-message">{templateError}</p>}
+          {templateLoading ? (
+            <p className="muted-note">Loading template...</p>
+          ) : (
+            <>
+              <label className="alerts-field">
+                <span className="alerts-label">SUBJECT</span>
+                <input
+                  type="text"
+                  value={subject}
+                  onChange={(event) => setSubject(event.target.value)}
+                />
+              </label>
 
-          <label className="alerts-field">
-            <span className="alerts-label">BODY</span>
-            <textarea
-              rows="5"
-              value={body}
-              onChange={(event) => setBody(event.target.value)}
-            />
-          </label>
+              <label className="alerts-field">
+                <span className="alerts-label">BODY</span>
+                <textarea
+                  rows="5"
+                  value={body}
+                  onChange={(event) => setBody(event.target.value)}
+                />
+              </label>
 
-          <div className="alerts-actions">
-            <button
-              type="button"
-              className="new-evaluation-btn"
-              onClick={handleSendTestEmail}
-            >
-              SEND TEST EMAIL
-            </button>
-          </div>
+              <div className="alerts-actions">
+                <button
+                  type="button"
+                  className="new-evaluation-btn"
+                  onClick={handleSendTestEmail}
+                >
+                  SEND TEST EMAIL
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
       <section className="dashboard-section">
         <SectionHeader title="Delivery Logs" action="EXPORT LOGS" />
         <div className="alerts-card">
-          <div className="alerts-filter-row">
-            <label className="alerts-field">
-              <span className="alerts-label">STATUS FILTER</span>
-              <select
-                value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value)}
-              >
-                <option>All</option>
-                <option>Delivered</option>
-                <option>Pending</option>
-                <option>Failed</option>
-              </select>
-            </label>
+          {logsError && <p className="dashboard-error-message">{logsError}</p>}
+          {logsLoading ? (
+            <p className="muted-note">Loading delivery logs...</p>
+          ) : (
+            <>
+              <div className="alerts-filter-row">
+                <label className="alerts-field">
+                  <span className="alerts-label">STATUS FILTER</span>
+                  <select
+                    value={statusFilter}
+                    onChange={(event) => setStatusFilter(event.target.value)}
+                  >
+                    <option>All</option>
+                    <option>Delivered</option>
+                    <option>Pending</option>
+                    <option>Failed</option>
+                  </select>
+                </label>
 
-            <label className="alerts-field alerts-field-wide">
-              <span className="alerts-label">SEARCH</span>
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="Search by log ID, recipient, or channel"
-              />
-            </label>
-          </div>
+                <label className="alerts-field alerts-field-wide">
+                  <span className="alerts-label">SEARCH</span>
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                    placeholder="Search by log ID, recipient, or channel"
+                  />
+                </label>
+              </div>
 
-          <div className="table-card">
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th>LOG ID</th>
-                  <th>RECIPIENT</th>
-                  <th>TYPE</th>
-                  <th>STATUS</th>
-                  <th>SENT AT</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredLogs.map((log) => (
-                  <tr key={log.id}>
-                    <td>{log.id}</td>
-                    <td>{log.recipient}</td>
-                    <td>{log.channel}</td>
-                    <td>
-                      <span
-                        className={`result-badge ${
-                          log.status === "Failed"
-                            ? "danger"
-                            : log.status === "Pending"
-                            ? "pending"
-                            : "ok"
-                        }`}
-                      >
-                        <span className="result-dot"></span>
-                        {log.status}
-                      </span>
-                    </td>
-                    <td>{log.sentAt}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              <div className="table-card">
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>LOG ID</th>
+                      <th>RECIPIENT</th>
+                      <th>TYPE</th>
+                      <th>STATUS</th>
+                      <th>SENT AT</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredLogs.map((log) => (
+                      <tr key={log.id}>
+                        <td>{log.id}</td>
+                        <td>{log.recipient}</td>
+                        <td>{log.channel}</td>
+                        <td>
+                          <span
+                            className={`result-badge ${
+                              log.status === "Failed"
+                                ? "danger"
+                                : log.status === "Pending"
+                                  ? "pending"
+                                  : "ok"
+                            }`}
+                          >
+                            <span className="result-dot"></span>
+                            {log.status}
+                          </span>
+                        </td>
+                        <td>{log.sentAt}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
         </div>
       </section>
     </>

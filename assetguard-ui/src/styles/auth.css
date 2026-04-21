@@ -496,3 +496,9 @@
       text-align: center;
     }
   }
+
+.auth-error-message {
+  color: #f87171;
+  margin-top: -4px;
+  margin-bottom: 8px;
+}
