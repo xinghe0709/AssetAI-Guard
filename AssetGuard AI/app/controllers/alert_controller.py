@@ -42,3 +42,9 @@ def get_email_template():
 def put_email_template():
     payload = request.get_json(silent=True) or {}
     return ok(AlertService.update_template(payload))
+
+
+@alerts_bp.post("/test-email")
+@require_roles(UserRole.SYSTEM_ADMIN.value, UserRole.ASSET_MANAGER.value)
+def post_test_email():
+    return ok(AlertService.send_test_email())

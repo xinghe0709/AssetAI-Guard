@@ -7,7 +7,7 @@
   #root {
     margin: 0;
     min-height: 100%;
-    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-family: var(--font-family-base);
     background: #f5f4f2;
     color: #1d1d1d;
   }
@@ -496,3 +496,9 @@
       text-align: center;
     }
   }
+
+.auth-error-message {
+  color: #f87171;
+  margin-top: -4px;
+  margin-bottom: 8px;
+}
