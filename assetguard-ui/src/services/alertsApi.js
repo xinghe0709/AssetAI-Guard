@@ -23,7 +23,9 @@ export function updateEmailTemplate(template) {
 }
 
 export function getEmailLogs() {
-  return requestJson("/alerts/email-logs", { method: "GET" });
+  return requestJson("/alerts/email-logs", { method: "GET" }).then((data) =>
+    Array.isArray(data?.items) ? data.items : []
+  );
 }
 export function sendTestEmail() {
   return requestJson("/alerts/test-email", { method: "POST" });

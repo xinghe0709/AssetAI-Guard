@@ -7,6 +7,10 @@ from email.message import EmailMessage
 from typing import Any
 
 from flask import current_app
+from sqlalchemy import select
+
+from app.models.evaluation_log import EvaluationLog
+from app.models.load_capacity import LoadCapacity
 
 
 def _utc_iso_now() -> str:
@@ -76,7 +80,39 @@ class AlertService:
                     "sentAt": item.get("sentAt"),
                 }
             )
-        return normalized
+
+        remaining = max(limit - len(normalized), 0)
+        if remaining == 0:
+            return normalized[:limit]
+
+        stmt = (
+            select(EvaluationLog)
+            .order_by(EvaluationLog.evaluated_at.desc(), EvaluationLog.id.desc())
+            .limit(remaining)
+        )
+        eval_logs = list(EvaluationLog.query.session.scalars(stmt))
+
+        for log in eval_logs:
+            capacity = (
+                LoadCapacity.query.filter_by(
+                    asset_id=log.asset_id,
+                    name=log.matched_capacity_name,
+                ).first()
+            )
+            max_load = f"{int(capacity.max_load) if capacity else '-'}{log.load_parameter_metric if capacity else ''}"
+            planned = f"{int(log.load_parameter_value)}{log.load_parameter_metric}"
+            normalized.append(
+                {
+                    "id": f"EV-{log.id:04d}",
+                    "channel": log.asset.name if log.asset else "Unknown Asset",
+                    "recipient": "ops.team@assetguard.io",
+                    "status": "Failed" if log.status.value == "Non-Compliant" else "Delivered",
+                    "maxPlanned": f"{max_load} / {planned}",
+                    "overCap": f"{round(log.overload_percentage * 100, 1)}%",
+                    "sentAt": log.evaluated_at.replace(microsecond=0).isoformat(),
+                }
+            )
+        return normalized[:limit]
 
     @staticmethod
     def send_test_email() -> dict[str, Any]:
