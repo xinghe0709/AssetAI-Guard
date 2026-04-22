@@ -1,0 +1,15 @@
+:root {
+  --font-family-base: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --color-bg-base: #f5f4f2;
+  --color-text-base: #1e1e1e;
+  --color-brand: #006d73;
+}
+
+* {
+  font-family: var(--font-family-base);
+}
+
+body {
+  background: var(--color-bg-base);
+  color: var(--color-text-base);
+}

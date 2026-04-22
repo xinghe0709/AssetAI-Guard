@@ -18,6 +18,7 @@ function TemplateEditorModal({
   onSendTestEmail,
   isSavingTemplate,
   disableSaveTemplate,
+  isSendingTestEmail,
 }) {
   if (!open) {
     return null;
@@ -113,8 +114,9 @@ function TemplateEditorModal({
                 type="button"
                 className="new-evaluation-btn"
                 onClick={onSendTestEmail}
+                disabled={isSendingTestEmail}
               >
-                SEND TEST EMAIL
+                {isSendingTestEmail ? "SENDING..." : "SEND TEST EMAIL"}
               </button>
             </div>
           </section>

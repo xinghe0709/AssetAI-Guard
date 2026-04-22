@@ -6,6 +6,7 @@ import {
   getEmailTemplate,
   updateEmailPreferences,
   updateEmailTemplate,
+  sendTestEmail,
 } from "../services/alertsApi";
 
 const defaultPreferences = {
@@ -39,6 +40,7 @@ function AlertsPage() {
   const [templateError, setTemplateError] = useState("");
   const [isSavingPreferences, setIsSavingPreferences] = useState(false);
   const [isSavingTemplate, setIsSavingTemplate] = useState(false);
+  const [isSendingTestEmail, setIsSendingTestEmail] = useState(false);
 
   const [statusFilter, setStatusFilter] = useState("All Communications");
   const [dateRange, setDateRange] = useState("Last 30 Days");
@@ -150,14 +152,19 @@ function AlertsPage() {
     }
   };
 
-  const handleSendTestEmail = () => {
-    console.log("SEND TEST EMAIL", {
-      thresholdPercent,
-      recipients,
-      alertsEnabled,
-      subject,
-      body,
-    });
+  const handleSendTestEmail = async () => {
+    if (isSendingTestEmail) return;
+
+    setIsSendingTestEmail(true);
+    setTemplateError("");
+    try {
+      const testResult = await sendTestEmail();
+      setDeliveryLogs((previous) => [testResult, ...previous]);
+    } catch (error) {
+      setTemplateError(error.message || "Unable to send test email.");
+    } finally {
+      setIsSendingTestEmail(false);
+    }
   };
 
   const filteredLogs = useMemo(() => {
@@ -303,6 +310,7 @@ function AlertsPage() {
         onSendTestEmail={handleSendTestEmail}
         isSavingTemplate={isSavingTemplate}
         disableSaveTemplate={!isTemplateDirty}
+        isSendingTestEmail={isSendingTestEmail}
       />
     </>
   );
