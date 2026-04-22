@@ -44,6 +44,7 @@ function AlertsPage() {
 
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false);
 
   useEffect(() => {
     const loadAlertsData = async () => {
@@ -260,16 +261,15 @@ function AlertsPage() {
       <section className="dashboard-section">
         <SectionHeader
           title="Template Editor"
-          action={isSavingTemplate ? "SAVING..." : "SAVE TEMPLATE"}
-          onAction={handleSaveTemplate}
-          actionDisabled={isSavingTemplate || !isTemplateDirty}
+          action={isTemplateEditorOpen ? "CLOSE" : "OPEN EDITOR"}
+          onAction={() => setIsTemplateEditorOpen((previous) => !previous)}
         />
         <div className="alerts-card">
           {templateError && <p className="dashboard-error-message">{templateError}</p>}
           {templateLoading ? (
             <p className="muted-note">Loading template...</p>
-          ) : (
-            <>
+          ) : isTemplateEditorOpen ? (
+            <div className="template-editor-panel">
               <label className="alerts-field">
                 <span className="alerts-label">SUBJECT</span>
                 <input
@@ -282,7 +282,7 @@ function AlertsPage() {
               <label className="alerts-field">
                 <span className="alerts-label">BODY</span>
                 <textarea
-                  rows="5"
+                  rows="6"
                   value={body}
                   onChange={(event) => setBody(event.target.value)}
                 />
@@ -291,13 +291,41 @@ function AlertsPage() {
               <div className="alerts-actions">
                 <button
                   type="button"
+                  className="section-action template-cancel-btn"
+                  onClick={() => setIsTemplateEditorOpen(false)}
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="button"
+                  className="new-evaluation-btn"
+                  onClick={handleSaveTemplate}
+                  disabled={isSavingTemplate || !isTemplateDirty}
+                >
+                  {isSavingTemplate ? "SAVING..." : "SAVE TEMPLATE"}
+                </button>
+                <button
+                  type="button"
                   className="new-evaluation-btn"
                   onClick={handleSendTestEmail}
                 >
                   SEND TEST EMAIL
                 </button>
               </div>
-            </>
+            </div>
+          ) : (
+            <div className="template-preview-card">
+              <p className="alerts-label">CURRENT TEMPLATE</p>
+              <h3>{subject}</h3>
+              <p>{body}</p>
+              <button
+                type="button"
+                className="new-evaluation-btn"
+                onClick={() => setIsTemplateEditorOpen(true)}
+              >
+                CREATE / EDIT TEMPLATE
+              </button>
+            </div>
           )}
         </div>
       </section>
