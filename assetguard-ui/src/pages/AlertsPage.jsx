@@ -168,6 +168,128 @@ function AlertsPage() {
     }
   };
 
+  useEffect(() => {
+    const loadAlertsData = async () => {
+      setPreferencesLoading(true);
+      setTemplateLoading(true);
+      setLogsLoading(true);
+      setPreferencesError("");
+      setTemplateError("");
+      setLogsError("");
+
+      const [preferencesResult, templateResult, logsResult] =
+        await Promise.allSettled([
+          getEmailPreferences(),
+          getEmailTemplate(),
+          getEmailLogs(),
+        ]);
+
+      if (preferencesResult.status === "fulfilled") {
+        const preferences = preferencesResult.value || {};
+        const nextPreferences = {
+          thresholdPercent:
+            preferences.thresholdPercent != null
+              ? String(preferences.thresholdPercent)
+              : defaultPreferences.thresholdPercent,
+          recipients: Array.isArray(preferences.recipients)
+            ? preferences.recipients.join(", ")
+            : preferences.recipients || defaultPreferences.recipients,
+          alertsEnabled:
+            preferences.alertsEnabled != null
+              ? Boolean(preferences.alertsEnabled)
+              : defaultPreferences.alertsEnabled,
+        };
+
+        setThresholdPercent(nextPreferences.thresholdPercent);
+        setRecipients(nextPreferences.recipients);
+        setAlertsEnabled(nextPreferences.alertsEnabled);
+        setPreferencesSnapshot(nextPreferences);
+      } else {
+        setPreferencesError(
+          preferencesResult.reason?.message ||
+            "Unable to load email preferences."
+        );
+      }
+      setPreferencesLoading(false);
+
+      if (templateResult.status === "fulfilled") {
+        const template = templateResult.value || {};
+        const nextTemplate = {
+          subject: template.subject || defaultTemplate.subject,
+          body: template.body || defaultTemplate.body,
+        };
+
+        setSubject(nextTemplate.subject);
+        setBody(nextTemplate.body);
+        setTemplateSnapshot(nextTemplate);
+      } else {
+        setTemplateError(
+          templateResult.reason?.message || "Unable to load email template."
+        );
+      }
+      setTemplateLoading(false);
+
+      if (logsResult.status === "fulfilled") {
+        setDeliveryLogs(Array.isArray(logsResult.value) ? logsResult.value : []);
+      } else {
+        setLogsError(logsResult.reason?.message || "Unable to load email logs.");
+      }
+      setLogsLoading(false);
+    };
+
+    loadAlertsData();
+  }, []);
+
+  const isPreferencesDirty =
+    thresholdPercent !== preferencesSnapshot.thresholdPercent ||
+    recipients !== preferencesSnapshot.recipients ||
+    alertsEnabled !== preferencesSnapshot.alertsEnabled;
+
+  const isTemplateDirty =
+    subject !== templateSnapshot.subject || body !== templateSnapshot.body;
+
+  const handleSavePreferences = async () => {
+    if (isSavingPreferences || !isPreferencesDirty) {
+      return;
+    }
+
+    setIsSavingPreferences(true);
+    setPreferencesError("");
+    try {
+      await updateEmailPreferences({
+        thresholdPercent: Number(thresholdPercent),
+        recipients: recipients
+          .split(",")
+          .map((email) => email.trim())
+          .filter(Boolean),
+        alertsEnabled,
+      });
+
+      setPreferencesSnapshot({ thresholdPercent, recipients, alertsEnabled });
+    } catch (error) {
+      setPreferencesError(error.message || "Unable to save email preferences.");
+    } finally {
+      setIsSavingPreferences(false);
+    }
+  };
+
+  const handleSaveTemplate = async () => {
+    if (isSavingTemplate || !isTemplateDirty) {
+      return;
+    }
+
+    setIsSavingTemplate(true);
+    setTemplateError("");
+    try {
+      await updateEmailTemplate({ subject, body });
+      setTemplateSnapshot({ subject, body });
+    } catch (error) {
+      setTemplateError(error.message || "Unable to save email template.");
+    } finally {
+      setIsSavingTemplate(false);
+    }
+  };
+
   const handleSendTestEmail = () => {
     console.log("SEND TEST EMAIL", {
       thresholdPercent,
