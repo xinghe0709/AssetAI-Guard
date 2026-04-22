@@ -25,8 +25,6 @@ export function updateEmailTemplate(template) {
 export function getEmailLogs() {
   return requestJson("/alerts/email-logs", { method: "GET" });
 }
-
-
 export function sendTestEmail() {
   return requestJson("/alerts/test-email", { method: "POST" });
 }
