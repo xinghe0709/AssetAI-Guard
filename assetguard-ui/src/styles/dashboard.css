@@ -534,3 +534,38 @@
     align-items: flex-start;
   }
 }
+
+
+.dashboard-error-message {
+  margin: 0 0 14px;
+  color: var(--dashboard-error-color);
+  font-size: 14px;
+}
+
+
+.template-preview-card h3 {
+  margin: 8px 0 12px;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+.template-preview-card p {
+  margin: 0 0 14px;
+  color: #515151;
+  line-height: 1.55;
+}
+
+.template-editor-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.template-cancel-btn {
+  margin-right: auto;
+  height: 42px;
+  border: 1px solid #dad6ce;
+  border-radius: 6px;
+  padding: 0 16px;
+  letter-spacing: 0.1em;
+}

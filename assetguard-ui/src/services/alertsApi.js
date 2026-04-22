@@ -27,8 +27,6 @@ export function getEmailLogs() {
     Array.isArray(data?.items) ? data.items : []
   );
 }
-
-
 export function sendTestEmail() {
   return requestJson("/alerts/test-email", { method: "POST" });
 }

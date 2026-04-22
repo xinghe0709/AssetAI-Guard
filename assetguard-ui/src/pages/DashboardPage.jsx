@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AppLayout from "../components/layout/AppLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import StatCard from "../components/dashboard/StatCard";
@@ -27,22 +27,54 @@ const navDescriptions = {
   Admin: "Manage users, roles, and system-level settings.",
 };
 
+const roleNavAccess = {
+  admin: ["Dashboard", "Evaluation", "Assets", "History", "Alerts", "Admin"],
+  manager: ["Dashboard", "Evaluation", "Assets", "History", "Alerts"],
+  operator: ["Dashboard", "Evaluation", "Assets", "History", "Alerts"],
+  viewer: ["Dashboard", "Assets", "History", "Alerts"],
+};
+
 function DashboardPage({ user }) {
+  const userRole = String(user?.role || "viewer").toLowerCase();
+  const allowedNavItems = useMemo(() => {
+    return roleNavAccess[userRole] || roleNavAccess.viewer;
+  }, [userRole]);
+
   const [activeNav, setActiveNav] = useState("Dashboard");
 
-  if (activeNav !== "Dashboard") {
+  const safeActiveNav = allowedNavItems.includes(activeNav)
+    ? activeNav
+    : "Dashboard";
+
+  const handleNavChange = (nextNav) => {
+    if (allowedNavItems.includes(nextNav)) {
+      setActiveNav(nextNav);
+    }
+  };
+
+  if (safeActiveNav !== "Dashboard") {
     return (
-      <AppLayout activeNav={activeNav} onNavChange={setActiveNav} user={user}>
-        {activeNav === "Alerts" ? (
+      <AppLayout
+        activeNav={safeActiveNav}
+        onNavChange={handleNavChange}
+        user={user}
+        menuItems={allowedNavItems}
+      >
+        {safeActiveNav === "Alerts" ? (
           <AlertsPage />
-        ) : (
+        ) : allowedNavItems.includes(safeActiveNav) ? (
           <section className="module-placeholder">
-            <h1>{activeNav}</h1>
-            <p>{navDescriptions[activeNav]}</p>
+            <h1>{safeActiveNav}</h1>
+            <p>{navDescriptions[safeActiveNav]}</p>
             <p className="muted-note">
               This module is now selectable from the sidebar. Detailed screens can be
               implemented next.
             </p>
+          </section>
+        ) : (
+          <section className="module-placeholder">
+            <h1>Access Restricted</h1>
+            <p>You do not have permission to view this module.</p>
           </section>
         )}
       </AppLayout>
@@ -50,7 +82,12 @@ function DashboardPage({ user }) {
   }
 
   return (
-    <AppLayout activeNav={activeNav} onNavChange={setActiveNav} user={user}>
+    <AppLayout
+      activeNav={safeActiveNav}
+      onNavChange={handleNavChange}
+      user={user}
+      menuItems={allowedNavItems}
+    >
       <DashboardHeader />
 
       <section className="stats-grid">

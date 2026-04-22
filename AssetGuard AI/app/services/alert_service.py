@@ -68,7 +68,7 @@ class AlertService:
     @staticmethod
     def get_logs(*, limit: int = 100) -> list[dict[str, Any]]:
         normalized: list[dict[str, Any]] = []
-        for item in _STORE.logs:
+        for item in _STORE.logs[:limit]:
             normalized.append(
                 {
                     "id": f"EV-{item['id']:04d}",
