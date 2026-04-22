@@ -1,4 +1,4 @@
-const menuItems = [
+const defaultMenuItems = [
   "Dashboard",
   "Evaluation",
   "Assets",
@@ -7,7 +7,7 @@ const menuItems = [
   "Admin",
 ];
 
-function Sidebar({ activeItem = "Dashboard", onSelectItem }) {
+function Sidebar({ activeItem = "Dashboard", onSelectItem, menuItems = defaultMenuItems }) {
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">

@@ -3,7 +3,7 @@ import AuthLayout from "../components/layout/AuthLayout";
 import buildingImage from "../assets/building.png";
 import { API_BASE_URL } from "../services/apiClient";
 
-function LoginEmailPage({ onLoginSuccess }) {
+function LoginEmailPage({ onLoginSuccess, systemMessage = "" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -89,7 +89,9 @@ function LoginEmailPage({ onLoginSuccess }) {
           />
         </div>
 
-        {errorMessage && <p className="auth-error-message">{errorMessage}</p>}
+        {(errorMessage || systemMessage) && (
+          <p className="auth-error-message">{errorMessage || systemMessage}</p>
+        )}
 
         <button type="submit" className="primary-btn" disabled={isSubmitting}>
           {isSubmitting ? "Signing In..." : "Sign In"} <span>→</span>

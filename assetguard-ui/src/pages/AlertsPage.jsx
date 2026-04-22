@@ -8,17 +8,28 @@ import {
   updateEmailTemplate,
 } from "../services/alertsApi";
 
-function AlertsPage() {
-  const [thresholdPercent, setThresholdPercent] = useState("85");
-  const [recipients, setRecipients] = useState(
-    "ops.team@assetguard.io, safety.audit@assetguard.io"
-  );
-  const [alertsEnabled, setAlertsEnabled] = useState(true);
+const defaultPreferences = {
+  thresholdPercent: "85",
+  recipients: "ops.team@assetguard.io, safety.audit@assetguard.io",
+  alertsEnabled: true,
+};
 
-  const [subject, setSubject] = useState("[ASSETGUARD] THRESHOLD BREACH DETECTED");
-  const [body, setBody] = useState(
-    "A monitored asset has exceeded the configured load threshold. Please review the latest evaluation report immediately."
+const defaultTemplate = {
+  subject: "[ASSETGUARD] THRESHOLD BREACH DETECTED",
+  body: "A monitored asset has exceeded the configured load threshold. Please review the latest evaluation report immediately.",
+};
+
+function AlertsPage() {
+  const [thresholdPercent, setThresholdPercent] = useState(
+    defaultPreferences.thresholdPercent
   );
+  const [recipients, setRecipients] = useState(defaultPreferences.recipients);
+  const [alertsEnabled, setAlertsEnabled] = useState(defaultPreferences.alertsEnabled);
+  const [preferencesSnapshot, setPreferencesSnapshot] = useState(defaultPreferences);
+
+  const [subject, setSubject] = useState(defaultTemplate.subject);
+  const [body, setBody] = useState(defaultTemplate.body);
+  const [templateSnapshot, setTemplateSnapshot] = useState(defaultTemplate);
 
   const [deliveryLogs, setDeliveryLogs] = useState([]);
   const [preferencesLoading, setPreferencesLoading] = useState(true);
@@ -52,17 +63,24 @@ function AlertsPage() {
 
       if (preferencesResult.status === "fulfilled") {
         const preferences = preferencesResult.value || {};
-        setThresholdPercent(
-          preferences.thresholdPercent != null
-            ? String(preferences.thresholdPercent)
-            : "85"
-        );
-        setRecipients(
-          Array.isArray(preferences.recipients)
+        const nextPreferences = {
+          thresholdPercent:
+            preferences.thresholdPercent != null
+              ? String(preferences.thresholdPercent)
+              : defaultPreferences.thresholdPercent,
+          recipients: Array.isArray(preferences.recipients)
             ? preferences.recipients.join(", ")
-            : preferences.recipients || ""
-        );
-        setAlertsEnabled(Boolean(preferences.alertsEnabled));
+            : preferences.recipients || defaultPreferences.recipients,
+          alertsEnabled:
+            preferences.alertsEnabled != null
+              ? Boolean(preferences.alertsEnabled)
+              : defaultPreferences.alertsEnabled,
+        };
+
+        setThresholdPercent(nextPreferences.thresholdPercent);
+        setRecipients(nextPreferences.recipients);
+        setAlertsEnabled(nextPreferences.alertsEnabled);
+        setPreferencesSnapshot(nextPreferences);
       } else {
         setPreferencesError(
           preferencesResult.reason?.message ||
@@ -73,8 +91,14 @@ function AlertsPage() {
 
       if (templateResult.status === "fulfilled") {
         const template = templateResult.value || {};
-        setSubject(template.subject || "");
-        setBody(template.body || "");
+        const nextTemplate = {
+          subject: template.subject || defaultTemplate.subject,
+          body: template.body || defaultTemplate.body,
+        };
+
+        setSubject(nextTemplate.subject);
+        setBody(nextTemplate.body);
+        setTemplateSnapshot(nextTemplate);
       } else {
         setTemplateError(
           templateResult.reason?.message || "Unable to load email template."
@@ -93,8 +117,16 @@ function AlertsPage() {
     loadAlertsData();
   }, []);
 
+  const isPreferencesDirty =
+    thresholdPercent !== preferencesSnapshot.thresholdPercent ||
+    recipients !== preferencesSnapshot.recipients ||
+    alertsEnabled !== preferencesSnapshot.alertsEnabled;
+
+  const isTemplateDirty =
+    subject !== templateSnapshot.subject || body !== templateSnapshot.body;
+
   const handleSavePreferences = async () => {
-    if (isSavingPreferences) {
+    if (isSavingPreferences || !isPreferencesDirty) {
       return;
     }
 
@@ -109,6 +141,8 @@ function AlertsPage() {
           .filter(Boolean),
         alertsEnabled,
       });
+
+      setPreferencesSnapshot({ thresholdPercent, recipients, alertsEnabled });
     } catch (error) {
       setPreferencesError(error.message || "Unable to save email preferences.");
     } finally {
@@ -117,7 +151,7 @@ function AlertsPage() {
   };
 
   const handleSaveTemplate = async () => {
-    if (isSavingTemplate) {
+    if (isSavingTemplate || !isTemplateDirty) {
       return;
     }
 
@@ -125,6 +159,7 @@ function AlertsPage() {
     setTemplateError("");
     try {
       await updateEmailTemplate({ subject, body });
+      setTemplateSnapshot({ subject, body });
     } catch (error) {
       setTemplateError(error.message || "Unable to save email template.");
     } finally {
@@ -169,7 +204,7 @@ function AlertsPage() {
           title="Email Preferences"
           action={isSavingPreferences ? "SAVING..." : "SAVE PREFERENCES"}
           onAction={handleSavePreferences}
-          actionDisabled={preferencesLoading || isSavingPreferences}
+          actionDisabled={isSavingPreferences || !isPreferencesDirty}
         />
         <div className="alerts-card">
           {preferencesError && (
@@ -227,7 +262,7 @@ function AlertsPage() {
           title="Template Editor"
           action={isSavingTemplate ? "SAVING..." : "SAVE TEMPLATE"}
           onAction={handleSaveTemplate}
-          actionDisabled={templateLoading || isSavingTemplate}
+          actionDisabled={isSavingTemplate || !isTemplateDirty}
         />
         <div className="alerts-card">
           {templateError && <p className="dashboard-error-message">{templateError}</p>}
