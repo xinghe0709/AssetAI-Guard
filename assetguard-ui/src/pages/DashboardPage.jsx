@@ -4,7 +4,11 @@ import DashboardHeader from "../components/dashboard/DashboardHeader";
 import StatCard from "../components/dashboard/StatCard";
 import SectionHeader from "../components/dashboard/SectionHeader";
 import DataTable from "../components/dashboard/DataTable";
-import AlertsPage from "./AlertsPage";
+import EvaluationPage from "./EvaluationPage";
+import AssetsPage from "./AssetsPage";
+import HistoryPage from "./HistoryPage";
+import AdminUsersPage from "./AdminUsersPage";
+import AdminLocationPage from "./AdminLocationPage";
 
 const recentEvaluations = [
   ["Main Turbine G7", "Siemens SGT-800", "Compliant", "14:22 PM"],
@@ -42,17 +46,27 @@ function DashboardPage({ user }) {
 
   const [activeNav, setActiveNav] = useState("Dashboard");
 
-  const safeActiveNav = allowedNavItems.includes(activeNav)
-    ? activeNav
-    : "Dashboard";
+  if (activeNav === "Evaluation") {
+    return <EvaluationPage user={user} onNavChange={setActiveNav} />;
+  }
 
-  const handleNavChange = (nextNav) => {
-    if (allowedNavItems.includes(nextNav)) {
-      setActiveNav(nextNav);
-    }
-  };
+  if (activeNav === "Assets") {
+    return <AssetsPage user={user} onNavChange={setActiveNav} />;
+  }
 
-  if (safeActiveNav !== "Dashboard") {
+  if (activeNav === "History") {
+    return <HistoryPage user={user} onNavChange={setActiveNav} />;
+  }
+
+  if (activeNav === "Admin/User") {
+    return <AdminUsersPage user={user} onNavChange={setActiveNav} />;
+  }
+
+  if (activeNav === "Admin/Location") {
+    return <AdminLocationPage user={user} onNavChange={setActiveNav} />;
+  }
+
+  if (activeNav !== "Dashboard") {
     return (
       <AppLayout
         activeNav={safeActiveNav}

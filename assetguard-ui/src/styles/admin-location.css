@@ -1,0 +1,407 @@
+/* Admin Location Page Styles */
+
+.admin-location-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #fbf9f8;
+}
+
+/* Breadcrumb Section */
+.breadcrumb-section {
+  background: #fbf9f8;
+  border-bottom: 1px solid rgba(189, 201, 200, 0.15);
+  padding: 20px 32px 21px;
+}
+
+.breadcrumb-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.35px;
+  color: #3e4949;
+}
+
+/* Admin Content Area */
+.admin-content {
+  padding: 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+  flex: 1;
+}
+
+/* Header Section */
+.location-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 64px;
+  gap: 32px;
+}
+
+.location-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -2.24px;
+  color: #1b1c1c;
+  margin: 0;
+  line-height: 61.6px;
+}
+
+.btn-add-location {
+  background: #006767;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.35px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-add-location:hover {
+  background: #005555;
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+/* Location Table Container */
+.location-table-wrapper {
+  background: white;
+  border-radius: 8px;
+  padding: 4px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.location-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+/* Table Header */
+.table-header-row {
+  background: #f5f3f3;
+}
+
+.table-header-cell {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #3e4949;
+  text-align: left;
+  padding: 24px 32px;
+  vertical-align: middle;
+}
+
+.cell-location {
+  width: 200px;
+}
+
+.cell-asset-manager {
+  width: 140px;
+}
+
+.cell-contractor {
+  width: 160px;
+}
+
+.cell-created {
+  width: 130px;
+}
+
+.cell-updated {
+  width: 110px;
+}
+
+.cell-action {
+  width: 80px;
+}
+
+/* Table Body */
+.table-body-row {
+  border-top: 1px solid rgba(189, 201, 200, 0.1);
+  background: white;
+}
+
+.table-body-row:hover {
+  background: #fafafa;
+}
+
+.table-cell {
+  padding: 24px 32px;
+  vertical-align: middle;
+}
+
+/* Location Cell */
+.location-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.location-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1b1c1c;
+  line-height: 20px;
+}
+
+.location-id {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #3e4949;
+  opacity: 0.6;
+  line-height: 16px;
+}
+
+.manager-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #1b1c1c;
+  display: block;
+  line-height: 20px;
+}
+
+.contractor-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #1b1c1c;
+  display: block;
+  line-height: 20px;
+}
+
+/* Created Time Cell */
+.created-time {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.created-time .date {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #3e4949;
+  line-height: 16px;
+}
+
+.created-time .time {
+  font-family: 'Inter', sans-serif;
+  font-size: 9.6px;
+  font-weight: 400;
+  color: #3e4949;
+  opacity: 0.5;
+  line-height: 16px;
+}
+
+.update-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #3e4949;
+  display: block;
+  line-height: 16px;
+}
+
+/* Action Button */
+.action-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #3e4949;
+  padding: 8px;
+  transition: color 0.2s ease;
+  opacity: 0;
+}
+
+.table-body-row:hover .action-button {
+  opacity: 1;
+}
+
+.action-button:hover {
+  color: #006767;
+}
+
+/* Pagination Section */
+.pagination-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background: rgba(233, 232, 231, 0.3);
+  border-radius: 8px;
+}
+
+.pagination-info {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #3e4949;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagination-btn {
+  background: white;
+  border: 1px solid rgba(189, 201, 200, 0.2);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1b1c1c;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #f3f4f6;
+  border-color: rgba(189, 201, 200, 0.4);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.prev-btn,
+.next-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .admin-content {
+    padding: 32px 24px;
+  }
+
+  .location-title {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -1.6px;
+  }
+
+  .table-header-cell,
+  .table-cell {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .location-name {
+    font-size: 14px;
+  }
+
+  .manager-name,
+  .contractor-name {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-location-container {
+    min-height: auto;
+  }
+
+  .admin-content {
+    padding: 24px 16px;
+  }
+
+  .location-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .btn-add-location {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 24px;
+  }
+
+  .location-title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .pagination-section {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .pagination-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Hide contractor column on tablet */
+  .cell-contractor,
+  .table-header-cell.cell-contractor {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-content {
+    padding: 16px;
+  }
+
+  .location-title {
+    font-size: 24px;
+  }
+
+  .breadcrumb-section {
+    padding: 12px 16px;
+  }
+
+  .table-header-cell,
+  .table-cell {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  .location-name {
+    font-size: 12px;
+  }
+
+  .manager-name,
+  .contractor-name {
+    font-size: 12px;
+  }
+
+  /* Show only essential columns on mobile */
+  .cell-asset-manager,
+  .table-header-cell.cell-asset-manager {
+    display: none;
+  }
+
+  .cell-contractor,
+  .table-header-cell.cell-contractor {
+    display: none;
+  }
+}

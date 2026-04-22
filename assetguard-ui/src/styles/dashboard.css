@@ -55,6 +55,57 @@
     font-weight: 600;
     border-left: 4px solid #006d73;
   }
+
+  .sidebar-menu-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-link.expanded {
+    background: #eef5f4;
+    color: #006d73;
+    font-weight: 600;
+    border-left: 4px solid #006d73;
+  }
+
+  .submenu-toggle {
+    margin-left: auto;
+    font-size: 10px;
+    transition: transform 0.2s ease;
+  }
+
+  .sidebar-submenu {
+    display: flex;
+    flex-direction: column;
+    margin-top: 4px;
+    margin-left: 8px;
+    gap: 4px;
+    border-left: 2px solid rgba(0, 109, 115, 0.2);
+    padding-left: 12px;
+  }
+
+  .sidebar-submenu-link {
+    border: none;
+    background: transparent;
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: #7d7d7d;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-submenu-link:hover {
+    background: #f0f0f0;
+    color: #525252;
+  }
+
+  .sidebar-submenu-link.active {
+    background: #d9eeec;
+    color: #006d73;
+    font-weight: 500;
+  }
   
   .app-main {
     display: flex;

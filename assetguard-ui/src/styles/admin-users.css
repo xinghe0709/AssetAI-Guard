@@ -1,0 +1,403 @@
+/* Admin Users Page Styles */
+
+.admin-users-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #fbf9f8;
+}
+
+/* Breadcrumb Section */
+.breadcrumb-section {
+  background: #fbf9f8;
+  border-bottom: 1px solid rgba(189, 201, 200, 0.15);
+  padding: 20px 32px 21px;
+}
+
+.breadcrumb-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.35px;
+  color: #3e4949;
+  tracking: 0.35px;
+}
+
+/* Admin Content Area */
+.admin-content {
+  padding: 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+  flex: 1;
+}
+
+/* Header Section */
+.users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 64px;
+  gap: 32px;
+}
+
+.users-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -2.24px;
+  color: #1b1c1c;
+  margin: 0;
+  line-height: 61.6px;
+}
+
+.btn-add-user {
+  background: #006767;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.35px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-add-user:hover {
+  background: #005555;
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+/* Users Table Container */
+.users-table-wrapper {
+  background: white;
+  border-radius: 8px;
+  padding: 4px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+/* Table Header */
+.table-header-row {
+  background: #f5f3f3;
+}
+
+.table-header-cell {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #3e4949;
+  text-align: left;
+  padding: 24px;
+  vertical-align: middle;
+}
+
+.cell-user-id {
+  width: 87.41px;
+}
+
+.cell-name {
+  width: 120.39px;
+}
+
+.cell-role {
+  width: 136.77px;
+}
+
+.cell-org {
+  width: 153.7px;
+}
+
+.cell-created {
+  width: 117.27px;
+}
+
+.cell-updated {
+  width: 108.94px;
+}
+
+.cell-status {
+  width: 127.5px;
+}
+
+.cell-action {
+  width: 92.03px;
+}
+
+/* Table Body */
+.table-body-row {
+  border-top: 1px solid rgba(189, 201, 200, 0.1);
+  background: white;
+}
+
+.table-body-row:hover {
+  background: #fafafa;
+}
+
+.table-cell {
+  padding: 24px;
+  vertical-align: middle;
+}
+
+.user-id {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(62, 73, 73, 0.7);
+  display: block;
+  line-height: 20px;
+}
+
+.user-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1b1c1c;
+  display: block;
+  line-height: 20px;
+}
+
+.user-role {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e4949;
+  display: block;
+  line-height: 20px;
+}
+
+.user-org {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e4949;
+  display: block;
+  line-height: 20px;
+}
+
+.user-date {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e4949;
+  display: block;
+  line-height: 20px;
+}
+
+/* Status Badge */
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 12px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.status-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+/* Action Button */
+.action-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #3e4949;
+  padding: 24px;
+  transition: color 0.2s ease;
+}
+
+.action-button:hover {
+  color: #006767;
+}
+
+/* Pagination Section */
+.pagination-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background: rgba(233, 232, 231, 0.3);
+  border-radius: 8px;
+}
+
+.pagination-info {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #3e4949;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-btn {
+  background: white;
+  border: 1px solid rgba(189, 201, 200, 0.2);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1b1c1c;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 36px;
+  text-align: center;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #f3f4f6;
+  border-color: rgba(189, 201, 200, 0.4);
+}
+
+.pagination-btn.active {
+  background: #006767;
+  color: white;
+  border-color: #006767;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.prev-btn,
+.next-btn {
+  min-width: auto;
+  padding: 8px 10px;
+}
+
+.pagination-ellipsis {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #3e4949;
+  padding: 0 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .admin-content {
+    padding: 32px 24px;
+  }
+
+  .users-title {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -1.6px;
+  }
+
+  .table-header-cell,
+  .table-cell {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-users-container {
+    min-height: auto;
+  }
+
+  .admin-content {
+    padding: 24px 16px;
+  }
+
+  .users-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .btn-add-user {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 24px;
+  }
+
+  .users-title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .pagination-section {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .pagination-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Hide some columns on tablet */
+  .cell-created,
+  .table-header-cell.cell-created {
+    display: none;
+  }
+
+  .cell-org,
+  .table-header-cell.cell-org {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-content {
+    padding: 16px;
+  }
+
+  .users-title {
+    font-size: 24px;
+  }
+
+  .breadcrumb-section {
+    padding: 12px 16px;
+  }
+
+  .table-header-cell,
+  .table-cell {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  /* Show only essential columns on mobile */
+  .cell-role,
+  .table-header-cell.cell-role {
+    display: none;
+  }
+
+  .cell-updated,
+  .table-header-cell.cell-updated {
+    display: none;
+  }
+}

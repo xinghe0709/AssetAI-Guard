@@ -1,0 +1,362 @@
+/* Assets Page Styles */
+
+.assets-container {
+  padding: 48px 32px 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.assets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.header-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -2.24px;
+  color: #1b1c1c;
+  margin: 0;
+  line-height: 70px;
+}
+
+.header-description {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #3e4949;
+  margin: 0;
+  line-height: 26px;
+  max-width: 448px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 16px;
+}
+
+/* Buttons */
+.btn-secondary {
+  background: #f5f3f3;
+  color: #006767;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #e8e5e5;
+}
+
+.btn-primary {
+  background: #006767;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #005555;
+}
+
+.btn-primary .icon,
+.btn-secondary .icon {
+  font-size: 12px;
+}
+
+/* Search & Filter Area */
+.search-filter-area {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 576px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.search-input {
+  width: 100%;
+  padding: 18px 17px 19px 49px;
+  border: 2px solid rgba(189, 201, 200, 0.2);
+  border-bottom: 2px solid rgba(189, 201, 200, 0.2);
+  border-radius: 0;
+  background: #f5f3f3;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  color: #1b1c1c;
+  box-sizing: border-box;
+}
+
+.search-input::placeholder {
+  color: #6b7280;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #006767;
+  background: white;
+}
+
+/* Assets Table Container */
+.assets-table-container {
+  background: #f5f3f3;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.assets-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.table-header-row {
+  background: rgba(233, 232, 231, 0.5);
+  border-bottom: none;
+}
+
+.table-header-cell {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #3e4949;
+  text-align: left;
+  padding: 20px 32px;
+}
+
+.table-cell {
+  padding: 0;
+  vertical-align: middle;
+}
+
+.table-data-cell {
+  padding: 24px 32px;
+  border-top: 1px solid rgba(189, 201, 200, 0.1);
+  background: white;
+}
+
+.table-body-row:hover {
+  background: #fafafa;
+}
+
+.asset-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.asset-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1b1c1c;
+}
+
+.organization {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #464747;
+}
+
+.max-load {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #464747;
+}
+
+.update-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #3e4949;
+}
+
+.table-actions-cell {
+  text-align: right;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #3e4949;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.action-button:hover {
+  background: #f0f0f0;
+}
+
+/* Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  background: rgba(233, 232, 231, 0.3);
+  border-radius: 8px;
+  margin-top: 24px;
+}
+
+.pagination-info {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #464747;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pagination-button {
+  background: white;
+  border: 1px solid #d1d5db;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #3e4949;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background: #f3f4f6;
+  border-color: #006767;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1b1c1c;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .assets-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .header-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .assets-table {
+    font-size: 13px;
+  }
+
+  .table-header-cell,
+  .table-data-cell {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .assets-container {
+    padding: 24px 16px;
+  }
+
+  .header-title {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -1.28px;
+  }
+
+  .header-description {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .search-input-wrapper {
+    max-width: 100%;
+  }
+
+  .pagination-container {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .pagination-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Hide some columns on mobile for better readability */
+  .table-header-cell:nth-child(3),
+  .table-data-cell:nth-child(3) {
+    display: none;
+  }
+}
