@@ -1,10 +1,9 @@
 import { useState } from "react";
 import AuthLayout from "../components/layout/AuthLayout";
 import buildingImage from "../assets/building.png";
+import { API_BASE_URL } from "../services/apiClient";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api/v1";
-
-function LoginEmailPage({ onLoginSuccess }) {
+function LoginEmailPage({ onLoginSuccess, systemMessage = "" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,10 +29,10 @@ function LoginEmailPage({ onLoginSuccess }) {
         }),
       });
       const payload = await response.json();
-      if (!response.ok || !payload?.success) {
+      if (!response.ok || payload?.success === false) {
         throw new Error(payload?.message || "Login failed.");
       }
-      onLoginSuccess(payload.data);
+      onLoginSuccess(payload?.data ?? payload);
     } catch (error) {
       setErrorMessage(error.message || "Unable to sign in.");
     } finally {
@@ -90,10 +89,8 @@ function LoginEmailPage({ onLoginSuccess }) {
           />
         </div>
 
-        {errorMessage && (
-          <p style={{ color: "#f87171", marginTop: "-4px", marginBottom: "8px" }}>
-            {errorMessage}
-          </p>
+        {(errorMessage || systemMessage) && (
+          <p className="auth-error-message">{errorMessage || systemMessage}</p>
         )}
 
         <button type="submit" className="primary-btn" disabled={isSubmitting}>

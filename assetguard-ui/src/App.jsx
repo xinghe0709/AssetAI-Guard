@@ -1,17 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginEmailPage from "./pages/LoginEmailPage";
 import PasswordSetupPage from "./pages/PasswordSetupPage";
 import DashboardPage from "./pages/DashboardPage";
+import {
+  setAuthToken,
+  setUnauthorizedHandler,
+} from "./services/authSession";
 
 function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
   const [currentPage, setCurrentPage] = useState("login");
+  const [systemMessage, setSystemMessage] = useState("");
 
-  const handleLoginSuccess = ({ token: nextToken, user: nextUser }) => {
+  const handleLogout = (message = "") => {
+    setToken("");
+    setAuthToken("");
+    setUser(null);
+    setCurrentPage("login");
+    setSystemMessage(message);
+  };
+
+  useEffect(() => {
+    setUnauthorizedHandler(() => {
+      handleLogout("Your session has expired. Please sign in again.");
+    });
+
+    return () => {
+      setUnauthorizedHandler(null);
+    };
+  }, []);
+
+  const handleLoginSuccess = (loginPayload = {}) => {
+    const nextToken = loginPayload?.token || "";
+    const nextUser = loginPayload?.user || {};
+
+    if (!nextToken) {
+      setSystemMessage("Login response is missing token. Please verify backend response shape.");
+      setCurrentPage("login");
+      return;
+    }
+
     setToken(nextToken);
+    setAuthToken(nextToken);
     setUser(nextUser);
-    setCurrentPage(nextUser.isFirstLogin ? "password" : "dashboard");
+    setSystemMessage("");
+    setCurrentPage(nextUser?.isFirstLogin ? "password" : "dashboard");
   };
 
   const handlePasswordSetSuccess = () => {
@@ -20,16 +54,13 @@ function App() {
     setCurrentPage("dashboard");
   };
 
-  const handleLogout = () => {
-    setToken("");
-    setUser(null);
-    setCurrentPage("login");
-  };
-
   return (
     <>
       {currentPage === "login" && (
-        <LoginEmailPage onLoginSuccess={handleLoginSuccess} />
+        <LoginEmailPage
+          onLoginSuccess={handleLoginSuccess}
+          systemMessage={systemMessage}
+        />
       )}
       {currentPage === "password" && (
         <PasswordSetupPage

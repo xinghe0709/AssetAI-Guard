@@ -1,8 +1,10 @@
 import click
 from flask import Flask
+from datetime import datetime, timedelta, timezone
 
 from app.extensions import db
-from app.models import Asset, LoadCapacity, Location, User
+from app.models import Asset, EvaluationLog, LoadCapacity, Location, User
+from app.models.evaluation_log import EvaluationStatus
 from app.models.user import UserRole
 
 
@@ -120,8 +122,37 @@ def register_seed_command(app: Flask) -> None:
         upsert_asset_with_capacities("Berth 9", berth9_caps)
         upsert_asset_with_capacities("Hardstand A", hardstand_a_caps)
 
+        EvaluationLog.query.delete()
+        db.session.flush()
+        manager_user = manager
+        assets = Asset.query.filter_by(location_id=loc.id).order_by(Asset.id.asc()).limit(5).all()
+        now = datetime.now(timezone.utc)
+        sample_logs = []
+        for index, asset in enumerate(assets):
+            is_non_compliant = index % 2 == 1
+            load_value = 1300.0 if is_non_compliant else 900.0
+            overload = ((load_value - 1000.0) / 1000.0) if is_non_compliant else 0.0
+            sample_logs.append(
+                EvaluationLog(
+                    asset_id=asset.id,
+                    user_id=manager_user.id,
+                    equipment="Crane",
+                    equipment_model=f"Demo-{index + 1}",
+                    load_parameter_value=load_value,
+                    load_parameter_metric="kN",
+                    matched_capacity_name="max point load",
+                    status=EvaluationStatus.NON_COMPLIANT if is_non_compliant else EvaluationStatus.COMPLIANT,
+                    overload_percentage=overload,
+                    remark="seeded sample",
+                    evaluated_at=now - timedelta(hours=index * 2),
+                )
+            )
+        db.session.add_all(sample_logs)
+        db.session.commit()
+
         click.echo(f"Location: {loc.id} {loc.name}")
         click.echo(f"Admin: {admin.email} ({'created' if admin_created else 'updated'})")
         click.echo(f"Manager: {manager.email} ({'created' if manager_created else 'updated'})")
         click.echo(f"Contractor: {contractor.email} ({'created' if contractor_created else 'updated'})")
         click.echo("Assets seeded: Berth 2/3/5/8/9, Hardstand A (each with 4 capacity rows)")
+        click.echo(f"Evaluation logs seeded: {len(sample_logs)}")

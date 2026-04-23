@@ -9,6 +9,7 @@ import AssetsPage from "./AssetsPage";
 import HistoryPage from "./HistoryPage";
 import AdminUsersPage from "./AdminUsersPage";
 import AdminLocationPage from "./AdminLocationPage";
+import AlertsPage from "./AlertsPage";
 
 const recentEvaluations = [
   ["Main Turbine G7", "Siemens SGT-800", "Compliant", "14:22 PM"],
@@ -53,6 +54,14 @@ function DashboardPage({ user }) {
   if (activeNav === "Admin/Location") {
     return <AdminLocationPage user={user} onNavChange={setActiveNav} />;
   }
+
+  if (activeNav === "Alerts") {
+  return (
+    <AppLayout activeNav={activeNav} onNavChange={setActiveNav} user={user}>
+      <AlertsPage />
+    </AppLayout>
+  );
+}
 
   if (activeNav !== "Dashboard") {
     return (
