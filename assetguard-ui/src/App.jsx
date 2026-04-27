@@ -7,6 +7,8 @@ import {
   setUnauthorizedHandler,
 } from "./services/authSession";
 
+const LAST_LOGIN_EMAIL_KEY = "assetguard:last-login-email";
+
 function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
@@ -14,6 +16,11 @@ function App() {
   const [systemMessage, setSystemMessage] = useState("");
 
   const handleLogout = (message = "") => {
+    try {
+      localStorage.removeItem(LAST_LOGIN_EMAIL_KEY);
+    } catch {
+      // Ignore storage failures (e.g. private mode restrictions).
+    }
     setToken("");
     setAuthToken("");
     setUser(null);

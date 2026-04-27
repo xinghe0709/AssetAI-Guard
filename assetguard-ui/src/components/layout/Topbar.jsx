@@ -8,6 +8,14 @@ function Topbar({ user, onLogout }) {
     .map((token) => token[0]?.toUpperCase())
     .join("") || "JD";
 
+  const handleLogout = () => {
+    if (typeof onLogout === "function") {
+      onLogout();
+      return;
+    }
+    window.location.assign("/login");
+  };
+
   return (
     <header className="topbar">
       <div className="topbar-brand">AssetGuard AI</div>
@@ -18,7 +26,7 @@ function Topbar({ user, onLogout }) {
           type="button"
           className="topbar-logout"
           aria-label="Log out"
-          onClick={() => onLogout?.()}
+          onClick={handleLogout}
         >
           ↪
         </button>
