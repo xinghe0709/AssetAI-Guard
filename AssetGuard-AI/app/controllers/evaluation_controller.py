@@ -65,6 +65,7 @@ def check():
 
     data = EvaluationService.evaluate_load(
         user_id=ctx.user_id,
+        user_email=ctx.email,
         location_id=location_id_i,
         asset_id=asset_id_i,
         equipment=eq_str,

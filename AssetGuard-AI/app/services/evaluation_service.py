@@ -21,6 +21,7 @@ class EvaluationService:
     def evaluate_load(
         *,
         user_id: int,
+        user_email: str,
         location_id: int,
         asset_id: int,
         equipment: str,
@@ -97,6 +98,7 @@ class EvaluationService:
             asset_name=asset.name,
             status=status.value,
             overload_percent=float(overload_pct),
+            recipient_email=user_email,
         )
 
         return {

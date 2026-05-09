@@ -2,19 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import TemplateEditorModal from "../components/dashboard/TemplateEditorModal";
 import {
   getEmailLogs,
-  getEmailPreferences,
   getEmailTemplate,
-  updateEmailPreferences,
   updateEmailTemplate,
   sendTestEmail,
 } from "../services/alertsApi";
 import "../styles/alerts.css";
-
-const defaultPreferences = {
-  thresholdPercent: "85",
-  recipients: "ops.team@assetguard.io, safety.audit@assetguard.io",
-  alertsEnabled: true,
-};
 
 const defaultTemplate = {
   subject: "[ASSETGUARD] THRESHOLD BREACH DETECTED",
@@ -22,13 +14,6 @@ const defaultTemplate = {
 };
 
 function AlertsPage() {
-  const [thresholdPercent, setThresholdPercent] = useState(
-    defaultPreferences.thresholdPercent
-  );
-  const [recipients, setRecipients] = useState(defaultPreferences.recipients);
-  const [alertsEnabled, setAlertsEnabled] = useState(defaultPreferences.alertsEnabled);
-  const [preferencesSnapshot, setPreferencesSnapshot] = useState(defaultPreferences);
-
   const [subject, setSubject] = useState(defaultTemplate.subject);
   const [body, setBody] = useState(defaultTemplate.body);
   const [templateSnapshot, setTemplateSnapshot] = useState(defaultTemplate);
@@ -37,11 +22,10 @@ function AlertsPage() {
   const [logsLoading, setLogsLoading] = useState(true);
   const [logsError, setLogsError] = useState("");
 
-  const [preferencesError, setPreferencesError] = useState("");
   const [templateError, setTemplateError] = useState("");
-  const [isSavingPreferences, setIsSavingPreferences] = useState(false);
   const [isSavingTemplate, setIsSavingTemplate] = useState(false);
   const [isSendingTestEmail, setIsSendingTestEmail] = useState(false);
+  const [testEmailSuccessFeedback, setTestEmailSuccessFeedback] = useState("");
 
   const [statusFilter, setStatusFilter] = useState("All Communications");
   const [dateRange, setDateRange] = useState("Last 30 Days");
@@ -54,38 +38,12 @@ function AlertsPage() {
     const loadAlertsData = async () => {
       setLogsLoading(true);
       setLogsError("");
-      setPreferencesError("");
       setTemplateError("");
 
-      const [preferencesResult, templateResult, logsResult] =
-        await Promise.allSettled([
-          getEmailPreferences(),
-          getEmailTemplate(),
-          getEmailLogs(),
-        ]);
-
-      if (preferencesResult.status === "fulfilled") {
-        const preferences = preferencesResult.value || {};
-        const nextPreferences = {
-          thresholdPercent:
-            preferences.thresholdPercent != null
-              ? String(preferences.thresholdPercent)
-              : defaultPreferences.thresholdPercent,
-          recipients: Array.isArray(preferences.recipients)
-            ? preferences.recipients.join(", ")
-            : preferences.recipients || defaultPreferences.recipients,
-          alertsEnabled:
-            preferences.alertsEnabled != null
-              ? Boolean(preferences.alertsEnabled)
-              : defaultPreferences.alertsEnabled,
-        };
-        setThresholdPercent(nextPreferences.thresholdPercent);
-        setRecipients(nextPreferences.recipients);
-        setAlertsEnabled(nextPreferences.alertsEnabled);
-        setPreferencesSnapshot(nextPreferences);
-      } else {
-        setPreferencesError("Unable to load email preferences.");
-      }
+      const [templateResult, logsResult] = await Promise.allSettled([
+        getEmailTemplate(),
+        getEmailLogs(),
+      ]);
 
       if (templateResult.status === "fulfilled") {
         const template = templateResult.value || {};
@@ -112,34 +70,8 @@ function AlertsPage() {
     loadAlertsData();
   }, []);
 
-  const isPreferencesDirty =
-    thresholdPercent !== preferencesSnapshot.thresholdPercent ||
-    recipients !== preferencesSnapshot.recipients ||
-    alertsEnabled !== preferencesSnapshot.alertsEnabled;
-
   const isTemplateDirty =
     subject !== templateSnapshot.subject || body !== templateSnapshot.body;
-
-  const handleSavePreferences = async () => {
-    if (isSavingPreferences || !isPreferencesDirty) return;
-    setIsSavingPreferences(true);
-    setPreferencesError("");
-    try {
-      await updateEmailPreferences({
-        thresholdPercent: Number(thresholdPercent),
-        recipients: recipients
-          .split(",")
-          .map((email) => email.trim())
-          .filter(Boolean),
-        alertsEnabled,
-      });
-      setPreferencesSnapshot({ thresholdPercent, recipients, alertsEnabled });
-    } catch (error) {
-      setPreferencesError(error.message || "Unable to save email preferences.");
-    } finally {
-      setIsSavingPreferences(false);
-    }
-  };
 
   const handleSaveTemplate = async () => {
     if (isSavingTemplate || !isTemplateDirty) return;
@@ -160,9 +92,13 @@ function AlertsPage() {
 
     setIsSendingTestEmail(true);
     setTemplateError("");
+    setTestEmailSuccessFeedback("");
     try {
       const testResult = await sendTestEmail();
       setDeliveryLogs((previous) => [testResult, ...previous]);
+      setTestEmailSuccessFeedback(
+        `Test email sent successfully to ${testResult.recipient || "your email"}.`
+      );
     } catch (error) {
       setTemplateError(error.message || "Unable to send test email.");
     } finally {
@@ -321,22 +257,16 @@ function AlertsPage() {
         </div>
       </section>
 
-      {(preferencesError || templateError) && (
-        <p className="dashboard-error-message">{preferencesError || templateError}</p>
+      {templateError && !isTemplateEditorOpen && (
+        <p className="dashboard-error-message">{templateError}</p>
       )}
 
       <TemplateEditorModal
         open={isTemplateEditorOpen}
-        onClose={() => setIsTemplateEditorOpen(false)}
-        thresholdPercent={thresholdPercent}
-        recipients={recipients}
-        alertsEnabled={alertsEnabled}
-        onThresholdChange={setThresholdPercent}
-        onRecipientsChange={setRecipients}
-        onToggleAlerts={() => setAlertsEnabled((previous) => !previous)}
-        onSavePreferences={handleSavePreferences}
-        isSavingPreferences={isSavingPreferences}
-        disableSavePreferences={!isPreferencesDirty}
+        onClose={() => {
+          setTestEmailSuccessFeedback("");
+          setIsTemplateEditorOpen(false);
+        }}
         subject={subject}
         body={body}
         onSubjectChange={setSubject}
@@ -346,6 +276,9 @@ function AlertsPage() {
         isSavingTemplate={isSavingTemplate}
         disableSaveTemplate={!isTemplateDirty}
         isSendingTestEmail={isSendingTestEmail}
+        templateError={templateError}
+        testEmailSuccessFeedback={testEmailSuccessFeedback}
+        onDismissSuccess={() => setTestEmailSuccessFeedback("")}
       />
     </>
   );

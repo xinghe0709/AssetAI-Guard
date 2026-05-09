@@ -119,14 +119,7 @@ class AlertService:
         return normalized[:limit]
 
     @staticmethod
-    def send_test_email() -> dict[str, Any]:
-        recipients = [
-            item.strip() for item in str(_STORE.preferences.get("recipientsCsv", "")).split(",") if item.strip()
-        ]
-        if not recipients:
-            raise ValueError("No recipients configured in email preferences")
-
-        recipient = recipients[0]
+    def send_test_email(*, recipient_email: str) -> dict[str, Any]:
         asset_name = "Template Test Asset"
         status = "Delivered"
         subject = _STORE.template["subject"].format(status="Test", assetName=asset_name)
@@ -135,7 +128,7 @@ class AlertService:
         delivery_status = "Delivered"
         error = None
         try:
-            AlertService._send_email_smtp(recipient=recipient, subject=subject, body=body)
+            AlertService._send_email_smtp(recipient=recipient_email, subject=subject, body=body)
         except Exception as exc:
             delivery_status = "Failed"
             error = str(exc)
@@ -143,7 +136,7 @@ class AlertService:
         return AlertService._append_log(
             asset_name=asset_name,
             status=status,
-            recipient=recipient,
+            recipient=recipient_email,
             delivery_status=delivery_status,
             error=error,
             max_planned="1200kg / 1200kg",
@@ -151,43 +144,36 @@ class AlertService:
         )
 
     @staticmethod
-    def notify_non_compliant(*, asset_name: str, status: str, overload_percent: float) -> None:
+    def notify_non_compliant(*, asset_name: str, status: str, overload_percent: float, recipient_email: str) -> None:
         if status != "Non-Compliant":
             return
         if not _STORE.preferences.get("sendOnNonCompliant", True):
             return
 
-        recipients = [
-            item.strip() for item in str(_STORE.preferences.get("recipientsCsv", "")).split(",") if item.strip()
-        ]
-        if not recipients:
-            return
+        subject = _STORE.template["subject"].format(status=status, assetName=asset_name)
+        body = _STORE.template["body"].format(
+            status=status,
+            assetName=asset_name,
+            overloadPercent=round(overload_percent * 100, 2),
+        )
 
-        for recipient in recipients:
-            subject = _STORE.template["subject"].format(status=status, assetName=asset_name)
-            body = _STORE.template["body"].format(
-                status=status,
-                assetName=asset_name,
-                overloadPercent=round(overload_percent * 100, 2),
-            )
+        delivery_status = "Delivered"
+        error = None
+        try:
+            AlertService._send_email_smtp(recipient=recipient_email, subject=subject, body=body)
+        except Exception as exc:
+            delivery_status = "Failed"
+            error = str(exc)
 
-            delivery_status = "Delivered"
-            error = None
-            try:
-                AlertService._send_email_smtp(recipient=recipient, subject=subject, body=body)
-            except Exception as exc:
-                delivery_status = "Failed"
-                error = str(exc)
-
-            AlertService._append_log(
-                asset_name=asset_name,
-                status=status,
-                recipient=recipient,
-                delivery_status=delivery_status,
-                error=error,
-                max_planned="-",
-                over_cap=f"{round(overload_percent * 100, 1)}%",
-            )
+        AlertService._append_log(
+            asset_name=asset_name,
+            status=status,
+            recipient=recipient_email,
+            delivery_status=delivery_status,
+            error=error,
+            max_planned="-",
+            over_cap=f"{round(overload_percent * 100, 1)}%",
+        )
 
     @staticmethod
     def _append_log(

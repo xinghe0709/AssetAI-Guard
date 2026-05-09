@@ -1,15 +1,13 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class Config:
-    """
-    Central configuration (environment variables).
-
-    - DATABASE_URL / SQLALCHEMY_DATABASE_URI: DB connection (default SQLite file)
-    - SECRET_KEY: token signing secret (override in production)
-    - TOKEN_EXPIRES_SECONDS: Bearer token lifetime
-    """
+    """Central configuration loaded from environment variables / .env file."""
 
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-change-me")
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///assetguard.db")
@@ -23,11 +21,11 @@ class Config:
         str(Path(__file__).resolve().parents[2] / "gjp-assetguard-extraction-tool" / "uploads"),
     )
 
-    # Lightweight demo email settings
-    SMTP_SUPPRESS_SEND = os.getenv("SMTP_SUPPRESS_SEND", "true").lower() == "true"
-    SMTP_HOST = os.getenv("SMTP_HOST")
+    # SMTP / Mailtrap sandbox settings
+    SMTP_SUPPRESS_SEND = os.getenv("SMTP_SUPPRESS_SEND", "false").lower() == "true"
+    SMTP_HOST = os.getenv("SMTP_HOST", "sandbox.smtp.mailtrap.io")
     SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-    SMTP_USERNAME = os.getenv("SMTP_USERNAME")
-    SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
-    SMTP_FROM_EMAIL = os.getenv("SMTP_FROM_EMAIL")
+    SMTP_USERNAME = os.getenv("SMTP_USERNAME", "")
+    SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+    SMTP_FROM_EMAIL = os.getenv("SMTP_FROM_EMAIL", "noreply@assetguard.ai")
     SMTP_USE_TLS = os.getenv("SMTP_USE_TLS", "true").lower() == "true"

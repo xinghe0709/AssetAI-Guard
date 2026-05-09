@@ -13,6 +13,7 @@ class TestConfig(Config):
     TESTING = True
     SECRET_KEY = "test-secret-key"
     TOKEN_EXPIRES_SECONDS = 3600
+    SMTP_SUPPRESS_SEND = True
 
 
 class ApiFlowTestCase(unittest.TestCase):
