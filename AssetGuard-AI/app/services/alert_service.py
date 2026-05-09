@@ -9,18 +9,22 @@ from typing import Any
 from flask import current_app
 from sqlalchemy import select
 
+from app.extensions import db
 from app.models.evaluation_log import EvaluationLog
 from app.models.load_capacity import LoadCapacity
 
 
-def _utc_iso_now() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+def _format_sent_at(dt: datetime) -> str:
+    """Format as 'May 9, 2026, 06:43 PM' in local time."""
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    local_dt = dt.astimezone()
+    return f"{local_dt:%B} {local_dt.day}, {local_dt.year}, {local_dt:%I:%M %p}"
 
 
 @dataclass
 class _DemoEmailStore:
     preferences: dict[str, Any]
-    template: dict[str, str]
     logs: list[dict[str, Any]]
     next_id: int = 1
 
@@ -32,12 +36,21 @@ _STORE = _DemoEmailStore(
         "recipientsCsv": "asset.manager@demo.com,safety@demo.com",
         "sendOnNonCompliant": True,
     },
-    template={
-        "subject": "[AssetGuard] {status} - {assetName}",
-        "body": "Evaluation result: {status}\\nAsset: {assetName}\\nOverload: {overloadPercent}%",
-    },
     logs=[],
 )
+
+
+_DEFAULT_TEMPLATE = {
+    "subject": "[AssetGuard] {status} - {assetName} ({equipment})",
+    "body": (
+        "Equipment {equipment} ({equipmentModel}) was evaluated against "
+        "asset {assetName} and found to be {status}.\n\n"
+        "Capacity: {capacityName} = {capacityMaxLoad} {loadParameterMetric}\n"
+        "Measured Load: {loadParameterValue} {loadParameterMetric}\n"
+        "Overload: {overloadPercent}%\n\n"
+        "Please review the evaluation and take corrective action."
+    ),
+}
 
 
 class AlertService:
@@ -55,75 +68,106 @@ class AlertService:
         return dict(_STORE.preferences)
 
     @staticmethod
+    def _get_template_dict() -> dict[str, str]:
+        from app.models.email_template import EmailTemplate
+
+        row = EmailTemplate.query.first()
+        if row:
+            return {"subject": row.subject, "body": row.body}
+        return dict(_DEFAULT_TEMPLATE)
+
+    @staticmethod
     def get_template() -> dict[str, str]:
-        return dict(_STORE.template)
+        return AlertService._get_template_dict()
 
     @staticmethod
     def update_template(payload: dict[str, Any]) -> dict[str, str]:
+        from app.models.email_template import EmailTemplate
+
+        row = EmailTemplate.query.first()
+        if row is None:
+            row = EmailTemplate(subject="", body="")
+            db.session.add(row)
         for key in ("subject", "body"):
             if key in payload and isinstance(payload[key], str):
-                _STORE.template[key] = payload[key]
-        return dict(_STORE.template)
+                setattr(row, key, payload[key])
+        db.session.commit()
+        return {"subject": row.subject, "body": row.body}
 
     @staticmethod
     def get_logs(*, limit: int = 100) -> list[dict[str, Any]]:
-        normalized: list[dict[str, Any]] = []
-        for item in _STORE.logs[:limit]:
-            normalized.append(
-                {
-                    "id": f"EV-{item['id']:04d}",
-                    "channel": item.get("assetName") or "Unknown Asset",
-                    "recipient": item.get("recipient"),
-                    "status": item.get("deliveryStatus", "Pending"),
-                    "maxPlanned": item.get("maxPlanned", "-"),
-                    "overCap": item.get("overCap", "-"),
-                    "sentAt": item.get("sentAt"),
-                }
-            )
+        entries: list[tuple[str, dict[str, Any]]] = []
 
-        remaining = max(limit - len(normalized), 0)
-        if remaining == 0:
-            return normalized[:limit]
+        for item in _STORE.logs:
+            sort_key = item.get("_sort_ts", "")
+            entries.append((sort_key, AlertService._normalize_memory(item)))
 
         stmt = (
             select(EvaluationLog)
             .order_by(EvaluationLog.evaluated_at.desc(), EvaluationLog.id.desc())
-            .limit(remaining)
+            .limit(max(limit, 100))
         )
-        eval_logs = list(EvaluationLog.query.session.scalars(stmt))
+        for log in EvaluationLog.query.session.scalars(stmt):
+            entries.append(
+                (log.evaluated_at.isoformat(), AlertService._normalize_db(log))
+            )
 
-        for log in eval_logs:
-            capacity = (
-                LoadCapacity.query.filter_by(
-                    asset_id=log.asset_id,
-                    name=log.matched_capacity_name,
-                ).first()
-            )
-            # Format with thousands separator
-            if capacity:
-                max_load = f"{int(capacity.max_load):,}{log.load_parameter_metric}"
-            else:
-                max_load = "-"
-            planned = f"{int(log.load_parameter_value):,}{log.load_parameter_metric}"
-            normalized.append(
-                {
-                    "id": f"EV-{log.id:04d}",
-                    "channel": log.asset.name if log.asset else "Unknown Asset",
-                    "recipient": "ops.team@assetguard.io",
-                    "status": "Failed" if log.status.value == "Non-Compliant" else "Delivered",
-                    "maxPlanned": f"{max_load} / {planned}",
-                    "overCap": f"{round(log.overload_percentage * 100, 1)}%",
-                    "sentAt": log.evaluated_at.replace(microsecond=0).isoformat(),
-                }
-            )
-        return normalized[:limit]
+        entries.sort(key=lambda e: e[0], reverse=True)
+        return [entry[1] for entry in entries[:limit]]
+
+    @staticmethod
+    def _normalize_memory(item: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "id": f"EV-{item['id']:04d}",
+            "channel": item.get("assetName") or "Unknown Asset",
+            "recipient": item.get("recipient"),
+            "status": item.get("deliveryStatus", "Pending"),
+            "maxPlanned": item.get("maxPlanned", "-"),
+            "overCap": item.get("overCap", "-"),
+            "sentAt": item.get("sentAt"),
+        }
+
+    @staticmethod
+    def _normalize_db(log: EvaluationLog) -> dict[str, Any]:
+        capacity = (
+            LoadCapacity.query.filter_by(
+                asset_id=log.asset_id,
+                name=log.matched_capacity_name,
+            ).first()
+        )
+        if capacity:
+            max_load = f"{int(capacity.max_load):,}{log.load_parameter_metric}"
+        else:
+            max_load = "-"
+        planned = f"{int(log.load_parameter_value):,}{log.load_parameter_metric}"
+        return {
+            "id": f"EV-{log.id:04d}",
+            "channel": log.asset.name if log.asset else "Unknown Asset",
+            "recipient": log.user.email if log.user else "N/A",
+            "status": log.email_status or (
+                "Delivered" if log.status.value == "Compliant" else "Pending"
+            ),
+            "maxPlanned": f"{max_load} / {planned}",
+            "overCap": f"{round(log.overload_percentage * 100, 1)}%",
+            "sentAt": _format_sent_at(log.evaluated_at),
+        }
 
     @staticmethod
     def send_test_email(*, recipient_email: str) -> dict[str, Any]:
-        asset_name = "Template Test Asset"
-        status = "Delivered"
-        subject = _STORE.template["subject"].format(status="Test", assetName=asset_name)
-        body = _STORE.template["body"].format(status="Test", assetName=asset_name, overloadPercent=0)
+        template_vars = {
+            "status": "Test",
+            "assetName": "Test Asset",
+            "equipment": "Test Equipment",
+            "equipmentModel": "Test Model",
+            "capacityName": "max point load",
+            "capacityMaxLoad": "1,000",
+            "loadParameterValue": "500",
+            "loadParameterMetric": "kN",
+            "overloadPercent": 0,
+        }
+        tpl = AlertService._get_template_dict()
+        subject = tpl["subject"].format(**template_vars)
+        body = tpl["body"].format(**template_vars)
 
         delivery_status = "Delivered"
         error = None
@@ -134,46 +178,55 @@ class AlertService:
             error = str(exc)
 
         return AlertService._append_log(
-            asset_name=asset_name,
-            status=status,
+            asset_name="Test Asset",
+            status="Delivered",
             recipient=recipient_email,
             delivery_status=delivery_status,
             error=error,
-            max_planned="1200kg / 1200kg",
+            max_planned="1,000kN / 500kN",
             over_cap="0%",
         )
 
     @staticmethod
-    def notify_non_compliant(*, asset_name: str, status: str, overload_percent: float, recipient_email: str) -> None:
+    def notify_non_compliant(
+        *,
+        asset_name: str,
+        status: str,
+        overload_percent: float,
+        recipient_email: str,
+        equipment: str,
+        equipment_model: str | None,
+        capacity_name: str,
+        capacity_max_load: float,
+        load_parameter_value: float,
+        load_parameter_metric: str,
+    ) -> tuple[str, str | None] | None:
+        """Send non-compliance email. Returns (delivery_status, error_message) or None if skipped."""
         if status != "Non-Compliant":
-            return
+            return None
         if not _STORE.preferences.get("sendOnNonCompliant", True):
-            return
+            return None
 
-        subject = _STORE.template["subject"].format(status=status, assetName=asset_name)
-        body = _STORE.template["body"].format(
-            status=status,
-            assetName=asset_name,
-            overloadPercent=round(overload_percent * 100, 2),
-        )
+        template_vars = {
+            "status": status,
+            "assetName": asset_name,
+            "equipment": equipment,
+            "equipmentModel": equipment_model or "N/A",
+            "capacityName": capacity_name,
+            "capacityMaxLoad": f"{int(capacity_max_load):,}",
+            "loadParameterValue": f"{int(load_parameter_value):,}",
+            "loadParameterMetric": load_parameter_metric,
+            "overloadPercent": round(overload_percent * 100, 2),
+        }
+        tpl = AlertService._get_template_dict()
+        subject = tpl["subject"].format(**template_vars)
+        body = tpl["body"].format(**template_vars)
 
-        delivery_status = "Delivered"
-        error = None
         try:
             AlertService._send_email_smtp(recipient=recipient_email, subject=subject, body=body)
+            return ("Delivered", None)
         except Exception as exc:
-            delivery_status = "Failed"
-            error = str(exc)
-
-        AlertService._append_log(
-            asset_name=asset_name,
-            status=status,
-            recipient=recipient_email,
-            delivery_status=delivery_status,
-            error=error,
-            max_planned="-",
-            over_cap=f"{round(overload_percent * 100, 1)}%",
-        )
+            return ("Failed", str(exc))
 
     @staticmethod
     def _append_log(
@@ -188,7 +241,8 @@ class AlertService:
     ) -> dict[str, Any]:
         log = {
             "id": _STORE.next_id,
-            "sentAt": _utc_iso_now(),
+            "_sort_ts": datetime.now(timezone.utc).isoformat(),
+            "sentAt": _format_sent_at(datetime.now(timezone.utc)),
             "assetName": asset_name,
             "evaluationStatus": status,
             "recipient": recipient,

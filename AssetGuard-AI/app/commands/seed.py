@@ -3,7 +3,7 @@ from flask import Flask
 from datetime import datetime, timedelta, timezone
 
 from app.extensions import db
-from app.models import Asset, EvaluationLog, LoadCapacity, Location, User
+from app.models import Asset, EmailTemplate, EvaluationLog, LoadCapacity, Location, User
 from app.models.evaluation_log import EvaluationStatus
 from app.models.user import UserRole
 
@@ -149,6 +149,23 @@ def register_seed_command(app: Flask) -> None:
             )
         db.session.add_all(sample_logs)
         db.session.commit()
+
+        # Seed default email template (only if none exists)
+        if EmailTemplate.query.first() is None:
+            db.session.add(
+                EmailTemplate(
+                    subject="[AssetGuard] {status} - {assetName} ({equipment})",
+                    body=(
+                        "Equipment {equipment} ({equipmentModel}) was evaluated against "
+                        "asset {assetName} and found to be {status}.\n\n"
+                        "Capacity: {capacityName} = {capacityMaxLoad} {loadParameterMetric}\n"
+                        "Measured Load: {loadParameterValue} {loadParameterMetric}\n"
+                        "Overload: {overloadPercent}%\n\n"
+                        "Please review the evaluation and take corrective action."
+                    ),
+                )
+            )
+            db.session.commit()
 
         click.echo(f"Location: {loc.id} {loc.name}")
         click.echo(f"Admin: {admin.email} ({'created' if admin_created else 'updated'})")

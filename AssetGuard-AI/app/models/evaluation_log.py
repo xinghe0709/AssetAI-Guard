@@ -36,3 +36,6 @@ class EvaluationLog(db.Model):
     overload_percentage = db.Column(db.Float, nullable=False, default=0.0)
     remark = db.Column(db.Text, nullable=True)
     evaluated_at = db.Column(db.DateTime, nullable=False, default=_utc_now, index=True)
+
+    email_status = db.Column(db.String(32), nullable=True)
+    email_error = db.Column(db.Text, nullable=True)

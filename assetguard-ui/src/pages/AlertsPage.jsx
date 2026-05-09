@@ -9,8 +9,8 @@ import {
 import "../styles/alerts.css";
 
 const defaultTemplate = {
-  subject: "[ASSETGUARD] THRESHOLD BREACH DETECTED",
-  body: "A monitored asset has exceeded the configured load threshold. Please review the latest evaluation report immediately.",
+  subject: "[AssetGuard] {status} - {assetName} ({equipment})",
+  body: "Equipment {equipment} ({equipmentModel}) was evaluated against asset {assetName} and found to be {status}.\n\nCapacity: {capacityName} = {capacityMaxLoad} {loadParameterMetric}\nMeasured Load: {loadParameterValue} {loadParameterMetric}\nOverload: {overloadPercent}%\n\nPlease review the evaluation and take corrective action.",
 };
 
 function AlertsPage() {

@@ -94,12 +94,22 @@ class EvaluationService:
         )
         db.session.add(log)
         db.session.commit()
-        AlertService.notify_non_compliant(
+
+        result = AlertService.notify_non_compliant(
             asset_name=asset.name,
             status=status.value,
             overload_percent=float(overload_pct),
             recipient_email=user_email,
+            equipment=equipment,
+            equipment_model=model_clean,
+            capacity_name=capacity.name.value,
+            capacity_max_load=max_v,
+            load_parameter_value=val,
+            load_parameter_metric=expected_metric,
         )
+        if result is not None:
+            log.email_status, log.email_error = result
+            db.session.commit()
 
         return {
             "asset": {
