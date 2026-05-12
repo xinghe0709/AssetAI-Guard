@@ -10,8 +10,14 @@ from flask import current_app
 from sqlalchemy import select
 
 from app.extensions import db
-from app.models.evaluation_log import EvaluationLog
+from app.models.evaluation_log import EvaluationLog, EvaluationStatus
 from app.models.load_capacity import LoadCapacity
+
+
+class _SafeDict(dict):
+    """Returns the placeholder itself for missing keys instead of raising KeyError."""
+    def __missing__(self, key):
+        return f"{{{key}}}"
 
 
 def _format_sent_at(dt: datetime) -> str:
@@ -104,6 +110,7 @@ class AlertService:
 
         stmt = (
             select(EvaluationLog)
+            .where(EvaluationLog.status == EvaluationStatus.NON_COMPLIANT)
             .order_by(EvaluationLog.evaluated_at.desc(), EvaluationLog.id.desc())
             .limit(max(limit, 100))
         )
@@ -166,8 +173,9 @@ class AlertService:
             "overloadPercent": 0,
         }
         tpl = AlertService._get_template_dict()
-        subject = tpl["subject"].format(**template_vars)
-        body = tpl["body"].format(**template_vars)
+        safe_vars = _SafeDict(template_vars)
+        subject = tpl["subject"].format_map(safe_vars)
+        body = tpl["body"].format_map(safe_vars)
 
         delivery_status = "Delivered"
         error = None
@@ -200,11 +208,12 @@ class AlertService:
         capacity_max_load: float,
         load_parameter_value: float,
         load_parameter_metric: str,
+        force: bool = False,
     ) -> tuple[str, str | None] | None:
         """Send non-compliance email. Returns (delivery_status, error_message) or None if skipped."""
         if status != "Non-Compliant":
             return None
-        if not _STORE.preferences.get("sendOnNonCompliant", True):
+        if not force and not _STORE.preferences.get("sendOnNonCompliant", True):
             return None
 
         template_vars = {
@@ -219,8 +228,9 @@ class AlertService:
             "overloadPercent": round(overload_percent * 100, 2),
         }
         tpl = AlertService._get_template_dict()
-        subject = tpl["subject"].format(**template_vars)
-        body = tpl["body"].format(**template_vars)
+        safe_vars = _SafeDict(template_vars)
+        subject = tpl["subject"].format_map(safe_vars)
+        body = tpl["body"].format_map(safe_vars)
 
         try:
             AlertService._send_email_smtp(recipient=recipient_email, subject=subject, body=body)

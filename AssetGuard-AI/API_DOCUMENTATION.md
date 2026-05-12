@@ -1134,6 +1134,9 @@ The service maps the `equipment` string to the required capacity name and metric
 {
   "success": true,
   "data": {
+    "id": 7,
+    "emailStatus": null,
+    "emailError": null,
     "asset": {
       "id": 10,
       "name": "Berth 5 Deck",
@@ -1152,12 +1155,15 @@ The service maps the `equipment` string to the required capacity name and metric
 }
 ```
 
-> **Note:** This endpoint does not return `evaluatedAt`, `createdAt`, or `updatedAt` in the response. Use `GET /evaluations/history` to retrieve logged timestamps.
+> **Note:** This endpoint does not return `evaluatedAt`, `createdAt`, or `updatedAt` in the response. Use `GET /evaluations/history` to retrieve logged timestamps. Emails are **not** sent automatically — use `POST /evaluations/<id>/notify` or the UI **Send Email Alert** button to manually send.
 
 **Response fields:**
 
 | Field                 | Type           | Description                                                                                    |
 | --------------------- | -------------- | ---------------------------------------------------------------------------------------------- |
+| `id`                  | integer        | Evaluation log ID (use with `/evaluations/<id>/notify` to manually send email)                 |
+| `emailStatus`         | string \| null | `null` until email is sent; then `"Delivered"` or `"Failed"`                                  |
+| `emailError`          | string \| null | SMTP error message if `emailStatus` is `"Failed"`                                             |
 | `asset`               | object         | Asset summary (without timestamps)                                                             |
 | `equipment`           | string         | Equipment type used                                                                            |
 | `equipmentModel`      | string \| null | Equipment model/identifier                                                                     |
@@ -1372,11 +1378,55 @@ Return aggregated evaluation statistics for the dashboard, including totals, ove
 
 ---
 
+### POST `/api/v1/evaluations/<id>/notify`
+
+Manually send an email alert for an existing evaluation. Uses the evaluation's stored data (asset, equipment, load values) and the current email template. The delivery result is persisted to the evaluation log's `email_status` and `email_error` columns.
+
+**Permissions:** Any authenticated user.
+
+**Path parameters:**
+
+| Parameter | Type    | Required | Description       |
+| --------- | ------- | -------- | ----------------- |
+| `id`      | integer | Yes      | Evaluation log ID |
+
+**Response `200`:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "emailStatus": "Delivered",
+    "emailError": null
+  }
+}
+```
+
+| field         | type           | description                                                  |
+| ------------- | -------------- | ------------------------------------------------------------ |
+| emailStatus   | string         | `"Delivered"`, `"Failed"`, or `"Skipped"`                   |
+| emailError    | string \| null | SMTP error message if `emailStatus` is `"Failed"`           |
+
+**Possible errors:**
+
+| Status | Code              | Description                   |
+| ------ | ----------------- | ----------------------------- |
+| `404`  | `not_found`       | Evaluation log does not exist |
+| `404`  | `asset_not_found` | Associated asset not found    |
+
+---
+
 ## Alert APIs
+
+All alert endpoints require **System Admin** or **Asset Manager** role.
+
+Email sending is **manual only**. Users click **Send Email Alert** on the Evaluation page after a Non-Compliant result. The evaluation response includes `emailStatus` and `emailError` fields showing the delivery outcome.
+
+---
 
 ### GET `/api/v1/alerts/email-logs`
 
-Return recent email delivery log entries.
+Return recent email delivery log entries. **Only Non-Compliant evaluations are shown.**
 
 **Permissions:** `System_Admin`, `Asset_Manager`.
 
@@ -1396,22 +1446,28 @@ Return recent email delivery log entries.
       {
         "id": "EV-0001",
         "channel": "Berth 5 Deck",
-        "recipient": "ops.team@assetguard.io",
+        "recipient": "contractor@demo.com",
         "status": "Delivered",
-        "maxPlanned": "1200.0 kN",
+        "maxPlanned": "1,200kN / 1,500kN",
         "overCap": "25.0%",
-        "sentAt": "2026-05-07T14:30:00+08:00"
+        "sentAt": "May 9, 2026, 06:43 PM"
       }
     ]
   }
 }
 ```
 
-**Possible errors:**
+**Response item fields:**
 
-| Status | Code | Description             |
-| ------ | ---- | ----------------------- |
-| `403`  | —    | Caller lacks permission |
+| field       | type   | description                                                     |
+| ----------- | ------ | --------------------------------------------------------------- |
+| id          | string | Log ID (e.g. `EV-0001`)                                         |
+| channel     | string | Asset name                                                      |
+| recipient   | string | Recipient email address                                         |
+| status      | string | `"Delivered"`, `"Failed"`, `"Pending"`, or `"Skipped"`         |
+| maxPlanned  | string | Formatted "max capacity / measured load"                        |
+| overCap     | string | Overload percentage                                             |
+| sentAt      | string | Formatted local timestamp (e.g. `"May 9, 2026, 06:43 PM"`)     |
 
 ---
 
@@ -1435,6 +1491,13 @@ Return the current email alert configuration.
 }
 ```
 
+| field                      | type    | description                                                |
+| -------------------------- | ------- | ---------------------------------------------------------- |
+| escalationThresholdPercent | integer | Overload % threshold for escalation                        |
+| digestTimeUtc              | string  | Scheduled digest time (HH:MM UTC)                          |
+| recipientsCsv              | string  | Comma-separated default recipients                         |
+| sendOnNonCompliant         | boolean | Informational (auto-send is disabled; email is manual only) |
+
 ---
 
 ### PUT `/api/v1/alerts/email-preferences`
@@ -1452,12 +1515,12 @@ Update email alert configuration. Partial update — only send the fields you wa
 }
 ```
 
-| Field                        | Type    | Notes                                             |
-| ---------------------------- | ------- | ------------------------------------------------- |
-| `escalationThresholdPercent` | integer | Overload threshold percentage                     |
-| `digestTimeUtc`              | string  | HH:MM format                                      |
-| `recipientsCsv`              | string  | Comma-separated email addresses                   |
-| `sendOnNonCompliant`         | boolean | Enable/disable auto-send on non-compliant results |
+| field                      | type    | description                             |
+| -------------------------- | ------- | --------------------------------------- |
+| escalationThresholdPercent | integer | Overload threshold percentage           |
+| digestTimeUtc              | string  | HH:MM format                            |
+| recipientsCsv              | string  | Comma-separated email addresses         |
+| sendOnNonCompliant         | boolean | Informational toggle (does not control auto-send) |
 
 **Response `200`:** Same shape as `GET /alerts/email-preferences`.
 
@@ -1465,7 +1528,7 @@ Update email alert configuration. Partial update — only send the fields you wa
 
 ### GET `/api/v1/alerts/email-template`
 
-Return the current email template.
+Return the current email template stored in the database. Falls back to the built-in default if no template has been saved.
 
 **Permissions:** `System_Admin`, `Asset_Manager`.
 
@@ -1475,17 +1538,31 @@ Return the current email template.
 {
   "success": true,
   "data": {
-    "subject": "[ASSETGUARD] THRESHOLD BREACH DETECTED",
-    "body": "A monitored asset has exceeded the configured load threshold. Please review the latest evaluation report immediately."
+    "subject": "[AssetGuard] {status} - {assetName} ({equipment})",
+    "body": "Equipment {equipment} ({equipmentModel}) was evaluated against asset {assetName} and found to be {status}.\n\nCapacity: {capacityName} = {capacityMaxLoad} {loadParameterMetric}\nMeasured Load: {loadParameterValue} {loadParameterMetric}\nOverload: {overloadPercent}%\n\nPlease review the evaluation and take corrective action."
   }
 }
 ```
+
+**Available template placeholders:**
+
+| Placeholder            | Source                  | Example value          |
+| ---------------------- | ----------------------- | ---------------------- |
+| `{status}`             | Evaluation result       | `Non-Compliant`        |
+| `{assetName}`          | Asset name              | `Berth 5 Deck`         |
+| `{equipment}`          | Equipment type          | `Crane with outriggers`|
+| `{equipmentModel}`     | Equipment model/ID      | `LTM 1100`             |
+| `{capacityName}`       | Matched capacity        | `max point load`       |
+| `{capacityMaxLoad}`    | Max load (formatted)    | `1,200`                |
+| `{loadParameterValue}` | Measured load (formatted)| `1,500`               |
+| `{loadParameterMetric}`| Load metric             | `kN`                   |
+| `{overloadPercent}`    | Overload percentage     | `25.0`                 |
 
 ---
 
 ### PUT `/api/v1/alerts/email-template`
 
-Update the email template. Partial update — only send the fields you want to change.
+Save a new email template to the database. Persists across server restarts. Partial update — only send the fields you want to change.
 
 **Permissions:** `System_Admin`, `Asset_Manager`.
 
@@ -1493,7 +1570,8 @@ Update the email template. Partial update — only send the fields you want to c
 
 ```json
 {
-  "subject": "[ASSETGUARD] Alert: Threshold Breach"
+  "subject": "[AssetGuard] {status} - {assetName}",
+  "body": "Equipment {equipment} ({equipmentModel}) was evaluated and found {status}."
 }
 ```
 
@@ -1503,7 +1581,7 @@ Update the email template. Partial update — only send the fields you want to c
 
 ### POST `/api/v1/alerts/test-email`
 
-Send a test email using the current configuration.
+Send a test email to the caller's email address using the current template (with placeholder values filled in as test data).
 
 **Permissions:** `System_Admin`, `Asset_Manager`.
 
@@ -1516,12 +1594,12 @@ No request body required.
   "success": true,
   "data": {
     "id": "EV-0042",
-    "channel": "Test",
-    "recipient": "asset.manager@demo.com",
+    "channel": "Test Asset",
+    "recipient": "admin@demo.com",
     "status": "Delivered",
-    "maxPlanned": "N/A",
-    "overCap": "N/A",
-    "sentAt": "2026-05-07T14:30:00+08:00"
+    "maxPlanned": "1,000kN / 500kN",
+    "overCap": "0%",
+    "sentAt": "May 9, 2026, 06:43 PM"
   }
 }
 ```

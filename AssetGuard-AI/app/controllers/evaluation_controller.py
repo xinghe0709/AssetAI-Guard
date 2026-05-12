@@ -2,7 +2,10 @@ from datetime import date, datetime
 
 from flask import Blueprint, request
 
+from app.extensions import db
+from app.models import Asset, EvaluationLog, LoadCapacity
 from app.models.user import UserRole
+from app.services.alert_service import AlertService
 from app.services.evaluation_service import EvaluationService
 from app.utils.auth import get_auth_context, require_auth, require_roles
 from app.utils.equipment_mapping import equipment_options
@@ -74,6 +77,50 @@ def check():
         remark=remark_str,
     )
     return ok(data)
+
+
+@evaluations_bp.post("/<int:log_id>/notify")
+@require_auth
+def notify(log_id: int):
+    """Re-send email notification for an existing evaluation."""
+    ctx = get_auth_context()
+    log = EvaluationLog.query.get(log_id)
+    if log is None:
+        raise ApiError("Evaluation log not found", 404, code="not_found")
+
+    asset = Asset.query.get(log.asset_id)
+    if asset is None:
+        raise ApiError("Asset not found", 404, code="asset_not_found")
+
+    capacity = (
+        LoadCapacity.query.filter_by(
+            asset_id=log.asset_id,
+            name=log.matched_capacity_name,
+        ).first()
+    )
+    max_load = float(capacity.max_load) if capacity else 0.0
+
+    result = AlertService.notify_non_compliant(
+        asset_name=asset.name,
+        status=log.status.value,
+        overload_percent=float(log.overload_percentage),
+        recipient_email=ctx.email,
+        equipment=log.equipment,
+        equipment_model=log.equipment_model,
+        capacity_name=log.matched_capacity_name or "",
+        capacity_max_load=max_load,
+        load_parameter_value=float(log.load_parameter_value),
+        load_parameter_metric=log.load_parameter_metric or "",
+        force=True,
+    )
+    if result is not None:
+        log.email_status, log.email_error = result
+        db.session.commit()
+
+    return ok({
+        "emailStatus": log.email_status or "Skipped",
+        "emailError": log.email_error,
+    })
 
 
 def _parse_optional_date(value: str | None) -> date | None:

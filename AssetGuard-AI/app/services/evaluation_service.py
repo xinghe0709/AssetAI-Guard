@@ -5,7 +5,6 @@ from sqlalchemy import select
 from app.extensions import db
 from app.models import Asset, EvaluationLog, LoadCapacity
 from app.models.evaluation_log import EvaluationStatus
-from app.services.alert_service import AlertService
 from app.utils.equipment_mapping import normalize_capacity_name, resolve_equipment
 from app.utils.errors import ApiError
 
@@ -95,23 +94,10 @@ class EvaluationService:
         db.session.add(log)
         db.session.commit()
 
-        result = AlertService.notify_non_compliant(
-            asset_name=asset.name,
-            status=status.value,
-            overload_percent=float(overload_pct),
-            recipient_email=user_email,
-            equipment=equipment,
-            equipment_model=model_clean,
-            capacity_name=capacity.name.value,
-            capacity_max_load=max_v,
-            load_parameter_value=val,
-            load_parameter_metric=expected_metric,
-        )
-        if result is not None:
-            log.email_status, log.email_error = result
-            db.session.commit()
-
         return {
+            "id": log.id,
+            "emailStatus": log.email_status,
+            "emailError": log.email_error,
             "asset": {
                 "id": asset.id,
                 "name": asset.name,

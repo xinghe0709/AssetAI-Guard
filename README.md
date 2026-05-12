@@ -136,7 +136,21 @@ TOKEN_EXPIRES_SECONDS=86400
 # Directory where the AI tool writes JSON upload files
 # Defaults to ../gjp-assetguard-extraction-tool/uploads relative to this project
 AI_JSON_UPLOADS_DIR=/path/to/gjp-assetguard-extraction-tool/uploads
+
+# --- Mailtrap sandbox SMTP (email alerts) ---
+# Sign up at https://mailtrap.io → Email Testing → Inboxes → Show Credentials
+SMTP_SUPPRESS_SEND=false
+SMTP_HOST=sandbox.smtp.mailtrap.io
+SMTP_PORT=587
+SMTP_USERNAME=your-mailtrap-username
+SMTP_PASSWORD=your-mailtrap-password
+SMTP_FROM_EMAIL=noreply@assetguard.ai
+SMTP_USE_TLS=true
 ```
+
+Email alerts for Non-Compliant evaluations are sent via Mailtrap sandbox (all captured in a testing inbox — no real emails). Sending is **manual**: after evaluation, click **Send Email Alert** on the result page. The email template (editable via Alerts page) supports these placeholders: `{status}`, `{assetName}`, `{equipment}`, `{equipmentModel}`, `{capacityName}`, `{capacityMaxLoad}`, `{loadParameterValue}`, `{loadParameterMetric}`, `{overloadPercent}`.
+
+See `AssetGuard-AI/API_DOCUMENTATION.md` for the full Alerts API reference.
 
 ### Initialise and run
 
@@ -434,7 +448,20 @@ Authorization: Bearer <manager_or_admin_token>
 |--------|------|------------|
 | `GET` | `/api/v1/evaluations/equipment-options` | Any authenticated user |
 | `POST` | `/api/v1/evaluations/check` | Any authenticated user |
+| `POST` | `/api/v1/evaluations/<id>/notify` | Any authenticated user |
 | `GET` | `/api/v1/evaluations/history` | `System_Admin`, `Asset_Manager` |
+| `GET` | `/api/v1/evaluations/dashboard-summary` | `System_Admin`, `Asset_Manager` |
+
+### Alerts
+
+| Method | Path | Permission |
+|--------|------|------------|
+| `GET` | `/api/v1/alerts/email-logs` | `System_Admin`, `Asset_Manager` |
+| `GET` | `/api/v1/alerts/email-preferences` | `System_Admin`, `Asset_Manager` |
+| `PUT` | `/api/v1/alerts/email-preferences` | `System_Admin`, `Asset_Manager` |
+| `GET` | `/api/v1/alerts/email-template` | `System_Admin`, `Asset_Manager` |
+| `PUT` | `/api/v1/alerts/email-template` | `System_Admin`, `Asset_Manager` |
+| `POST` | `/api/v1/alerts/test-email` | `System_Admin`, `Asset_Manager` |
 
 ---
 
