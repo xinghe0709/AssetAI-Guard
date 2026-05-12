@@ -353,16 +353,15 @@ function EvaluationPage({ user, onNavChange, onLogout }) {
         <div className="evaluation-content">
           {/* Error Message */}
           {error && (
-            <div style={{
-              padding: "12px 16px",
-              marginBottom: "20px",
-              backgroundColor: "#fef2f2",
-              border: "1px solid #fecaca",
-              borderRadius: "4px",
-              color: "#dc2626",
-              fontSize: "14px"
-            }}>
+            <div className="alert alert-error">
               ⚠️ {error}
+            </div>
+          )}
+
+          {/* Email Message */}
+          {emailMessage && (
+            <div className={`alert alert-${emailMessage.type}`}>
+              {emailMessage.type === "success" ? "✓" : emailMessage.type === "warning" ? "⚠️" : "✕"} {emailMessage.text}
             </div>
           )}
 
@@ -621,19 +620,6 @@ function EvaluationPage({ user, onNavChange, onLogout }) {
                   ← New Evaluation
                 </button>
               </div>
-              {emailMessage && (
-                <div style={{
-                  marginTop: 12,
-                  padding: "10px 14px",
-                  borderRadius: 4,
-                  fontSize: 13,
-                  background: emailMessage.type === "success" ? "#ecfdf5" : emailMessage.type === "warning" ? "#fffbeb" : "#fef2f2",
-                  color: emailMessage.type === "success" ? "#065f46" : emailMessage.type === "warning" ? "#92400e" : "#991b1b",
-                  border: `1px solid ${emailMessage.type === "success" ? "#a7f3d0" : emailMessage.type === "warning" ? "#fde68a" : "#fecaca"}`,
-                }}>
-                  {emailMessage.text}
-                </div>
-              )}
               {evaluationResult.emailStatus && (
                 <div style={{
                   marginTop: 8,
