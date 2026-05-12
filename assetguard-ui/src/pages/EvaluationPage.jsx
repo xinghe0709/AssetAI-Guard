@@ -57,6 +57,8 @@ function EvaluationPage({ user, onNavChange, onLogout }) {
   const [error, setError] = useState("");
 
   const [evaluationResult, setEvaluationResult] = useState(null);
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const [emailMessage, setEmailMessage] = useState(null);
 
   // Handle nav changes
   const handleNavChange = (newNav) => {
@@ -275,6 +277,42 @@ function EvaluationPage({ user, onNavChange, onLogout }) {
     }
   };
 
+  const handleSendEmail = async () => {
+    if (!evaluationResult?.id) return;
+    setSendingEmail(true);
+    setEmailMessage(null);
+    try {
+      const token = getAuthToken();
+      const response = await fetch(
+        `http://127.0.0.1:5000/api/v1/evaluations/${evaluationResult.id}/notify`,
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.message || `Request failed: ${response.status}`);
+      }
+      const result = await response.json();
+      if (result.success) {
+        setEmailMessage({
+          type: result.data.emailStatus === "Delivered" ? "success" : "warning",
+          text: result.data.emailStatus === "Delivered"
+            ? "Email sent successfully!"
+            : `Email status: ${result.data.emailStatus}`,
+        });
+      }
+    } catch (err) {
+      setEmailMessage({ type: "error", text: err.message || "Failed to send email" });
+    } finally {
+      setSendingEmail(false);
+    }
+  };
+
   // Get available assets based on selected location
   const availableAssets = formData.location 
     ? assetsByLocation[formData.location] || [] 
@@ -315,16 +353,15 @@ function EvaluationPage({ user, onNavChange, onLogout }) {
         <div className="evaluation-content">
           {/* Error Message */}
           {error && (
-            <div style={{
-              padding: "12px 16px",
-              marginBottom: "20px",
-              backgroundColor: "#fef2f2",
-              border: "1px solid #fecaca",
-              borderRadius: "4px",
-              color: "#dc2626",
-              fontSize: "14px"
-            }}>
+            <div className="alert alert-error">
               ⚠️ {error}
+            </div>
+          )}
+
+          {/* Email Message */}
+          {emailMessage && (
+            <div className={`alert alert-${emailMessage.type}`}>
+              {emailMessage.type === "success" ? "✓" : emailMessage.type === "warning" ? "⚠️" : "✕"} {emailMessage.text}
             </div>
           )}
 
@@ -563,26 +600,36 @@ function EvaluationPage({ user, onNavChange, onLogout }) {
             <div className="result-footer">
               <div className="result-actions">
                 {evaluationResult.status !== "Compliant" && (
-                  <button 
+                  <button
                     className="btn btn-primary"
-                    onClick={() => {
-                      // TODO: Implement send email alert functionality
-                      alert("Sending email alert...");
-                    }}
+                    onClick={handleSendEmail}
+                    disabled={sendingEmail}
+                    style={{ minWidth: 180 }}
                   >
-                  Send Email Alert
+                    {sendingEmail ? "Sending..." : "Send Email Alert"}
                   </button>
                 )}
-                <button 
+                <button
                   className="btn btn-secondary"
                   onClick={() => {
                     setShowResult(false);
                     setEvaluationResult(null);
+                    setEmailMessage(null);
                   }}
                 >
                   ← New Evaluation
                 </button>
               </div>
+              {evaluationResult.emailStatus && (
+                <div style={{
+                  marginTop: 8,
+                  fontSize: 12,
+                  color: "#64748b",
+                }}>
+                  Auto-send status: {evaluationResult.emailStatus}
+                  {evaluationResult.emailError && ` — ${evaluationResult.emailError}`}
+                </div>
+              )}
             </div>
           </div>
           )}

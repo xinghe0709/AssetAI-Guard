@@ -2,7 +2,7 @@ from flask import Blueprint, request
 
 from app.models.user import UserRole
 from app.services.alert_service import AlertService
-from app.utils.auth import require_roles
+from app.utils.auth import get_auth_context, require_roles
 from app.utils.errors import ApiError
 from app.utils.responses import ok
 
@@ -47,4 +47,5 @@ def put_email_template():
 @alerts_bp.post("/test-email")
 @require_roles(UserRole.SYSTEM_ADMIN.value, UserRole.ASSET_MANAGER.value)
 def post_test_email():
-    return ok(AlertService.send_test_email())
+    ctx = get_auth_context()
+    return ok(AlertService.send_test_email(recipient_email=ctx.email))

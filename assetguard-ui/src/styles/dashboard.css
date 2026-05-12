@@ -844,6 +844,83 @@
   color: var(--color-text-primary);
 }
 
+.template-modal-card-single {
+  width: min(640px, 100%);
+}
+
+.template-editor-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.template-success-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  background: var(--color-success-bg);
+  border: 1px solid var(--color-success-border);
+  border-radius: var(--radius-md);
+  color: var(--color-success);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  animation: fadeInUp 0.25s ease both;
+}
+
+.template-success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-success);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: var(--font-bold);
+  flex-shrink: 0;
+}
+
+.template-success-dismiss {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--color-success);
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.template-success-dismiss:hover {
+  background: rgba(0, 109, 115, 0.12);
+}
+
+.btn-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.new-evaluation-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 /* ============================================================
    Responsive
    ============================================================ */
@@ -874,8 +951,7 @@
     font-size: var(--text-base);
   }
   .alerts-filter-row,
-  .alerts-filter-row-wide,
-  .template-modal-grid {
+  .alerts-filter-row-wide {
     grid-template-columns: 1fr;
   }
   .alerts-toggle-row {

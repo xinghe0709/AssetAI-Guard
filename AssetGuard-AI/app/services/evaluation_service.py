@@ -5,7 +5,6 @@ from sqlalchemy import select
 from app.extensions import db
 from app.models import Asset, EvaluationLog, LoadCapacity
 from app.models.evaluation_log import EvaluationStatus
-from app.services.alert_service import AlertService
 from app.utils.equipment_mapping import normalize_capacity_name, resolve_equipment
 from app.utils.errors import ApiError
 
@@ -21,6 +20,7 @@ class EvaluationService:
     def evaluate_load(
         *,
         user_id: int,
+        user_email: str,
         location_id: int,
         asset_id: int,
         equipment: str,
@@ -93,13 +93,11 @@ class EvaluationService:
         )
         db.session.add(log)
         db.session.commit()
-        AlertService.notify_non_compliant(
-            asset_name=asset.name,
-            status=status.value,
-            overload_percent=float(overload_pct),
-        )
 
         return {
+            "id": log.id,
+            "emailStatus": log.email_status,
+            "emailError": log.email_error,
             "asset": {
                 "id": asset.id,
                 "name": asset.name,
