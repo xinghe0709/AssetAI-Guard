@@ -218,6 +218,10 @@ img {
   font-size: 15px;
 }
 
+.split-panels .card--problem h3 {
+  color: #e91429;
+}
+
 /* Workflow + video on one slide */
 .slide--combo .slide-title {
   margin-bottom: 10px;
