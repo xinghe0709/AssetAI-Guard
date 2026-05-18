@@ -447,7 +447,10 @@ img {
 }
 
 .workflow-switcher {
+  position: relative;
   width: 100%;
+  /* Reserved space so showing detail never shifts tabs upward */
+  padding-bottom: 300px;
 }
 
 .workflow-role-tabs {
@@ -483,6 +486,25 @@ img {
   outline-offset: 3px;
 }
 
+/* Overlay below tabs — opacity only, no min-height animation */
+.workflow-detail-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 300px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.55s ease-in-out, visibility 0.55s ease-in-out;
+}
+
+.workflow-switcher.is-detail-visible .workflow-detail-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 .workflow-role-intro {
   position: relative;
   min-height: 4.6em;
@@ -513,7 +535,6 @@ img {
 .workflow-diagram {
   position: relative;
   max-width: 100%;
-  /* Fixed height — avoids layout jump when switching taller admin diagram */
   min-height: 220px;
 }
 

@@ -130,8 +130,46 @@
   const roleFlows = Array.from(document.querySelectorAll(".role-flow[data-flow]"));
   const roleIntros = Array.from(document.querySelectorAll(".role-intro[data-flow]"));
 
+  const workflowSwitcher = document.querySelector(".workflow-switcher");
+  const roleTabList = document.querySelector(".workflow-role-tabs");
+  const workflowDetailPanel = document.getElementById("workflow-detail-panel");
+  let hideRoleFlowTimer = null;
+
+  function hideRoleFlow() {
+    if (workflowSwitcher) workflowSwitcher.classList.remove("is-detail-visible");
+    if (workflowDetailPanel) workflowDetailPanel.setAttribute("aria-hidden", "true");
+    roleTabs.forEach((tab) => {
+      tab.classList.remove("is-active");
+      tab.setAttribute("aria-pressed", "false");
+      tab.setAttribute("aria-selected", "false");
+    });
+    roleFlows.forEach((img) => img.classList.remove("is-visible"));
+    roleIntros.forEach((intro) => intro.classList.remove("is-visible"));
+  }
+
+  function scheduleHideRoleFlow() {
+    if (hideRoleFlowTimer) window.clearTimeout(hideRoleFlowTimer);
+    hideRoleFlowTimer = window.setTimeout(() => {
+      hideRoleFlow();
+      hideRoleFlowTimer = null;
+    }, 80);
+  }
+
+  function cancelHideRoleFlow() {
+    if (hideRoleFlowTimer) {
+      window.clearTimeout(hideRoleFlowTimer);
+      hideRoleFlowTimer = null;
+    }
+  }
+
   function showRoleFlow(flowId) {
-    if (!flowId) return;
+    cancelHideRoleFlow();
+    if (!flowId) {
+      hideRoleFlow();
+      return;
+    }
+    if (workflowSwitcher) workflowSwitcher.classList.add("is-detail-visible");
+    if (workflowDetailPanel) workflowDetailPanel.setAttribute("aria-hidden", "false");
     roleTabs.forEach((tab) => {
       const active = tab.dataset.flow === flowId;
       tab.classList.toggle("is-active", active);
@@ -147,23 +185,31 @@
   }
 
   if (roleTabs.length && roleFlows.length) {
-    const defaultFlow = roleTabs[0].dataset.flow;
-    showRoleFlow(defaultFlow);
+    hideRoleFlow();
 
     roleTabs.forEach((tab) => {
       tab.addEventListener("mouseenter", () => showRoleFlow(tab.dataset.flow));
       tab.addEventListener("focus", () => showRoleFlow(tab.dataset.flow));
-      tab.addEventListener("click", () => showRoleFlow(tab.dataset.flow));
     });
 
-    const switcher = document.querySelector(".workflow-switcher");
-    if (switcher) {
-      switcher.addEventListener("mouseleave", (e) => {
-        if (!switcher.contains(e.relatedTarget)) {
-          showRoleFlow(defaultFlow);
+    if (roleTabList) {
+      roleTabList.addEventListener("mouseleave", (e) => {
+        if (!roleTabList.contains(e.relatedTarget)) {
+          scheduleHideRoleFlow();
         }
       });
+      roleTabList.addEventListener("mouseenter", cancelHideRoleFlow);
     }
+
+    roleTabs.forEach((tab) => {
+      tab.addEventListener("blur", () => {
+        window.setTimeout(() => {
+          if (!roleTabList.contains(document.activeElement)) {
+            scheduleHideRoleFlow();
+          }
+        }, 0);
+      });
+    });
   }
 
   const video = document.getElementById("demo-video");
