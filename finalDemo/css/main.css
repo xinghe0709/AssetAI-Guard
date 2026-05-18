@@ -162,6 +162,39 @@ img {
   margin: 0 auto;
 }
 
+.slide--arch-only .architecture-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0 0;
+  min-height: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.slide--arch-only .architecture-wrap img {
+  max-height: min(68vh, 720px);
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.slide--arch-only .slide-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: calc(100vh - 120px);
+}
+
+.slide--arch-only .slide-title {
+  margin-bottom: 8px;
+}
+
 .slide--tall .table-wrap {
   overflow: hidden;
 }

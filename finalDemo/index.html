@@ -163,24 +163,12 @@
   </section>
 
   <!-- 5 · Technical summary -->
-  <section id="slide-5" class="slide slide--tall slide--alt" data-slide="5" aria-label="Technical summary">
+  <section id="slide-5" class="slide slide--tall slide--alt slide--arch-only" data-slide="5" aria-label="Technical summary">
     <div class="slide-inner">
       <span class="section-label reveal">Technical summary</span>
       <h2 class="slide-title reveal">Architecture and stack</h2>
-      <p class="slide-lead reveal">Monorepo: React UI, Flask API, SQLite, separate AI extraction app.</p>
       <div class="architecture-wrap reveal">
-        <img src="image/project-architecture.svg" alt="AssetGuard AI system architecture" width="1120" height="640" />
-        <p class="architecture-caption">UI &rarr; API &rarr; DB · PDF &rarr; extraction tool &rarr; JSON import</p>
-      </div>
-      <div class="table-wrap reveal">
-        <table>
-          <thead><tr><th>Component</th><th>Tech</th><th>Port</th></tr></thead>
-          <tbody>
-            <tr><td>assetguard-ui</td><td>React, Vite</td><td>5173</td></tr>
-            <tr><td>AssetGuard-AI</td><td>Flask</td><td>5000</td></tr>
-            <tr><td>extraction-tool</td><td>Flask, GCP, Gemini</td><td>5001</td></tr>
-          </tbody>
-        </table>
+        <img src="image/Backend%20Frame.png" alt="AssetGuard AI backend architecture" />
       </div>
     </div>
   </section>
