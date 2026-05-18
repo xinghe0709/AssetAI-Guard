@@ -13,7 +13,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AssetGuard AI — Final Demo | Group 11</title>
+    <title>AssetGuard AI &mdash; Final Demo | Group 11</title>
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
@@ -26,7 +26,7 @@
       <ul class="slide-nav__list"></ul>
     </nav>
 
-    <p class="nav-hint" aria-hidden="true">↑ ↓ scroll · Space next</p>
+    <p class="nav-hint" aria-hidden="true">&uarr;&darr; scroll &middot; Space next</p>
 
     <main id="slides">
       <section class="slide slide--hero is-active" data-title="Cover" id="slide-cover" aria-hidden="false">
@@ -34,11 +34,11 @@
           <p class="eyebrow">CITS5206 · Group 11 · Capstone</p>
           <h1>AssetGuard AI</h1>
           <p class="lead">
-            A web-based decision-support portal for structural load requests —
+            A web-based decision-support portal for structural load requests &mdash;
             from engineering drawings to compliant / non-compliant outcomes.
           </p>
           <p class="meta-line"><strong>Client:</strong> GJP Engineering</p>
-          <a class="btn btn--primary" href="#slide-problem">Start presentation ↓</a>
+          <a class="btn btn--primary" href="#slide-problem">Start presentation &rarr;</a>
         </div>
       </section>
 
@@ -54,7 +54,7 @@
           <ul class="bullet-list">
             <li>Heavy dependence on manual drawing interpretation</li>
             <li>Hard to confirm the latest drawing version and key limit data</li>
-            <li>Requires strong engineering knowledge — difficult for non-engineers</li>
+            <li>Requires strong engineering knowledge &mdash; difficult for non-engineers</li>
             <li>Outcomes can vary between staff members</li>
             <li>Slow end-to-end process with limited audit traceability</li>
           </ul>
@@ -68,7 +68,7 @@
           <p class="body-text body-text--tight">
             A <strong class="text-highlight">decision-support portal</strong> for GJP
             Engineering: compare proposed loads to design limits, log every check, and
-            return <strong>Compliant</strong> or <strong>Non-Compliant</strong> — faster
+            return <strong>Compliant</strong> or <strong>Non-Compliant</strong> &mdash; faster
             and more consistent than manual drawing review, without replacing engineering
             judgement.
           </p>
@@ -77,7 +77,7 @@
               <article class="hover-card hover-card--ok">
                 <span class="hover-card__label">Compliant</span>
                 <div class="hover-card__body">
-                  <h3 class="hover-card__title">Compliant — next steps</h3>
+                  <h3 class="hover-card__title">Compliant &mdash; next steps</h3>
                   <ol class="outcome-flow">
                     <li>System shows a clear <strong>Compliant</strong> result on the evaluation screen</li>
                     <li>Evaluation is saved to the database (user, asset, load, timestamp)</li>
@@ -90,9 +90,9 @@
               <article class="hover-card hover-card--bad">
                 <span class="hover-card__label">Non-Compliant</span>
                 <div class="hover-card__body">
-                  <h3 class="hover-card__title">Non-Compliant — next steps</h3>
+                  <h3 class="hover-card__title">Non-Compliant &mdash; next steps</h3>
                   <ol class="outcome-flow">
-                    <li>System shows <strong>Non-Compliant</strong> — proposed load exceeds the structural limit</li>
+                    <li>System shows <strong>Non-Compliant</strong> &mdash; proposed load exceeds the structural limit</li>
                     <li>Evaluation is still saved for traceability and audit purposes</li>
                     <li>Contractor should <strong>not</strong> proceed until engineering review</li>
                     <li>Asset Manager reviews the alert and history on the dashboard</li>
@@ -111,31 +111,34 @@
           <h2>Agreed scope with GJP Engineering</h2>
 
           <div class="hover-picker mvp-picker">
-            <div class="hover-picker__row">
+            <div class="hover-picker__row mvp-picker__list">
               <article class="hover-card">
                 <span class="hover-card__label">Login</span>
                 <div class="hover-card__body">
                   <h3 class="hover-card__title">Login &amp; access</h3>
-                  <p class="hover-card__text">The System Admin creates accounts for Asset Managers and Contractors. MVP has no self-signup or forgot-password — agreed with GJP in March 2026.</p>
+                  <p class="hover-card__text">The System Admin creates accounts for Asset Managers and Contractors. MVP has no self-signup or forgot-password &mdash; agreed with GJP in March 2026.</p>
                   <p class="hover-card__text">Implemented in <code>AssetGuard-AI</code> (JWT auth, roles) and <code>assetguard-ui</code> (login and first-time password setup).</p>
                 </div>
               </article>
+              <hr class="mvp-picker__rule" />
               <article class="hover-card">
                 <span class="hover-card__label">Assets</span>
                 <div class="hover-card__body">
                   <h3 class="hover-card__title">Asset selection &amp; load input</h3>
-                  <p class="hover-card__text">Users pick an asset (bridge, platform, building area, etc.) and enter load value, units, equipment context, and a comments field — e.g. crane outriggers or spreader plates.</p>
+                  <p class="hover-card__text">Users pick an asset (bridge, platform, building area, etc.) and enter load value, units, equipment context, and a comments field &mdash; e.g. crane outriggers or spreader plates.</p>
                   <p class="hover-card__text">Data can be entered manually or imported from AI-extracted JSON via the extraction tool and backend import API.</p>
                 </div>
               </article>
+              <hr class="mvp-picker__rule" />
               <article class="hover-card">
                 <span class="hover-card__label">Comparison</span>
                 <div class="hover-card__body">
                   <h3 class="hover-card__title">Limit comparison</h3>
                   <p class="hover-card__text">The evaluation engine compares the proposed load to stored design limits using rule-based numeric checks and unit conversion.</p>
-                  <p class="hover-card__text">This is not FEA or advanced structural modelling — it supports faster, consistent screening before engineering review when needed.</p>
+                  <p class="hover-card__text">This is not FEA or advanced structural modelling &mdash; it supports faster, consistent screening before engineering review when needed.</p>
                 </div>
               </article>
+              <hr class="mvp-picker__rule" />
               <article class="hover-card">
                 <span class="hover-card__label">Results</span>
                 <div class="hover-card__body">
@@ -144,19 +147,21 @@
                   <p class="hover-card__text">Built in the UI evaluation flow and <code>AssetGuard-AI</code> evaluation APIs so contractors and managers see the same unambiguous result.</p>
                 </div>
               </article>
+              <hr class="mvp-picker__rule" />
               <article class="hover-card">
                 <span class="hover-card__label">Dashboard</span>
                 <div class="hover-card__body">
                   <h3 class="hover-card__title">Records &amp; dashboard</h3>
-                  <p class="hover-card__text">Every evaluation is stored — user, asset, load, result, and timestamp — for traceability and audit, whether or not email is sent.</p>
+                  <p class="hover-card__text">Every evaluation is stored &mdash; user, asset, load, result, and timestamp &mdash; for traceability and audit, whether or not email is sent.</p>
                   <p class="hover-card__text">The dashboard shows history and alerts; GJP asked us to prioritise it over the external email feature if time is limited.</p>
                 </div>
               </article>
+              <hr class="mvp-picker__rule" />
               <article class="hover-card">
                 <span class="hover-card__label">Email</span>
                 <div class="hover-card__body">
                   <h3 class="hover-card__title">Optional email</h3>
-                  <p class="hover-card__text">Reports are sent only when the user triggers them — not automatically — to avoid spam and keep control with the operator.</p>
+                  <p class="hover-card__text">Reports are sent only when the user triggers them &mdash; not automatically &mdash; to avoid spam and keep control with the operator.</p>
                   <p class="hover-card__text">Recipients include the contractor and Asset Manager; the record always remains in the database for formal traceability.</p>
                 </div>
               </article>
@@ -178,7 +183,7 @@
                   <li>Create, update, and deactivate user accounts</li>
                   <li>Assign roles (Admin, Asset Manager, Contractor)</li>
                   <li>Full access to admin areas (users, locations, system setup)</li>
-                  <li>No self-signup — all accounts are admin-provisioned for MVP</li>
+                  <li>No self-signup &mdash; all accounts are admin-provisioned for MVP</li>
                 </ul>
               </div>
             </article>
@@ -244,7 +249,7 @@
             />
           </figure>
           <p class="hint hint--center reveal">
-            Three repositories in one workspace — extraction tool and backend run as separate apps.
+            Three repositories in one workspace &mdash; extraction tool and backend run as separate apps.
           </p>
         </div>
       </section>
@@ -260,15 +265,15 @@
             </li>
             <li>
               <time datetime="2026-03-23">23 Mar 2026</time>
-              <span>Deliverable 1 — Project spec &amp; plans submitted</span>
+              <span>Deliverable 1 &mdash; Project spec &amp; plans submitted</span>
             </li>
             <li>
               <time datetime="2026-04-30">30 Apr 2026</time>
-              <span>Deliverable 2 — Prototype ready</span>
+              <span>Deliverable 2 &mdash; Prototype ready</span>
             </li>
             <li class="timeline__item--accent">
               <time datetime="2026-05-21">21 May 2026</time>
-              <span>Deliverable 3 — Final deployment &amp; client demonstration</span>
+              <span>Deliverable 3 &mdash; Final deployment &amp; client demonstration</span>
             </li>
           </ul>
         </div>
@@ -280,7 +285,7 @@
           <h2>System walkthrough</h2>
           <p class="body-text">
             Demonstrate login, asset management, load evaluation, dashboard
-            history, and optional email — aligned with MVP priorities agreed
+            history, and optional email &mdash; aligned with MVP priorities agreed
             with GJP Engineering.
           </p>
           <div class="cta-row">

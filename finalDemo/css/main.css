@@ -508,6 +508,77 @@ code {
   background: var(--bg-base);
 }
 
+/* MVP slide — vertical list with dividers */
+.mvp-picker__list {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 0;
+  max-width: 34rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.mvp-picker__rule {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+  width: 100%;
+  opacity: 0.85;
+}
+
+.mvp-picker__list .hover-card {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  padding: 18px 0;
+  z-index: 0;
+}
+
+.mvp-picker__list .hover-card:is(:hover, :focus-within) {
+  z-index: 2;
+}
+
+.mvp-picker__list .hover-card:first-child {
+  padding-top: 0;
+}
+
+.mvp-picker__list .hover-card:last-child {
+  padding-bottom: 0;
+}
+
+.mvp-picker__list .hover-card__label {
+  display: block;
+  width: fit-content;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--text-base);
+  cursor: pointer;
+}
+
+.mvp-picker__list .hover-card__body {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0;
+  padding: 0;
+  z-index: 3;
+  box-shadow: none;
+  transform: none;
+  pointer-events: none;
+}
+
+.mvp-picker__list .hover-card:hover .hover-card__body,
+.mvp-picker__list .hover-card:focus-within .hover-card__body,
+.mvp-picker__list .hover-card.is-expanded .hover-card__body {
+  pointer-events: auto;
+}
+
 .hover-card__body {
   max-height: 0;
   opacity: 0;
@@ -589,9 +660,25 @@ code {
 }
 
 .outcome-picker .hover-card {
+  position: relative;
   flex: 0 0 auto;
   width: auto;
   max-width: min(48%, 22rem);
+  z-index: 0;
+}
+
+.outcome-picker .hover-card:is(:hover, :focus-within) {
+  z-index: 2;
+}
+
+.outcome-picker .hover-card__body {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0;
+  padding: 0;
+  transform: none;
 }
 
 .outcome-picker .hover-card--ok .hover-card__label {
@@ -627,11 +714,13 @@ code {
     box-shadow: 0 0 28px rgba(243, 114, 127, 0.3);
   }
 
-  .mvp-picker .hover-card:hover .hover-card__label {
-    background: rgba(30, 215, 96, 0.15);
-    border-color: var(--accent);
+  .mvp-picker__list .hover-card:hover .hover-card__label,
+  .mvp-picker__list .hover-card:focus-within .hover-card__label {
     color: var(--accent);
-    box-shadow: 0 0 16px rgba(30, 215, 96, 0.2);
+    transform: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
   .hover-card:hover .hover-card__body {
@@ -645,16 +734,24 @@ code {
     transform: translateY(0);
   }
 
-  .outcome-picker .hover-card:hover .hover-card__body {
+  .outcome-picker .hover-card:hover .hover-card__body,
+  .outcome-picker .hover-card:focus-within .hover-card__body {
     width: min(36rem, calc(100vw - 48px));
     max-width: none;
+    margin-top: 16px;
+    box-shadow: var(--shadow-medium);
   }
 
-  .mvp-picker .hover-card:hover .hover-card__body {
-    max-width: 40rem;
-    margin-left: auto;
-    margin-right: auto;
+  .mvp-picker__list .hover-card:hover .hover-card__body,
+  .mvp-picker__list .hover-card:focus-within .hover-card__body {
+    max-width: none;
+    margin-top: 8px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 22px 26px;
     background: var(--bg-base);
+    box-shadow: var(--shadow-medium);
+    transform: none;
   }
 }
 
@@ -673,11 +770,15 @@ code {
     box-shadow: 0 0 20px rgba(243, 114, 127, 0.2);
   }
 
-  .mvp-picker .hover-card.is-expanded .hover-card__label {
-    background: rgba(30, 215, 96, 0.15);
-    border-color: var(--accent);
+  .mvp-picker__list .hover-card.is-expanded .hover-card__label {
     color: var(--accent);
-    box-shadow: 0 0 16px rgba(30, 215, 96, 0.2);
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .mvp-picker__list .hover-card.is-expanded {
+    z-index: 2;
   }
 
   .hover-card.is-expanded .hover-card__body {
@@ -691,11 +792,16 @@ code {
     transform: translateY(0);
   }
 
-  .mvp-picker .hover-card.is-expanded .hover-card__body {
-    max-width: 40rem;
-    margin-left: auto;
-    margin-right: auto;
+  .mvp-picker__list .hover-card.is-expanded .hover-card__body {
+    max-width: none;
+    margin-top: 8px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 22px 26px;
     background: var(--bg-base);
+    box-shadow: var(--shadow-medium);
+    transform: none;
+    pointer-events: auto;
   }
 }
 
