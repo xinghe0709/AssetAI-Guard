@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AssetGuard AI — Final Demo | CITS5206 Group 11</title>
+  <meta name="description" content="AssetGuard AI final presentation — load compliance for port and engineering assets." />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#home" class="brand">
+        <span class="brand-title">AssetGuard AI</span>
+        <span class="brand-sub">CITS5206 Group 11 GJP Engineering</span>
+      </a>
+      <button type="button" class="menu-toggle" aria-label="Toggle menu">Menu</button>
+      <nav class="nav" aria-label="Primary">
+        <a href="#home" data-section="home">Home</a>
+        <a href="#problem" data-section="problem">Problem</a>
+        <a href="#solution" data-section="solution">Solution</a>
+        <a href="#workflow" data-section="workflow">Workflow</a>
+        <a href="#technical" data-section="technical">Technical</a>
+        <a href="#qa" data-section="qa">QA</a>
+        <a href="#deliverables" data-section="deliverables">Deliverables</a>
+        <a href="#future" data-section="future">Future</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero" aria-labelledby="hero-title">
+      <div class="hero-content reveal">
+        <span class="hero-badge">Final Demo 2026</span>
+        <h1 id="hero-title">AssetGuard AI</h1>
+        <p class="hero-tagline">Decision-support for engineering load compliance — from drawings to on-site checks.</p>
+        <p class="hero-meta">Client: GJP Engineering · UWA CITS5206 Capstone</p>
+        <div class="hero-actions">
+          <a href="#workflow" class="btn btn-primary">User workflow</a>
+          <a href="#demo-video" class="btn btn-secondary">Demo video</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="problem" class="section-alt" aria-labelledby="problem-title">
+      <div class="section-inner">
+        <span class="section-label reveal">Client problem</span>
+        <h2 id="problem-title" class="section-title reveal">The challenge</h2>
+        <p class="section-lead reveal">GJP needs a faster, traceable way to compare equipment loads against design limits at port assets.</p>
+        <div class="card-grid">
+          <article class="card reveal reveal-delay-1"><h3>Scattered limits</h3><p>Capacities live in PDFs — hard to access on site.</p></article>
+          <article class="card reveal reveal-delay-2"><h3>Slow checks</h3><p>Manual comparison is error-prone.</p></article>
+          <article class="card reveal reveal-delay-3"><h3>Weak audit trail</h3><p>Outcomes and alerts are not centralised.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="solution" class="section" aria-labelledby="solution-title">
+      <span class="section-label reveal">Our solution</span>
+      <h2 id="solution-title" class="section-title reveal">Summary</h2>
+      <p class="section-lead reveal">Web platform plus AI pipeline: ingest criteria, manage assets, evaluate loads, log results, notify when non-compliant.</p>
+      <ul class="bullet-list reveal">
+        <li><strong>AI tool</strong> — OCR + LLM from PDF/images to JSON</li>
+        <li><strong>Backend</strong> — auth, assets, evaluations, email alerts</li>
+        <li><strong>Web UI</strong> — role-based workflows</li>
+      </ul>
+      <p class="reveal note-muted">MVP: decision-support only — not a replacement for engineering judgement.</p>
+    </section>
+
+    <section id="workflow" class="section-alt" aria-labelledby="workflow-title">
+      <div class="section-inner">
+        <span class="section-label reveal">User workflow</span>
+        <h2 id="workflow-title" class="section-title reveal">Live application</h2>
+        <p class="section-lead reveal">End-to-end flow in the running system. Team presents details verbally; screenshots and video support the demo.</p>
+        <div class="workflow-steps reveal">
+          <span class="workflow-step">Sign in</span><span class="workflow-arrow">→</span>
+          <span class="workflow-step">Select asset</span><span class="workflow-arrow">→</span>
+          <span class="workflow-step">Evaluate</span><span class="workflow-arrow">→</span>
+          <span class="workflow-step">Result</span><span class="workflow-arrow">→</span>
+          <span class="workflow-step">History / email</span>
+        </div>
+        <div class="role-tabs reveal">
+          <button type="button" class="role-tab is-active" data-role="manager">Asset Manager</button>
+          <button type="button" class="role-tab" data-role="contractor">Contractor</button>
+          <button type="button" class="role-tab" data-role="admin">System Admin</button>
+        </div>
+        <div class="role-panel is-active reveal" data-role="manager">
+          <ul class="bullet-list"><li>Dashboard, Assets, Evaluation, History, Alerts</li></ul>
+        </div>
+        <div class="role-panel reveal" data-role="contractor">
+          <ul class="bullet-list"><li>Evaluation and own History; email on Non-Compliant</li></ul>
+        </div>
+        <div class="role-panel reveal" data-role="admin">
+          <ul class="bullet-list"><li>User/location admin; JSON import from AI uploads</li></ul>
+        </div>
+        <p class="reveal note-muted">Local app: <a href="http://127.0.0.1:5173" target="_blank" rel="noopener">127.0.0.1:5173</a> (run start-dev script first)</p>
+        <div class="screenshot-grid reveal">
+          <div class="screenshot-slot">Screenshot: Login</div>
+          <div class="screenshot-slot">Screenshot: Evaluation</div>
+          <div class="screenshot-slot">Screenshot: Result</div>
+          <div class="screenshot-slot">Screenshot: Assets</div>
+        </div>
+        <h3 id="demo-video" class="reveal section-subtitle">Demo video</h3>
+        <p class="reveal note-muted">Backup for demo and user manual. Narration by the team.</p>
+        <div class="video-block reveal">
+          <video id="demo-video" class="hidden" controls playsinline preload="metadata">
+            <source src="video/demo.mp4" type="video/mp4" />
+          </video>
+          <div id="video-placeholder" class="video-placeholder">
+            <p>Video not uploaded yet.</p>
+            <p>Place file at <code>finalDemo/video/demo.mp4</code></p>
+          </div>
+          <p class="video-caption">See video/README.md for outline.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="technical" class="section" aria-labelledby="technical-title">
+      <span class="section-label reveal">Technical summary</span>
+      <h2 id="technical-title" class="section-title reveal">Architecture and stack</h2>
+      <p class="section-lead reveal">Monorepo: React UI, Flask API, SQLite, and a separate AI extraction app.</p>
+      <div class="architecture-wrap reveal">
+        <img src="image/project-architecture.svg" alt="AssetGuard AI system architecture diagram" width="1120" height="640" />
+        <p class="architecture-caption">UI to API to DB; PDF to extraction tool to JSON import</p>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Component</th><th>Tech</th><th>Port</th></tr></thead>
+          <tbody>
+            <tr><td>assetguard-ui</td><td>React, Vite</td><td>5173</td></tr>
+            <tr><td>AssetGuard-AI</td><td>Flask, SQLAlchemy</td><td>5000</td></tr>
+            <tr><td>extraction-tool</td><td>Flask, GCP, Gemini</td><td>5001</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="bullet-list reveal">
+        <li>REST <code>/api/v1</code> with Bearer auth and RBAC</li>
+        <li>Separate venv per Python project</li>
+      </ul>
+    </section>
+
+    <section id="qa" class="section-alt" aria-labelledby="qa-title">
+      <div class="section-inner">
+        <span class="section-label reveal">Quality assurance</span>
+        <h2 id="qa-title" class="section-title reveal">QA and project management</h2>
+        <p class="section-lead reveal">Client check-ins, Git workflow, and documented tests.</p>
+        <div class="two-col">
+          <div class="reveal">
+            <h3 class="subsection-title">Testing</h3>
+            <ul class="bullet-list">
+              <li>Automated: <code>tests/test_api_flow.py</code></li>
+              <li>Manual: issues 16-21 in <code>testing/</code></li>
+            </ul>
+          </div>
+          <div class="reveal reveal-delay-1">
+            <h3 class="subsection-title">Process</h3>
+            <ul class="bullet-list">
+              <li>Feature branches and PRs</li>
+              <li>Weekly GJP meetings</li>
+              <li>D1 spec PDF in finalDemo folder</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="deliverables" class="section" aria-labelledby="deliverables-title">
+      <span class="section-label reveal">Deliveries</span>
+      <h2 id="deliverables-title" class="section-title reveal">What we deliver</h2>
+      <p class="section-lead reveal">Short notes for users and developers.</p>
+      <div class="two-col">
+        <article class="card reveal"><h3>For users</h3><ul class="bullet-list"><li>Web UI and demo accounts</li><li>Wiki user guide</li></ul></article>
+        <article class="card card-accent reveal reveal-delay-1"><h3>For developers</h3><ul class="bullet-list"><li>API docs and start-dev scripts</li><li>AI tool and import API</li></ul></article>
+      </div>
+    </section>
+
+    <section id="future" class="section-alt" aria-labelledby="future-title">
+      <div class="section-inner">
+        <span class="section-label reveal">Closing</span>
+        <h2 id="future-title" class="section-title reveal">Future work</h2>
+        <ul class="bullet-list reveal">
+          <li>Production deploy and real SMTP</li>
+          <li>UI integration for AI import</li>
+          <li>Audit exports and mobile workflows</li>
+        </ul>
+        <p class="thanks reveal">Thank you</p>
+        <p class="reveal note-muted">GJP Engineering, UWA CITS5206 Group 11, and all supporters.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>AssetGuard AI MIT License <a href="https://github.com/xinghe0709/AssetAI-Guard">GitHub</a></p>
+    <p class="thanks">We are happy to walk through the live system.</p>
+  </footer>
+
+  <button type="button" class="back-top" aria-label="Back to top">&#8593;</button>
+  <script src="js/main.js"></script>
+</body>
+</html>
