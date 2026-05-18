@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <!--
-  AssetGuard AI �?Final Demo (scroll presentation)
+  AssetGuard AI — Final Demo (scroll presentation)
 
   Open: finalDemo/index.html
-  Or:   cd finalDemo && python -m http.server 8080  �? http://127.0.0.1:8080
+  Or:   cd finalDemo && python -m http.server 8080  →  http://127.0.0.1:8080
 
-  Full app: repo root �?start-dev.bat / start-dev.sh
+  Full app: repo root → start-dev.bat / start-dev.sh
   Web UI:   http://127.0.0.1:5173
   API:      http://127.0.0.1:5000/api/v1
   Video:    finalDemo/video/demo.mp4
@@ -14,7 +14,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AssetGuard AI �?Final Demo | CITS5206 Group 11</title>
+  <title>AssetGuard AI — Final Demo | CITS5206 Group 11</title>
   <meta name="description" content="AssetGuard AI final presentation." />
   <link rel="stylesheet" href="css/main.css" />
 </head>
@@ -35,7 +35,7 @@
     <div class="slide-inner reveal">
       <span class="hero-badge">Final Demo 2026</span>
       <h1 class="hero-title">AssetGuard AI</h1>
-      <p class="hero-tagline">Decision-support for engineering load compliance �?from drawings to on-site checks.</p>
+      <p class="hero-tagline">Decision-support for engineering load compliance — from drawings to on-site checks.</p>
       <p class="hero-meta">Client: GJP Engineering · UWA CITS5206 · Group 11</p>
     </div>
     <p class="scroll-hint" aria-hidden="true">Scroll wheel</p>
@@ -47,7 +47,7 @@
       <h2 class="slide-title reveal">The challenge</h2>
       <p class="slide-lead reveal">GJP needs a faster, traceable way to compare equipment loads against design limits.</p>
       <div class="card-grid">
-        <article class="card reveal reveal-delay-1"><h3>Scattered limits</h3><p>Capacities live in PDFs �?hard to access on site.</p></article>
+        <article class="card reveal reveal-delay-1"><h3>Scattered limits</h3><p>Capacities live in PDFs — hard to access on site.</p></article>
         <article class="card reveal reveal-delay-2"><h3>Slow checks</h3><p>Manual comparison is error-prone.</p></article>
         <article class="card reveal reveal-delay-3"><h3>Weak audit trail</h3><p>Outcomes and alerts are not centralised.</p></article>
       </div>
@@ -60,11 +60,11 @@
       <h2 class="slide-title reveal">Summary</h2>
       <p class="slide-lead reveal">Web platform plus AI pipeline: ingest criteria, manage assets, evaluate loads, log results, notify when non-compliant.</p>
       <ul class="bullet-list reveal">
-        <li><strong>AI tool</strong> �?OCR + LLM from PDF/images to JSON</li>
-        <li><strong>Backend</strong> �?auth, assets, evaluations, email alerts</li>
-        <li><strong>Web UI</strong> �?role-based workflows</li>
+        <li><strong>AI tool</strong> — OCR + LLM from PDF/images to JSON</li>
+        <li><strong>Backend</strong> — auth, assets, evaluations, email alerts</li>
+        <li><strong>Web UI</strong> — role-based workflows</li>
       </ul>
-      <p class="reveal note-muted">Decision-support only �?not a replacement for engineering judgement.</p>
+      <p class="reveal note-muted">Decision-support only — not a replacement for engineering judgement.</p>
     </div>
   </section>
 
@@ -73,7 +73,7 @@
       <span class="section-label reveal">User workflow</span>
       <h2 class="slide-title reveal">Live application</h2>
       <p class="slide-lead reveal">Present the running system. Details are covered verbally by the team.</p>
-            <div class="workflow-steps reveal">
+      <div class="workflow-steps reveal">
         <span class="workflow-step">Sign in</span>
         <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
         <span class="workflow-step">Select asset</span>
@@ -85,9 +85,9 @@
         <span class="workflow-step">History / email</span>
       </div>
       <ul class="bullet-list reveal">
-        <li><strong>Contractor</strong> �?Evaluation, own history</li>
-        <li><strong>Asset Manager</strong> �?Assets, dashboard, alerts</li>
-        <li><strong>System Admin</strong> �?Users, locations, JSON import</li>
+        <li><strong>Contractor</strong> — Evaluation, own history</li>
+        <li><strong>Asset Manager</strong> — Assets, dashboard, alerts</li>
+        <li><strong>System Admin</strong> — Users, locations, JSON import</li>
       </ul>
       <p class="reveal note-muted">Live app: <a href="http://127.0.0.1:5173" target="_blank" rel="noopener">127.0.0.1:5173</a> (after start-dev)</p>
     </div>
@@ -118,7 +118,7 @@
       <p class="slide-lead reveal">Monorepo: React UI, Flask API, SQLite, separate AI extraction app.</p>
       <div class="architecture-wrap reveal">
         <img src="image/project-architecture.svg" alt="AssetGuard AI system architecture" width="1120" height="640" />
-        <p class="architecture-caption">UI �?API �?DB · PDF �?extraction tool �?JSON import</p>
+        <p class="architecture-caption">UI &rarr; API &rarr; DB · PDF &rarr; extraction tool &rarr; JSON import</p>
       </div>
       <div class="table-wrap reveal">
         <table>
@@ -143,7 +143,7 @@
           <h3 class="subsection-title">Testing</h3>
           <ul class="bullet-list">
             <li>Automated: <code>tests/test_api_flow.py</code></li>
-            <li>Manual: issues 16-21 in <code>testing/</code></li>
+            <li>Manual: issues 16–21 in <code>testing/</code></li>
           </ul>
         </div>
         <div>
