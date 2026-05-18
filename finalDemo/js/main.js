@@ -138,9 +138,7 @@
       tab.setAttribute("aria-selected", active ? "true" : "false");
     });
     roleFlows.forEach((img) => {
-      const show = img.dataset.flow === flowId;
-      img.classList.toggle("is-visible", show);
-      img.hidden = !show;
+      img.classList.toggle("is-visible", img.dataset.flow === flowId);
     });
   }
 
