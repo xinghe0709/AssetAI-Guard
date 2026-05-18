@@ -15,6 +15,7 @@
   --slide-pad: clamp(24px, 5vw, 48px);
   --content-max: 1000px;
   --transition: 0.65s ease-out;
+  --fade-duration: 0.9s;
   --dot-size: 10px;
 }
 
@@ -25,24 +26,30 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
+  height: 100%;
+  scroll-behavior: auto;
 }
 
 body {
   margin: 0;
+  height: 100%;
   font-family: var(--font);
   font-size: 16px;
   line-height: 1.55;
   color: var(--text-base);
   background: var(--bg-base);
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
     scroll-snap-type: none;
+  }
+
+  .slide {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .reveal {
@@ -104,29 +111,63 @@ img {
   outline-offset: 3px;
 }
 
-/* Slides */
+/* Slides — fixed viewport, no in-slide scroll; wheel changes slide in JS */
 .slide {
-  min-height: 100vh;
-  min-height: 100dvh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--slide-pad);
   padding-right: calc(var(--slide-pad) + 36px);
+  overflow: hidden;
+  opacity: var(--slide-opacity, 0);
+  transition: opacity var(--fade-duration) ease-in-out;
+  pointer-events: none;
+}
+
+.slide.is-current {
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.slide-inner {
+  max-height: 100%;
+  overflow: hidden;
+  transition: opacity calc(var(--fade-duration) * 0.85) ease-in-out;
 }
 
 .slide--alt {
   background: var(--bg-surface);
 }
 
-.slide--tall {
-  min-height: 100vh;
-  min-height: 100dvh;
-  align-items: flex-start;
-  padding-top: clamp(48px, 8vh, 80px);
-  padding-bottom: clamp(48px, 8vh, 80px);
+.slide--tall .slide-title {
+  font-size: clamp(22px, 3.5vw, 32px);
+}
+
+.slide--tall .slide-lead {
+  margin-bottom: 12px;
+}
+
+.slide--tall .architecture-wrap {
+  margin: 10px 0;
+  padding: 8px;
+}
+
+.slide--tall .architecture-wrap img {
+  max-height: 34vh;
+  width: auto;
+  margin: 0 auto;
+}
+
+.slide--tall .table-wrap {
+  overflow: hidden;
+}
+
+.slide--tall table {
+  font-size: 13px;
 }
 
 .slide-inner {
@@ -155,14 +196,14 @@ img {
   50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
 }
 
-/* Reveal */
+/* Reveal — staggers inside the current slide only */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity var(--transition), transform var(--transition);
+  transform: translateY(20px);
+  transition: opacity 0.75s ease-out, transform 0.75s ease-out;
 }
 
-.reveal.is-visible {
+.slide.is-current .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }

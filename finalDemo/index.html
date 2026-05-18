@@ -18,7 +18,7 @@
   <meta name="description" content="AssetGuard AI final presentation." />
   <link rel="stylesheet" href="css/main.css" />
 </head>
-<body>
+<body tabindex="-1">
   <nav class="slide-dots" aria-label="Presentation sections">
     <button type="button" data-slide="0" aria-label="Introduction" aria-current="true"></button>
     <button type="button" data-slide="1" aria-label="Client problem"></button>
@@ -38,7 +38,7 @@
       <p class="hero-tagline">Decision-support for engineering load compliance �?from drawings to on-site checks.</p>
       <p class="hero-meta">Client: GJP Engineering · UWA CITS5206 · Group 11</p>
     </div>
-    <p class="scroll-hint" aria-hidden="true">Scroll</p>
+    <p class="scroll-hint" aria-hidden="true">Scroll wheel</p>
   </section>
 
   <section id="slide-1" class="slide slide--alt" data-slide="1" aria-label="Client problem">
@@ -73,11 +73,15 @@
       <span class="section-label reveal">User workflow</span>
       <h2 class="slide-title reveal">Live application</h2>
       <p class="slide-lead reveal">Present the running system. Details are covered verbally by the team.</p>
-      <div class="workflow-steps reveal">
-        <span class="workflow-step">Sign in</span><span class="workflow-arrow">�?/span>
-        <span class="workflow-step">Select asset</span><span class="workflow-arrow">�?/span>
-        <span class="workflow-step">Evaluate</span><span class="workflow-arrow">�?/span>
-        <span class="workflow-step">Result</span><span class="workflow-arrow">�?/span>
+            <div class="workflow-steps reveal">
+        <span class="workflow-step">Sign in</span>
+        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+        <span class="workflow-step">Select asset</span>
+        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+        <span class="workflow-step">Evaluate</span>
+        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+        <span class="workflow-step">Result</span>
+        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
         <span class="workflow-step">History / email</span>
       </div>
       <ul class="bullet-list reveal">
