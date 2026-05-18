@@ -650,6 +650,28 @@ img {
   gap: 20px;
 }
 
+.qa-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 36px;
+  margin-top: 8px;
+}
+
+.qa-grid .bullet-list {
+  margin-top: 0;
+}
+
+.qa-grid .subsection-title {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .qa-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
 .subsection-title {
   font-size: 15px;
   margin: 0 0 10px;
