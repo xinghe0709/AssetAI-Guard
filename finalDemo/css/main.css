@@ -170,15 +170,34 @@ img {
   font-size: 13px;
 }
 
-/* Homepage — title only */
-.slide--home .slide-inner {
-  text-align: center;
+/* Homepage — left-aligned hero block */
+.slide--home {
+  align-items: flex-start;
 }
 
-.hero-tagline--home {
-  max-width: 22em;
-  margin-left: auto;
-  margin-right: auto;
+.slide--home .slide-inner {
+  text-align: left;
+  max-width: 40rem;
+  margin-top: clamp(12vh, 18vh, 22vh);
+}
+
+.hero-intro {
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 32em;
+  margin: 0 0 28px;
+}
+
+.hero-line {
+  font-size: 15px;
+  color: #9a9a9a;
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
+.hero-line:last-of-type {
+  margin-bottom: 0;
 }
 
 /* Side-by-side panels */
