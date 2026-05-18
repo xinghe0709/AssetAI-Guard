@@ -446,6 +446,83 @@ img {
   font-weight: 700;
 }
 
+.workflow-switcher {
+  width: 100%;
+}
+
+.workflow-role-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.role-tab {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(30, 215, 96, 0.12);
+  color: var(--accent);
+  border: 2px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.role-tab:hover,
+.role-tab.is-active {
+  background: rgba(30, 215, 96, 0.22);
+  border-color: var(--accent);
+  transform: scale(1.03);
+}
+
+.role-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.workflow-diagram {
+  position: relative;
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-heavy);
+  max-width: 100%;
+  min-height: 200px;
+}
+
+.workflow-diagram .role-flow {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 58vh;
+  margin: 0 auto;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 12px;
+  width: calc(100% - 24px);
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  pointer-events: none;
+}
+
+.workflow-diagram .role-flow.is-visible {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+  left: auto;
+  right: auto;
+  top: auto;
+  width: 100%;
+  pointer-events: auto;
+}
+
 .two-col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 220" role="img" aria-labelledby="af-title">
+  <title id="af-title">System Admin workflow</title>
+  <defs>
+    <linearGradient id="af-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#121212"/>
+      <stop offset="100%" stop-color="#181818"/>
+    </linearGradient>
+    <filter id="af-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="af-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#1ed760"/>
+    </marker>
+  </defs>
+  <rect width="960" height="220" fill="url(#af-bg)" rx="12"/>
+  <text x="480" y="36" text-anchor="middle" fill="#1ed760" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" letter-spacing="1.2">SYSTEM ADMIN</text>
+  <text x="480" y="58" text-anchor="middle" fill="#b3b3b3" font-family="Segoe UI, Arial, sans-serif" font-size="12">Users, locations, data import, and full system access</text>
+
+  <g filter="url(#af-shadow)"><rect x="16" y="92" width="92" height="48" rx="24" fill="#252525" stroke="#1ed760" stroke-width="2"/><text x="62" y="122" text-anchor="middle" fill="#fff" font-family="Segoe UI, Arial" font-size="12" font-weight="600">Sign in</text></g>
+  <line x1="108" y1="116" x2="128" y2="116" stroke="#1ed760" stroke-width="2" marker-end="url(#af-arrow)"/>
+  <g filter="url(#af-shadow)"><rect x="130" y="92" width="108" height="48" rx="24" fill="#252525" stroke="#539df5" stroke-width="2"/><text x="184" y="122" text-anchor="middle" fill="#fff" font-family="Segoe UI, Arial" font-size="12" font-weight="600">Users</text></g>
+  <line x1="238" y1="116" x2="258" y2="116" stroke="#1ed760" stroke-width="2" marker-end="url(#af-arrow)"/>
+  <g filter="url(#af-shadow)"><rect x="260" y="92" width="118" height="48" rx="24" fill="#252525" stroke="#539df5" stroke-width="2"/><text x="319" y="122" text-anchor="middle" fill="#fff" font-family="Segoe UI, Arial" font-size="12" font-weight="600">Locations</text></g>
+  <line x1="378" y1="116" x2="398" y2="116" stroke="#1ed760" stroke-width="2" marker-end="url(#af-arrow)"/>
+  <g filter="url(#af-shadow)"><rect x="400" y="92" width="118" height="48" rx="24" fill="#252525" stroke="#539df5" stroke-width="2"/><text x="459" y="122" text-anchor="middle" fill="#fff" font-family="Segoe UI, Arial" font-size="12" font-weight="600">JSON import</text></g>
+  <line x1="518" y1="116" x2="538" y2="116" stroke="#1ed760" stroke-width="2" marker-end="url(#af-arrow)"/>
+  <g filter="url(#af-shadow)"><rect x="540" y="92" width="100" height="48" rx="24" fill="#252525" stroke="#1ed760" stroke-width="2"/><text x="590" y="122" text-anchor="middle" fill="#fff" font-family="Segoe UI, Arial" font-size="12" font-weight="600">Assets</text></g>
+  <line x1="640" y1="116" x2="660" y2="116" stroke="#1ed760" stroke-width="2" marker-end="url(#af-arrow)"/>
+  <g filter="url(#af-shadow)"><rect x="662" y="92" width="108" height="48" rx="24" fill="#252525" stroke="#1ed760" stroke-width="2"/><text x="716" y="122" text-anchor="middle" fill="#fff" font-family="Segoe UI, Arial" font-size="12" font-weight="600">History</text></g>
+  <line x1="770" y1="116" x2="790" y2="116" stroke="#1ed760" stroke-width="2" marker-end="url(#af-arrow)"/>
+  <g filter="url(#af-shadow)"><rect x="792" y="92" width="100" height="48" rx="24" fill="#252525" stroke="#1ed760" stroke-width="2"/><text x="842" y="122" text-anchor="middle" fill="#fff" font-family="Segoe UI, Arial" font-size="12" font-weight="600">Alerts</text></g>
+
+  <text x="184" y="178" text-anchor="middle" fill="#7c7c7c" font-family="Segoe UI, Arial" font-size="10">CRUD users &amp; roles</text>
+  <text x="459" y="178" text-anchor="middle" fill="#7c7c7c" font-family="Segoe UI, Arial" font-size="10">AI extraction output</text>
+  <text x="842" y="178" text-anchor="middle" fill="#7c7c7c" font-family="Segoe UI, Arial" font-size="10">Plus all manager capabilities</text>
+</svg>

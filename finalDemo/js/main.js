@@ -125,6 +125,45 @@
     }
   });
 
+  // Role workflow tabs (hover + keyboard)
+  const roleTabs = Array.from(document.querySelectorAll(".role-tab[data-flow]"));
+  const roleFlows = Array.from(document.querySelectorAll(".role-flow[data-flow]"));
+
+  function showRoleFlow(flowId) {
+    if (!flowId) return;
+    roleTabs.forEach((tab) => {
+      const active = tab.dataset.flow === flowId;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-pressed", active ? "true" : "false");
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    roleFlows.forEach((img) => {
+      const show = img.dataset.flow === flowId;
+      img.classList.toggle("is-visible", show);
+      img.hidden = !show;
+    });
+  }
+
+  if (roleTabs.length && roleFlows.length) {
+    const defaultFlow = roleTabs[0].dataset.flow;
+    showRoleFlow(defaultFlow);
+
+    roleTabs.forEach((tab) => {
+      tab.addEventListener("mouseenter", () => showRoleFlow(tab.dataset.flow));
+      tab.addEventListener("focus", () => showRoleFlow(tab.dataset.flow));
+      tab.addEventListener("click", () => showRoleFlow(tab.dataset.flow));
+    });
+
+    const switcher = document.querySelector(".workflow-switcher");
+    if (switcher) {
+      switcher.addEventListener("mouseleave", (e) => {
+        if (!switcher.contains(e.relatedTarget)) {
+          showRoleFlow(defaultFlow);
+        }
+      });
+    }
+  }
+
   const video = document.getElementById("demo-video");
   const placeholder = document.getElementById("video-placeholder");
   if (video && placeholder) {
