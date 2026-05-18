@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--
+  Local preview (run from this folder):
+
+    cd finalDemo
+    python -m http.server 5500
+
+  Then open: http://localhost:5500
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AssetGuard AI — Final Demo</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <span class="top-bar__logo" aria-hidden="true"></span>
+      <span class="top-bar__brand">AssetGuard AI</span>
+    </header>
+
+    <nav class="slide-nav" aria-label="Section navigation">
+      <ul class="slide-nav__list"></ul>
+    </nav>
+
+    <main id="slides">
+      <section class="slide slide--hero" data-title="Cover" id="slide-cover">
+        <div class="slide__inner reveal is-visible">
+          <p class="eyebrow">CITS5206 · Final Demo</p>
+          <h1>AssetGuard AI</h1>
+          <p class="lead">
+            Intelligent asset load monitoring and alerting — from engineering
+            documents to operational data.
+          </p>
+          <a class="btn btn--primary" href="#slide-problem">Explore ↓</a>
+        </div>
+      </section>
+
+      <section class="slide slide--surface" data-title="Context" id="slide-problem">
+        <div class="slide__inner reveal">
+          <p class="eyebrow">01 · Context</p>
+          <h2>What problem are we solving?</h2>
+          <p class="body-text">
+            Engineering teams still reconcile load limits manually across PDFs,
+            drawings, and spreadsheets. That slows operations, increases
+            compliance risk, and makes real-time safety decisions harder.
+          </p>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Solution" id="slide-solution">
+        <div class="slide__inner reveal">
+          <p class="eyebrow">02 · Solution</p>
+          <h2>How AssetGuard works</h2>
+          <ul class="feature-grid">
+            <li class="feature-card">
+              <strong>AI document extraction</strong>
+              <span>PDFs and drawings → structured assets and load criteria</span>
+            </li>
+            <li class="feature-card">
+              <strong>Evaluation engine</strong>
+              <span>Compare live loads to thresholds and log every assessment</span>
+            </li>
+            <li class="feature-card">
+              <strong>Operations dashboard</strong>
+              <span>Assets, alerts, and history in one place</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="slide slide--surface" data-title="Architecture" id="slide-architecture">
+        <div class="slide__inner reveal">
+          <p class="eyebrow">03 · Architecture</p>
+          <h2>Three components, one workflow</h2>
+          <p class="body-text">
+            <code>gjp-assetguard-extraction-tool</code> runs AI extraction;
+            <code>AssetGuard-AI</code> exposes APIs and stores business data;
+            <code>assetguard-ui</code> delivers the operator experience.
+          </p>
+          <p class="hint">Drop architecture diagrams into <code>assets/</code></p>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Demo" id="slide-demo">
+        <div class="slide__inner reveal">
+          <p class="eyebrow">04 · Live demo</p>
+          <h2>See it in action</h2>
+          <p class="body-text">
+            Embed screenshots or short clips here, or jump into the running
+            application for the client walkthrough.
+          </p>
+          <div class="cta-row">
+            <a
+              class="btn btn--outline"
+              href="../assetguard-ui/index.html"
+              target="_blank"
+              rel="noopener"
+            >
+              Open dashboard
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide slide--hero" data-title="Closing" id="slide-closing">
+        <div class="slide__inner reveal">
+          <p class="eyebrow">05 · Closing</p>
+          <h2>Thank you</h2>
+          <p class="lead">
+            Outcomes, roadmap, and Q&amp;A — customize this slide before the
+            presentation.
+          </p>
+          <p class="footer-meta">AssetGuard AI · Final Demo</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="js/main.js" type="module"></script>
+  </body>
+</html>
