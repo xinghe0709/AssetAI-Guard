@@ -170,15 +170,15 @@ img {
   font-size: 13px;
 }
 
-/* Homepage — left-aligned hero block */
+/* Homepage — left-aligned, vertically centred */
 .slide--home {
-  align-items: flex-start;
+  align-items: center;
 }
 
 .slide--home .slide-inner {
   text-align: left;
   max-width: 40rem;
-  margin-top: clamp(12vh, 18vh, 22vh);
+  margin-top: 0;
 }
 
 .hero-intro {
