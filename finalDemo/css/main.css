@@ -170,6 +170,90 @@ img {
   font-size: 13px;
 }
 
+/* Homepage — title only */
+.slide--home .slide-inner {
+  text-align: center;
+}
+
+.hero-tagline--home {
+  max-width: 22em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Side-by-side panels */
+.slide-inner--split .slide-title {
+  margin-bottom: 12px;
+}
+
+.split-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.split-panels .card h3 {
+  margin-top: 0;
+  color: var(--accent);
+  font-size: 15px;
+}
+
+/* Workflow + video on one slide */
+.slide--combo .slide-title {
+  margin-bottom: 10px;
+}
+
+.slide--combo .slide-lead {
+  display: none;
+}
+
+.workflow-block {
+  margin-bottom: 14px;
+}
+
+.workflow-block .workflow-steps {
+  margin-bottom: 10px;
+}
+
+.bullet-list--compact li {
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.bullet-list--deliveries li {
+  margin-bottom: 12px;
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+}
+
+.video-block--compact {
+  max-width: 720px;
+}
+
+.video-block--compact .video-placeholder,
+.video-block--compact video {
+  max-height: 30vh;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: contain;
+}
+
+.video-block--compact .video-caption {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+/* Thank you slide */
+.slide--thanks .slide-inner {
+  text-align: center;
+}
+
+.slide-lead--center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
 .slide-inner {
   width: 100%;
   max-width: var(--content-max);

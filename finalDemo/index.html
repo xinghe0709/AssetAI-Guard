@@ -20,85 +20,95 @@
 </head>
 <body tabindex="-1">
   <nav class="slide-dots" aria-label="Presentation sections">
-    <button type="button" data-slide="0" aria-label="Introduction" aria-current="true"></button>
-    <button type="button" data-slide="1" aria-label="Client problem"></button>
-    <button type="button" data-slide="2" aria-label="Our solution"></button>
-    <button type="button" data-slide="3" aria-label="User workflow"></button>
-    <button type="button" data-slide="4" aria-label="Demo video"></button>
-    <button type="button" data-slide="5" aria-label="Technical summary"></button>
-    <button type="button" data-slide="6" aria-label="Quality assurance"></button>
-    <button type="button" data-slide="7" aria-label="Deliverables"></button>
-    <button type="button" data-slide="8" aria-label="Future and thanks"></button>
+    <button type="button" data-slide="0" aria-label="Homepage" aria-current="true"></button>
+    <button type="button" data-slide="1" aria-label="Introduction"></button>
+    <button type="button" data-slide="2" aria-label="Problem and solution"></button>
+    <button type="button" data-slide="3" aria-label="Workflow and demo video"></button>
+    <button type="button" data-slide="4" aria-label="Technical summary"></button>
+    <button type="button" data-slide="5" aria-label="Quality assurance"></button>
+    <button type="button" data-slide="6" aria-label="Deliveries"></button>
+    <button type="button" data-slide="7" aria-label="Key notes"></button>
+    <button type="button" data-slide="8" aria-label="Future work"></button>
+    <button type="button" data-slide="9" aria-label="Thank you"></button>
   </nav>
 
-  <section id="slide-0" class="slide" data-slide="0" aria-label="Introduction">
+  <!-- 0 · Homepage -->
+  <section id="slide-0" class="slide slide--home" data-slide="0" aria-label="Homepage">
     <div class="slide-inner reveal">
       <span class="hero-badge">Final Demo 2026</span>
       <h1 class="hero-title">AssetGuard AI</h1>
-      <p class="hero-tagline">Decision-support for engineering load compliance — from drawings to on-site checks.</p>
-      <p class="hero-meta">Client: GJP Engineering · UWA CITS5206 · Group 11</p>
+      <p class="hero-tagline hero-tagline--home">Engineering load compliance, made traceable.</p>
     </div>
     <p class="scroll-hint" aria-hidden="true">Scroll wheel</p>
   </section>
 
-  <section id="slide-1" class="slide slide--alt" data-slide="1" aria-label="Client problem">
+  <!-- 1 · Introduction -->
+  <section id="slide-1" class="slide slide--alt" data-slide="1" aria-label="Introduction">
     <div class="slide-inner">
-      <span class="section-label reveal">Client problem</span>
-      <h2 class="slide-title reveal">The challenge</h2>
-      <p class="slide-lead reveal">GJP needs a faster, traceable way to compare equipment loads against design limits.</p>
-      <div class="card-grid">
-        <article class="card reveal reveal-delay-1"><h3>Scattered limits</h3><p>Capacities live in PDFs — hard to access on site.</p></article>
-        <article class="card reveal reveal-delay-2"><h3>Slow checks</h3><p>Manual comparison is error-prone.</p></article>
-        <article class="card reveal reveal-delay-3"><h3>Weak audit trail</h3><p>Outcomes and alerts are not centralised.</p></article>
-      </div>
+      <span class="section-label reveal">Introduction</span>
+      <h2 class="slide-title reveal">What we are presenting</h2>
+      <p class="slide-lead reveal">A decision-support platform for GJP Engineering — compare on-site equipment loads against design limits with a clear audit trail.</p>
+      <ul class="bullet-list reveal">
+        <li><strong>Client</strong> — GJP Engineering (structural / load compliance)</li>
+        <li><strong>Team</strong> — UWA CITS5206, Group 11</li>
+        <li><strong>Scope</strong> — Web app, API, AI extraction pipeline, documentation</li>
+      </ul>
+      <p class="reveal note-muted">This deck is a visual guide; the team presents details live.</p>
     </div>
   </section>
 
-  <section id="slide-2" class="slide" data-slide="2" aria-label="Our solution">
-    <div class="slide-inner">
-      <span class="section-label reveal">Our solution</span>
-      <h2 class="slide-title reveal">Summary</h2>
-      <p class="slide-lead reveal">Web platform plus AI pipeline: ingest criteria, manage assets, evaluate loads, log results, notify when non-compliant.</p>
-      <ul class="bullet-list reveal">
-        <li><strong>AI tool</strong> — OCR + LLM from PDF/images to JSON</li>
-        <li><strong>Backend</strong> — auth, assets, evaluations, email alerts</li>
-        <li><strong>Web UI</strong> — role-based workflows</li>
-      </ul>
+  <!-- 2 · Client problem & our solution (summary) -->
+  <section id="slide-2" class="slide" data-slide="2" aria-label="Client problem and our solution">
+    <div class="slide-inner slide-inner--split">
+      <span class="section-label reveal">Summary</span>
+      <h2 class="slide-title reveal">Problem &amp; solution</h2>
+      <div class="split-panels reveal">
+        <article class="card">
+          <h3>Client problem</h3>
+          <ul class="bullet-list">
+            <li>Design limits scattered in PDFs — hard to use on site</li>
+            <li>Manual load checks are slow and error-prone</li>
+            <li>No central record of outcomes and alerts</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Our solution</h3>
+          <ul class="bullet-list">
+            <li>Web platform + AI pipeline (PDF/images → JSON criteria)</li>
+            <li>Role-based UI: evaluate loads, manage assets, import data</li>
+            <li>Logged results and email alerts when non-compliant</li>
+          </ul>
+        </article>
+      </div>
       <p class="reveal note-muted">Decision-support only — not a replacement for engineering judgement.</p>
     </div>
   </section>
 
-  <section id="slide-3" class="slide slide--alt" data-slide="3" aria-label="User workflow">
+  <!-- 3 · User workflow & live application video -->
+  <section id="slide-3" class="slide slide--alt slide--combo" data-slide="3" aria-label="User workflow and demo video">
     <div class="slide-inner">
-      <span class="section-label reveal">User workflow</span>
-      <h2 class="slide-title reveal">Live application</h2>
-      <p class="slide-lead reveal">Present the running system. Details are covered verbally by the team.</p>
-      <div class="workflow-steps reveal">
-        <span class="workflow-step">Sign in</span>
-        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
-        <span class="workflow-step">Select asset</span>
-        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
-        <span class="workflow-step">Evaluate</span>
-        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
-        <span class="workflow-step">Result</span>
-        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
-        <span class="workflow-step">History / email</span>
+      <span class="section-label reveal">Live system</span>
+      <h2 class="slide-title reveal">User workflow &amp; application video</h2>
+      <div class="workflow-block reveal">
+        <div class="workflow-steps">
+          <span class="workflow-step">Sign in</span>
+          <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+          <span class="workflow-step">Select asset</span>
+          <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+          <span class="workflow-step">Evaluate load</span>
+          <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+          <span class="workflow-step">Result</span>
+          <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+          <span class="workflow-step">History / email</span>
+        </div>
+        <ul class="bullet-list bullet-list--compact">
+          <li><strong>Contractor</strong> — evaluations and own history</li>
+          <li><strong>Asset Manager</strong> — assets, dashboard, alerts</li>
+          <li><strong>System Admin</strong> — users, locations, JSON import</li>
+        </ul>
+        <p class="note-muted">Live app: <a href="http://127.0.0.1:5173" target="_blank" rel="noopener">127.0.0.1:5173</a> (run <code>start-dev</code> from repo root)</p>
       </div>
-      <ul class="bullet-list reveal">
-        <li><strong>Contractor</strong> — Evaluation, own history</li>
-        <li><strong>Asset Manager</strong> — Assets, dashboard, alerts</li>
-        <li><strong>System Admin</strong> — Users, locations, JSON import</li>
-      </ul>
-      <p class="reveal note-muted">Live app: <a href="http://127.0.0.1:5173" target="_blank" rel="noopener">127.0.0.1:5173</a> (after start-dev)</p>
-    </div>
-  </section>
-
-  <section id="slide-4" class="slide" data-slide="4" aria-label="Demo video">
-    <div class="slide-inner">
-      <span class="section-label reveal">Demo video</span>
-      <h2 class="slide-title reveal">Application walkthrough</h2>
-      <p class="slide-lead reveal">Backup recording for the demo and user manual.</p>
-      <div class="video-block reveal">
+      <div class="video-block video-block--compact reveal">
         <video id="demo-video" class="hidden" controls playsinline preload="metadata">
           <source src="video/demo.mp4" type="video/mp4" />
         </video>
@@ -106,12 +116,13 @@
           <p>Video not uploaded yet.</p>
           <p>Place file at <code>finalDemo/video/demo.mp4</code></p>
         </div>
-        <p class="video-caption">See video/README.md for recording outline.</p>
+        <p class="video-caption">Walkthrough recording — see <code>video/README.md</code></p>
       </div>
     </div>
   </section>
 
-  <section id="slide-5" class="slide slide--alt slide--tall" data-slide="5" aria-label="Technical summary">
+  <!-- 4 · Technical summary -->
+  <section id="slide-4" class="slide slide--tall" data-slide="4" aria-label="Technical summary">
     <div class="slide-inner">
       <span class="section-label reveal">Technical summary</span>
       <h2 class="slide-title reveal">Architecture and stack</h2>
@@ -133,11 +144,12 @@
     </div>
   </section>
 
-  <section id="slide-6" class="slide" data-slide="6" aria-label="Quality assurance">
+  <!-- 5 · Quality assurance & project management -->
+  <section id="slide-5" class="slide slide--alt" data-slide="5" aria-label="Quality assurance and project management">
     <div class="slide-inner">
       <span class="section-label reveal">Quality assurance</span>
-      <h2 class="slide-title reveal">QA and project management</h2>
-      <p class="slide-lead reveal">Client check-ins, Git workflow, documented tests.</p>
+      <h2 class="slide-title reveal">QA &amp; project management</h2>
+      <p class="slide-lead reveal">Client check-ins, Git workflow, and documented tests throughout the project.</p>
       <div class="two-col reveal">
         <div>
           <h3 class="subsection-title">Testing</h3>
@@ -149,44 +161,83 @@
         <div>
           <h3 class="subsection-title">Process</h3>
           <ul class="bullet-list">
-            <li>Feature branches and PRs</li>
-            <li>Weekly GJP meetings</li>
-            <li>D1 spec in <code>finalDemo/</code></li>
+            <li>Feature branches and pull requests</li>
+            <li>Weekly meetings with GJP</li>
+            <li>D1 specification in <code>finalDemo/</code></li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="slide-7" class="slide slide--alt" data-slide="7" aria-label="Deliverables">
+  <!-- 6 · Deliveries summary -->
+  <section id="slide-6" class="slide" data-slide="6" aria-label="Deliveries summary">
     <div class="slide-inner">
       <span class="section-label reveal">Deliveries</span>
       <h2 class="slide-title reveal">What we deliver</h2>
-      <div class="two-col">
-        <article class="card reveal">
-          <h3>For users</h3>
-          <ul class="bullet-list"><li>Web UI and demo accounts</li><li>Wiki user guide</li></ul>
-        </article>
-        <article class="card reveal reveal-delay-1">
-          <h3>For developers</h3>
-          <ul class="bullet-list"><li>API docs, start-dev scripts</li><li>AI tool and import API</li></ul>
-        </article>
-      </div>
+      <p class="slide-lead reveal">End-to-end artefacts for GJP: runnable software, documentation, and demo materials.</p>
+      <ul class="bullet-list reveal bullet-list--deliveries">
+        <li>Production-ready <strong>web application</strong> and REST API</li>
+        <li><strong>AI extraction tool</strong> for criteria from PDFs and images</li>
+        <li><strong>User manual</strong>, demo video, and GitHub Wiki guides</li>
+        <li><strong>Developer docs</strong> — API reference, setup scripts, test suite</li>
+        <li><strong>This presentation</strong> and project specification (D1)</li>
+      </ul>
     </div>
   </section>
 
-  <section id="slide-8" class="slide" data-slide="8" aria-label="Future and thanks">
+  <!-- 7 · Key notes for users & developers -->
+  <section id="slide-7" class="slide slide--alt" data-slide="7" aria-label="Key notes for users and developers">
+    <div class="slide-inner slide-inner--split">
+      <span class="section-label reveal">Key notes</span>
+      <h2 class="slide-title reveal">For users &amp; developers</h2>
+      <div class="split-panels reveal">
+        <article class="card">
+          <h3>Users</h3>
+          <ul class="bullet-list">
+            <li>Sign in with role-appropriate demo accounts (see Wiki)</li>
+            <li>Always verify critical loads with engineering judgement</li>
+            <li>Non-compliant results can trigger email alerts to managers</li>
+            <li>User guide: GitHub Wiki — Getting Started &amp; User Guide</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Developers</h3>
+          <ul class="bullet-list">
+            <li>Start stack: <code>start-dev.bat</code> / <code>start-dev.sh</code></li>
+            <li>API base: <code>http://127.0.0.1:5000/api/v1</code></li>
+            <li>Import path: extraction tool → JSON → admin import API</li>
+            <li>Docs: Wiki Development Guide &amp; API Reference</li>
+          </ul>
+        </article>
+      </div>
+      <p class="reveal note-muted"><a href="https://github.com/xinghe0709/AssetAI-Guard">github.com/xinghe0709/AssetAI-Guard</a></p>
+    </div>
+  </section>
+
+  <!-- 8 · Future work -->
+  <section id="slide-8" class="slide" data-slide="8" aria-label="Future work">
+    <div class="slide-inner">
+      <span class="section-label reveal">Future work</span>
+      <h2 class="slide-title reveal">Next steps</h2>
+      <p class="slide-lead reveal">Planned improvements beyond this semester delivery.</p>
+      <ul class="bullet-list reveal">
+        <li>Production deployment and real SMTP for alerts</li>
+        <li>Deeper AI import integrated in the main UI</li>
+        <li>Audit exports and reporting for compliance reviews</li>
+        <li>Mobile-friendly workflows for on-site contractors</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9 · Thank you -->
+  <section id="slide-9" class="slide slide--alt slide--thanks" data-slide="9" aria-label="Thank you">
     <div class="slide-inner reveal">
       <span class="section-label">Closing</span>
-      <h2 class="slide-title">Future work</h2>
-      <ul class="bullet-list">
-        <li>Production deploy and real SMTP</li>
-        <li>Deeper AI import in the UI</li>
-        <li>Audit exports and mobile workflows</li>
-      </ul>
       <p class="thanks-large">Thank you</p>
+      <p class="slide-lead slide-lead--center">Questions and live demo welcome.</p>
       <p class="note-muted">GJP Engineering · UWA CITS5206 Group 11</p>
-      <p class="note-muted"><a href="https://github.com/xinghe0709/AssetAI-Guard">GitHub</a></p>
+      <p class="note-muted"><a href="https://github.com/xinghe0709/AssetAI-Guard">GitHub — AssetAI-Guard</a></p>
     </div>
   </section>
 
