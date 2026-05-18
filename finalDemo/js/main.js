@@ -131,7 +131,6 @@
   const roleIntros = Array.from(document.querySelectorAll(".workflow-switcher .role-intro[data-flow]"));
 
   const workflowSwitcher = document.querySelector(".workflow-switcher");
-  const roleTabList = document.querySelector(".workflow-switcher .workflow-role-tabs");
   const workflowDetailPanel = document.getElementById("workflow-detail-panel");
   let hideRoleFlowTimer = null;
 
@@ -192,19 +191,23 @@
       tab.addEventListener("focus", () => showRoleFlow(tab.dataset.flow));
     });
 
-    if (roleTabList) {
-      roleTabList.addEventListener("mouseleave", (e) => {
-        if (!roleTabList.contains(e.relatedTarget)) {
+    if (workflowSwitcher) {
+      workflowSwitcher.addEventListener("mouseleave", (e) => {
+        if (!workflowSwitcher.contains(e.relatedTarget)) {
           scheduleHideRoleFlow();
         }
       });
-      roleTabList.addEventListener("mouseenter", cancelHideRoleFlow);
+      workflowSwitcher.addEventListener("mouseenter", cancelHideRoleFlow);
+    }
+
+    if (workflowDetailPanel) {
+      workflowDetailPanel.addEventListener("mouseenter", cancelHideRoleFlow);
     }
 
     roleTabs.forEach((tab) => {
       tab.addEventListener("blur", () => {
         window.setTimeout(() => {
-          if (!roleTabList.contains(document.activeElement)) {
+          if (workflowSwitcher && !workflowSwitcher.contains(document.activeElement)) {
             scheduleHideRoleFlow();
           }
         }, 0);
@@ -216,7 +219,6 @@
   const videoTabs = Array.from(document.querySelectorAll(".video-switcher .video-tab[data-video]"));
   const videoBlocks = Array.from(document.querySelectorAll(".video-detail-panel .video-block[data-video]"));
   const videoSwitcher = document.querySelector(".video-switcher");
-  const videoTabList = document.querySelector(".video-switcher .video-role-tabs");
   const videoDetailPanel = document.getElementById("video-detail-panel");
   let hideVideoTimer = null;
 
@@ -304,19 +306,23 @@
       tab.addEventListener("focus", () => showRoleVideo(tab.dataset.video));
     });
 
-    if (videoTabList) {
-      videoTabList.addEventListener("mouseleave", (e) => {
-        if (!videoTabList.contains(e.relatedTarget)) {
+    if (videoSwitcher) {
+      videoSwitcher.addEventListener("mouseleave", (e) => {
+        if (!videoSwitcher.contains(e.relatedTarget)) {
           scheduleHideRoleVideo();
         }
       });
-      videoTabList.addEventListener("mouseenter", cancelHideRoleVideo);
+      videoSwitcher.addEventListener("mouseenter", cancelHideRoleVideo);
+    }
+
+    if (videoDetailPanel) {
+      videoDetailPanel.addEventListener("mouseenter", cancelHideRoleVideo);
     }
 
     videoTabs.forEach((tab) => {
       tab.addEventListener("blur", () => {
         window.setTimeout(() => {
-          if (videoTabList && !videoTabList.contains(document.activeElement)) {
+          if (videoSwitcher && !videoSwitcher.contains(document.activeElement)) {
             scheduleHideRoleVideo();
           }
         }, 0);
