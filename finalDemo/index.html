@@ -118,17 +118,47 @@
     <div class="slide-inner">
       <span class="section-label reveal">Demo video</span>
       <h2 class="slide-title reveal">Application video</h2>
-      <p class="slide-lead reveal">Walkthrough recording for the demo and user manual.</p>
-      <div class="video-block reveal">
-        <video id="demo-video" class="hidden" controls playsinline preload="metadata">
-          <source src="video/demo.mp4" type="video/mp4" />
-        </video>
-        <div id="video-placeholder" class="video-placeholder">
-          <p>Video not uploaded yet.</p>
-          <p>Place file at <code>finalDemo/video/demo.mp4</code></p>
+      <p class="slide-lead reveal">Hover a role to preview its walkthrough recording.</p>
+      <div class="video-switcher reveal">
+        <div class="workflow-role-tabs video-role-tabs" role="tablist" aria-label="Demo videos by role">
+          <button type="button" class="role-tab video-tab" role="tab" data-video="contractors" aria-pressed="false" aria-selected="false">Contractors</button>
+          <button type="button" class="role-tab video-tab" role="tab" data-video="manager" aria-pressed="false" aria-selected="false">Asset_Manager</button>
+          <button type="button" class="role-tab video-tab" role="tab" data-video="admin" aria-pressed="false" aria-selected="false">System_Admin</button>
         </div>
-        <p class="video-caption">See <code>video/README.md</code> for recording outline.</p>
+        <div class="video-detail-panel" id="video-detail-panel" aria-hidden="true">
+          <article class="video-block" data-video="contractors">
+            <video class="demo-role-video hidden" controls playsinline preload="metadata">
+              <source src="video/contractors.mp4" type="video/mp4" />
+            </video>
+            <div class="video-placeholder">
+              <p>Contractors video not uploaded yet.</p>
+              <p>Place file at <code>finalDemo/video/contractors.mp4</code></p>
+            </div>
+            <p class="video-caption">Sign in, evaluate load, view own history</p>
+          </article>
+          <article class="video-block" data-video="manager">
+            <video class="demo-role-video hidden" controls playsinline preload="metadata">
+              <source src="video/manager.mp4" type="video/mp4" />
+            </video>
+            <div class="video-placeholder">
+              <p>Asset Manager video not uploaded yet.</p>
+              <p>Place file at <code>finalDemo/video/manager.mp4</code></p>
+            </div>
+            <p class="video-caption">Dashboard, assets, history, and alerts</p>
+          </article>
+          <article class="video-block" data-video="admin">
+            <video class="demo-role-video hidden" controls playsinline preload="metadata">
+              <source src="video/admin.mp4" type="video/mp4" />
+            </video>
+            <div class="video-placeholder">
+              <p>System Admin video not uploaded yet.</p>
+              <p>Place file at <code>finalDemo/video/admin.mp4</code></p>
+            </div>
+            <p class="video-caption">Users, locations, JSON import, full access</p>
+          </article>
+        </div>
       </div>
+
     </div>
   </section>
 

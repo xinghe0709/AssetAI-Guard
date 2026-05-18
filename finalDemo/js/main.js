@@ -126,12 +126,12 @@
   });
 
   // Role workflow tabs (hover + keyboard)
-  const roleTabs = Array.from(document.querySelectorAll(".role-tab[data-flow]"));
-  const roleFlows = Array.from(document.querySelectorAll(".role-flow[data-flow]"));
-  const roleIntros = Array.from(document.querySelectorAll(".role-intro[data-flow]"));
+  const roleTabs = Array.from(document.querySelectorAll(".workflow-switcher .role-tab[data-flow]"));
+  const roleFlows = Array.from(document.querySelectorAll(".workflow-switcher .role-flow[data-flow]"));
+  const roleIntros = Array.from(document.querySelectorAll(".workflow-switcher .role-intro[data-flow]"));
 
   const workflowSwitcher = document.querySelector(".workflow-switcher");
-  const roleTabList = document.querySelector(".workflow-role-tabs");
+  const roleTabList = document.querySelector(".workflow-switcher .workflow-role-tabs");
   const workflowDetailPanel = document.getElementById("workflow-detail-panel");
   let hideRoleFlowTimer = null;
 
@@ -212,20 +212,115 @@
     });
   }
 
-  const video = document.getElementById("demo-video");
-  const placeholder = document.getElementById("video-placeholder");
-  if (video && placeholder) {
-    video.addEventListener("error", () => {
+  // Demo video tabs (hover, same pattern as workflow)
+  const videoTabs = Array.from(document.querySelectorAll(".video-switcher .video-tab[data-video]"));
+  const videoBlocks = Array.from(document.querySelectorAll(".video-detail-panel .video-block[data-video]"));
+  const videoSwitcher = document.querySelector(".video-switcher");
+  const videoTabList = document.querySelector(".video-switcher .video-role-tabs");
+  const videoDetailPanel = document.getElementById("video-detail-panel");
+  let hideVideoTimer = null;
+
+  function pauseAllRoleVideos() {
+    document.querySelectorAll(".demo-role-video").forEach((v) => {
+      v.pause();
+    });
+  }
+
+  function initRoleVideo(block) {
+    const video = block.querySelector(".demo-role-video");
+    const placeholder = block.querySelector(".video-placeholder");
+    if (!video || !placeholder || video.dataset.bound === "1") return;
+    video.dataset.bound = "1";
+
+    const showPlaceholder = () => {
       video.classList.add("hidden");
       placeholder.classList.remove("hidden");
-    });
-    video.addEventListener("loadeddata", () => {
+    };
+    const showVideo = () => {
       placeholder.classList.add("hidden");
       video.classList.remove("hidden");
+    };
+
+    video.addEventListener("error", showPlaceholder);
+    video.addEventListener("loadeddata", showVideo);
+    if (video.readyState >= 2) showVideo();
+    else showPlaceholder();
+  }
+
+  videoBlocks.forEach(initRoleVideo);
+
+  function hideRoleVideo() {
+    pauseAllRoleVideos();
+    if (videoSwitcher) videoSwitcher.classList.remove("is-detail-visible");
+    if (videoDetailPanel) videoDetailPanel.setAttribute("aria-hidden", "true");
+    videoTabs.forEach((tab) => {
+      tab.classList.remove("is-active");
+      tab.setAttribute("aria-pressed", "false");
+      tab.setAttribute("aria-selected", "false");
     });
-    if (video.readyState >= 2) {
-      placeholder.classList.add("hidden");
-      video.classList.remove("hidden");
+    videoBlocks.forEach((block) => block.classList.remove("is-visible"));
+  }
+
+  function scheduleHideRoleVideo() {
+    if (hideVideoTimer) window.clearTimeout(hideVideoTimer);
+    hideVideoTimer = window.setTimeout(() => {
+      hideRoleVideo();
+      hideVideoTimer = null;
+    }, 80);
+  }
+
+  function cancelHideRoleVideo() {
+    if (hideVideoTimer) {
+      window.clearTimeout(hideVideoTimer);
+      hideVideoTimer = null;
     }
+  }
+
+  function showRoleVideo(videoId) {
+    cancelHideRoleVideo();
+    if (!videoId) {
+      hideRoleVideo();
+      return;
+    }
+    pauseAllRoleVideos();
+    if (videoSwitcher) videoSwitcher.classList.add("is-detail-visible");
+    if (videoDetailPanel) videoDetailPanel.setAttribute("aria-hidden", "false");
+    videoTabs.forEach((tab) => {
+      const active = tab.dataset.video === videoId;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-pressed", active ? "true" : "false");
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    videoBlocks.forEach((block) => {
+      block.classList.toggle("is-visible", block.dataset.video === videoId);
+    });
+  }
+
+  if (videoTabs.length && videoBlocks.length) {
+    hideRoleVideo();
+
+    videoTabs.forEach((tab) => {
+      tab.addEventListener("mouseenter", () => showRoleVideo(tab.dataset.video));
+      tab.addEventListener("focus", () => showRoleVideo(tab.dataset.video));
+    });
+
+    if (videoTabList) {
+      videoTabList.addEventListener("mouseleave", (e) => {
+        if (!videoTabList.contains(e.relatedTarget)) {
+          scheduleHideRoleVideo();
+        }
+      });
+      videoTabList.addEventListener("mouseenter", cancelHideRoleVideo);
+    }
+
+    videoTabs.forEach((tab) => {
+      tab.addEventListener("blur", () => {
+        window.setTimeout(() => {
+          if (videoTabList && !videoTabList.contains(document.activeElement)) {
+            scheduleHideRoleVideo();
+          }
+        }, 0);
+      });
+    });
   }
 })();

@@ -558,6 +558,59 @@ img {
   z-index: 1;
 }
 
+/* Demo video — role tabs + hover-to-show player */
+.video-switcher {
+  position: relative;
+  width: 100%;
+  padding-bottom: min(52vh, 420px);
+}
+
+.video-role-tabs {
+  margin-bottom: 20px;
+}
+
+.video-detail-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(52vh, 420px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.55s ease-in-out, visibility 0.55s ease-in-out;
+}
+
+.video-switcher.is-detail-visible .video-detail-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.video-detail-panel .video-block {
+  position: absolute;
+  inset: 0;
+  max-width: 900px;
+  margin: 0 auto;
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 0.55s ease-in-out;
+  pointer-events: none;
+}
+
+.video-detail-panel .video-block.is-visible {
+  opacity: 1;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.video-detail-panel .video-block video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  display: block;
+}
+
 .two-col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

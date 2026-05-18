@@ -1,18 +1,21 @@
-# Demo video
+# Demo videos
 
-Place your presentation recording here:
+Place role-specific walkthrough recordings here:
 
-```
-finalDemo/video/demo.mp4
-```
+| Role | File |
+|------|------|
+| Contractors | `finalDemo/video/contractors.mp4` |
+| Asset Manager | `finalDemo/video/manager.mp4` |
+| System Admin | `finalDemo/video/admin.mp4` |
 
-The final demo page (`index.html`) loads this file automatically. Supported: MP4 (H.264 recommended).
+The Application video slide loads these on hover over each role tab. Supported format: MP4 (H.264 recommended).
+
+Legacy single file (optional): `demo.mp4` — no longer used by the demo page; rename or copy into the role files above.
 
 ## Suggested recording outline
 
-1. Sign in (demo account)
-2. Run a load evaluation (Compliant or Non-Compliant)
-3. Optional: send email alert on Non-Compliant result
-4. Optional: asset list or AI extraction import
+**Contractors:** Sign in → select asset → evaluate load → result → own history.
 
-Keep the file name as `demo.mp4` unless you update the `<source>` in `index.html`.
+**Asset Manager:** Dashboard → assets → evaluation → team history → alerts.
+
+**System Admin:** User management → locations → JSON import → assets.
