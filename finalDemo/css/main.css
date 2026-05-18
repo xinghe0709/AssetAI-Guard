@@ -485,22 +485,17 @@ img {
 
 .workflow-diagram {
   position: relative;
-  background: var(--bg-card);
-  border-radius: var(--radius-card);
-  padding: 12px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-heavy);
   max-width: 100%;
   /* Fixed height — avoids layout jump when switching taller admin diagram */
-  min-height: 244px;
+  min-height: 220px;
 }
 
 .workflow-diagram .role-flow {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  width: calc(100% - 24px);
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: auto;
   max-height: 52vh;
   margin: 0;
