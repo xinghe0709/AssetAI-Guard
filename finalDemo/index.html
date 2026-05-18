@@ -97,6 +97,11 @@
           <button type="button" class="role-tab" role="tab" data-flow="manager" aria-pressed="false" aria-selected="false">Asset_Manager</button>
           <button type="button" class="role-tab" role="tab" data-flow="admin" aria-pressed="false" aria-selected="false">System_Admin</button>
         </div>
+        <div class="workflow-role-intro" aria-live="polite">
+          <p class="role-intro is-visible" data-flow="contractors">On-site staff who sign in, select an asset, run load evaluations, and view their own history. Email alerts can be sent when a check is non-compliant.</p>
+          <p class="role-intro" data-flow="manager">Oversees the fleet: dashboard metrics, asset and capacity management, team-wide evaluation history, and alert email settings for managers.</p>
+          <p class="role-intro" data-flow="admin">Full system control — create users and roles, manage locations, import AI-extracted JSON criteria, and access all manager features.</p>
+        </div>
         <div class="workflow-diagram" id="workflow-diagram">
           <img class="role-flow is-visible" data-flow="contractors" src="image/contractorFlow.svg" alt="Contractors workflow" width="960" height="200" />
           <img class="role-flow" data-flow="manager" src="image/managerFlow.svg" alt="Asset Manager workflow" width="960" height="200" />

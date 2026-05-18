@@ -128,6 +128,7 @@
   // Role workflow tabs (hover + keyboard)
   const roleTabs = Array.from(document.querySelectorAll(".role-tab[data-flow]"));
   const roleFlows = Array.from(document.querySelectorAll(".role-flow[data-flow]"));
+  const roleIntros = Array.from(document.querySelectorAll(".role-intro[data-flow]"));
 
   function showRoleFlow(flowId) {
     if (!flowId) return;
@@ -139,6 +140,9 @@
     });
     roleFlows.forEach((img) => {
       img.classList.toggle("is-visible", img.dataset.flow === flowId);
+    });
+    roleIntros.forEach((intro) => {
+      intro.classList.toggle("is-visible", intro.dataset.flow === flowId);
     });
   }
 

@@ -483,6 +483,33 @@ img {
   outline-offset: 3px;
 }
 
+.workflow-role-intro {
+  position: relative;
+  min-height: 4.6em;
+  margin-bottom: 18px;
+}
+
+.workflow-role-intro .role-intro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 42em;
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 0.7s ease-in-out;
+  pointer-events: none;
+}
+
+.workflow-role-intro .role-intro.is-visible {
+  opacity: 1;
+  z-index: 1;
+}
+
 .workflow-diagram {
   position: relative;
   max-width: 100%;
