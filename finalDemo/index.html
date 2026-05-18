@@ -23,13 +23,14 @@
     <button type="button" data-slide="0" aria-label="Homepage" aria-current="true"></button>
     <button type="button" data-slide="1" aria-label="Introduction"></button>
     <button type="button" data-slide="2" aria-label="Problem and solution"></button>
-    <button type="button" data-slide="3" aria-label="Workflow and demo video"></button>
-    <button type="button" data-slide="4" aria-label="Technical summary"></button>
-    <button type="button" data-slide="5" aria-label="Quality assurance"></button>
-    <button type="button" data-slide="6" aria-label="Deliveries"></button>
-    <button type="button" data-slide="7" aria-label="Key notes"></button>
-    <button type="button" data-slide="8" aria-label="Future work"></button>
-    <button type="button" data-slide="9" aria-label="Thank you"></button>
+    <button type="button" data-slide="3" aria-label="User workflow"></button>
+    <button type="button" data-slide="4" aria-label="Application video"></button>
+    <button type="button" data-slide="6" aria-label="Technical summary"></button>
+    <button type="button" data-slide="7" aria-label="Quality assurance"></button>
+    <button type="button" data-slide="8" aria-label="Deliveries"></button>
+    <button type="button" data-slide="9" aria-label="Key notes"></button>
+    <button type="button" data-slide="10" aria-label="Future work"></button>
+    <button type="button" data-slide="10" aria-label="Thank you"></button>
   </nav>
 
   <!-- 0 · Homepage -->
@@ -84,31 +85,38 @@
     </div>
   </section>
 
-  <!-- 3 · User workflow & live application video -->
-  <section id="slide-3" class="slide slide--alt slide--combo" data-slide="3" aria-label="User workflow and demo video">
+  <!-- 3 · User workflow -->
+  <section id="slide-3" class="slide slide--alt" data-slide="3" aria-label="User workflow">
     <div class="slide-inner">
       <span class="section-label reveal">Live system</span>
-      <h2 class="slide-title reveal">User workflow &amp; application video</h2>
-      <div class="workflow-block reveal">
-        <div class="workflow-steps">
-          <span class="workflow-step">Sign in</span>
-          <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
-          <span class="workflow-step">Select asset</span>
-          <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
-          <span class="workflow-step">Evaluate load</span>
-          <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
-          <span class="workflow-step">Result</span>
-          <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
-          <span class="workflow-step">History / email</span>
-        </div>
-        <ul class="bullet-list bullet-list--compact">
-          <li><strong>Contractor</strong> — evaluations and own history</li>
-          <li><strong>Asset Manager</strong> — assets, dashboard, alerts</li>
-          <li><strong>System Admin</strong> — users, locations, JSON import</li>
-        </ul>
-        <p class="note-muted">Live app: <a href="http://127.0.0.1:5173" target="_blank" rel="noopener">127.0.0.1:5173</a> (run <code>start-dev</code> from repo root)</p>
+      <h2 class="slide-title reveal">User workflow</h2>
+      <p class="slide-lead reveal">End-to-end path from sign-in to logged results and alerts.</p>
+      <div class="workflow-steps reveal">
+        <span class="workflow-step">Sign in</span>
+        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+        <span class="workflow-step">Select asset</span>
+        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+        <span class="workflow-step">Evaluate load</span>
+        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+        <span class="workflow-step">Result</span>
+        <span class="workflow-arrow" aria-hidden="true">&rarr;</span>
+        <span class="workflow-step">History / email</span>
       </div>
-      <div class="video-block video-block--compact reveal">
+      <ul class="bullet-list reveal">
+        <li><strong>Contractor</strong> — evaluations and own history</li>
+        <li><strong>Asset Manager</strong> — assets, dashboard, alerts</li>
+        <li><strong>System Admin</strong> — users, locations, JSON import</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 · Application video -->
+  <section id="slide-4" class="slide" data-slide="4" aria-label="Application video">
+    <div class="slide-inner">
+      <span class="section-label reveal">Demo video</span>
+      <h2 class="slide-title reveal">Application video</h2>
+      <p class="slide-lead reveal">Walkthrough recording for the demo and user manual.</p>
+      <div class="video-block reveal">
         <video id="demo-video" class="hidden" controls playsinline preload="metadata">
           <source src="video/demo.mp4" type="video/mp4" />
         </video>
@@ -116,13 +124,13 @@
           <p>Video not uploaded yet.</p>
           <p>Place file at <code>finalDemo/video/demo.mp4</code></p>
         </div>
-        <p class="video-caption">Walkthrough recording — see <code>video/README.md</code></p>
+        <p class="video-caption">See <code>video/README.md</code> for recording outline.</p>
       </div>
     </div>
   </section>
 
-  <!-- 4 · Technical summary -->
-  <section id="slide-4" class="slide slide--tall" data-slide="4" aria-label="Technical summary">
+  <!-- 5 · Technical summary -->
+  <section id="slide-5" class="slide slide--tall slide--alt" data-slide="5" aria-label="Technical summary">
     <div class="slide-inner">
       <span class="section-label reveal">Technical summary</span>
       <h2 class="slide-title reveal">Architecture and stack</h2>
@@ -144,8 +152,8 @@
     </div>
   </section>
 
-  <!-- 5 · Quality assurance & project management -->
-  <section id="slide-5" class="slide slide--alt" data-slide="5" aria-label="Quality assurance and project management">
+  <!-- 6 · Quality assurance & project management -->
+  <section id="slide-6" class="slide" data-slide="6" aria-label="Quality assurance and project management">
     <div class="slide-inner">
       <span class="section-label reveal">Quality assurance</span>
       <h2 class="slide-title reveal">QA &amp; project management</h2>
@@ -171,7 +179,7 @@
   </section>
 
   <!-- 6 · Deliveries summary -->
-  <section id="slide-6" class="slide" data-slide="6" aria-label="Deliveries summary">
+  <section id="slide-7" class="slide slide--alt" data-slide="7" aria-label="Deliveries summary">
     <div class="slide-inner">
       <span class="section-label reveal">Deliveries</span>
       <h2 class="slide-title reveal">What we deliver</h2>
@@ -187,7 +195,7 @@
   </section>
 
   <!-- 7 · Key notes for users & developers -->
-  <section id="slide-7" class="slide slide--alt" data-slide="7" aria-label="Key notes for users and developers">
+  <section id="slide-8" class="slide slide--alt" data-slide="8" aria-label="Key notes for users and developers">
     <div class="slide-inner slide-inner--split">
       <span class="section-label reveal">Key notes</span>
       <h2 class="slide-title reveal">For users &amp; developers</h2>
@@ -216,7 +224,7 @@
   </section>
 
   <!-- 8 · Future work -->
-  <section id="slide-8" class="slide" data-slide="8" aria-label="Future work">
+  <section id="slide-9" class="slide slide--alt" data-slide="9" aria-label="Future work">
     <div class="slide-inner">
       <span class="section-label reveal">Future work</span>
       <h2 class="slide-title reveal">Next steps</h2>
@@ -231,7 +239,7 @@
   </section>
 
   <!-- 9 · Thank you -->
-  <section id="slide-9" class="slide slide--alt slide--thanks" data-slide="9" aria-label="Thank you">
+  <section id="slide-10" class="slide slide--alt slide--thanks" data-slide="10" aria-label="Thank you">
     <div class="slide-inner reveal">
       <span class="section-label">Closing</span>
       <p class="thanks-large">Thank you</p>
