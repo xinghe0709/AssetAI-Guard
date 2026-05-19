@@ -5,6 +5,8 @@
 
   if (!slides.length) return;
 
+  const videoSlideIndex = slides.findIndex((s) => s.querySelector(".video-switcher"));
+
   let currentIndex = 0;
   let isAnimating = false;
   let wheelLock = false;
@@ -36,12 +38,27 @@
     });
   }
 
+  function isVideoSlideActive() {
+    return videoSlideIndex >= 0 && currentIndex === videoSlideIndex;
+  }
+
+  function releaseVideoFocus() {
+    document.querySelectorAll(".demo-role-video").forEach((v) => {
+      v.pause();
+      if (typeof v.blur === "function") v.blur();
+    });
+  }
+
   function goToSlide(index) {
     const target = Math.max(0, Math.min(slides.length - 1, index));
     if (target === currentIndex && !isAnimating) return;
 
+    const leavingVideo =
+      videoSlideIndex >= 0 && currentIndex === videoSlideIndex && target !== videoSlideIndex;
+
     isAnimating = true;
     applySlideState(target);
+    if (leavingVideo) releaseVideoFocus();
 
     window.setTimeout(() => {
       isAnimating = false;
@@ -75,7 +92,7 @@
   function shouldIgnoreNavEvent(e) {
     const tag = e.target.tagName;
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || tag === "BUTTON") return true;
-    if (e.type !== "keydown") return false;
+    if (e.type !== "keydown" || !isVideoSlideActive()) return false;
 
     const active = document.activeElement;
     if (active && (active.tagName === "VIDEO" || isInsideVideoSwitcher(active))) {
@@ -88,7 +105,7 @@
   }
 
   function onWheel(e) {
-    if (isInsideVideoSwitcher(e.target)) return;
+    if (isVideoSlideActive() && isInsideVideoSwitcher(e.target)) return;
     e.preventDefault();
     if (wheelLock || isAnimating) return;
     if (Math.abs(e.deltaY) < 8) return;
@@ -274,16 +291,6 @@
     video.setAttribute("tabindex", "0");
     if (video.readyState >= 2) showVideo();
     else showPlaceholder();
-  }
-
-  if (videoSwitcher) {
-    videoSwitcher.addEventListener(
-      "keydown",
-      (e) => {
-        if (SLIDE_NAV_KEYS.has(e.key)) e.stopPropagation();
-      },
-      true
-    );
   }
 
   videoBlocks.forEach(initRoleVideo);
