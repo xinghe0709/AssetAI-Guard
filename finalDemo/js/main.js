@@ -56,14 +56,39 @@
     if (currentIndex > 0) goToSlide(currentIndex - 1);
   }
 
+  const SLIDE_NAV_KEYS = new Set([
+    "ArrowDown",
+    "ArrowUp",
+    "ArrowLeft",
+    "ArrowRight",
+    " ",
+    "Home",
+    "End",
+    "PageUp",
+    "PageDown",
+  ]);
+
+  function isInsideVideoSwitcher(el) {
+    return Boolean(el && el.closest && el.closest(".video-switcher"));
+  }
+
   function shouldIgnoreNavEvent(e) {
     const tag = e.target.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA") return true;
-    if (tag === "VIDEO" && e.type === "keydown") return true;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || tag === "BUTTON") return true;
+    if (e.type !== "keydown") return false;
+
+    const active = document.activeElement;
+    if (active && (active.tagName === "VIDEO" || isInsideVideoSwitcher(active))) {
+      return SLIDE_NAV_KEYS.has(e.key);
+    }
+    if (tag === "VIDEO" || isInsideVideoSwitcher(e.target)) {
+      return SLIDE_NAV_KEYS.has(e.key);
+    }
     return false;
   }
 
   function onWheel(e) {
+    if (isInsideVideoSwitcher(e.target)) return;
     e.preventDefault();
     if (wheelLock || isAnimating) return;
     if (Math.abs(e.deltaY) < 8) return;
@@ -78,7 +103,6 @@
   }
 
   applySlideState(0);
-  document.body.focus({ preventScroll: true });
 
   dots.forEach((dot, index) => {
     dot.addEventListener("click", () => goToSlide(index));
@@ -245,8 +269,21 @@
 
     video.addEventListener("error", showPlaceholder);
     video.addEventListener("loadeddata", showVideo);
+    video.addEventListener("click", () => video.focus());
+    video.addEventListener("keydown", (e) => e.stopPropagation());
+    video.setAttribute("tabindex", "0");
     if (video.readyState >= 2) showVideo();
     else showPlaceholder();
+  }
+
+  if (videoSwitcher) {
+    videoSwitcher.addEventListener(
+      "keydown",
+      (e) => {
+        if (SLIDE_NAV_KEYS.has(e.key)) e.stopPropagation();
+      },
+      true
+    );
   }
 
   videoBlocks.forEach(initRoleVideo);

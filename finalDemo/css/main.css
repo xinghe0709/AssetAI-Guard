@@ -687,6 +687,12 @@ img {
   aspect-ratio: 16 / 9;
   background: #000;
   display: block;
+  pointer-events: auto;
+}
+
+.video-detail-panel .video-placeholder.hidden {
+  display: none !important;
+  pointer-events: none;
 }
 
 .two-col {
