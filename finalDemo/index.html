@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!--
+  AssetGuard AI — Final Demo (scroll presentation)
+
+  Open: finalDemo/index.html
+  Or:   cd finalDemo && python -m http.server 8080  →  http://127.0.0.1:8080
+
+  Full app: repo root → start-dev.bat / start-dev.sh
+  Web UI:   http://127.0.0.1:5173
+  API:      http://127.0.0.1:5000/api/v1
+  Video:    finalDemo/video/demo.mp4
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AssetGuard AI — Final Demo | CITS5206 Group 11</title>
+  <meta name="description" content="AssetGuard AI final presentation." />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body tabindex="-1">
+  <nav class="slide-dots" aria-label="Presentation sections">
+    <button type="button" data-slide="0" aria-label="Homepage" aria-current="true"></button>
+    <button type="button" data-slide="1" aria-label="Introduction"></button>
+    <button type="button" data-slide="2" aria-label="Problem and solution"></button>
+    <button type="button" data-slide="3" aria-label="User workflow"></button>
+    <button type="button" data-slide="4" aria-label="Application video"></button>
+    <button type="button" data-slide="6" aria-label="Technical summary"></button>
+    <button type="button" data-slide="7" aria-label="Quality assurance"></button>
+    <button type="button" data-slide="8" aria-label="Deliveries"></button>
+    <button type="button" data-slide="9" aria-label="Key notes"></button>
+    <button type="button" data-slide="10" aria-label="Future work"></button>
+    <button type="button" data-slide="10" aria-label="Thank you"></button>
+  </nav>
+
+  <!-- 0 · Homepage -->
+  <section id="slide-0" class="slide slide--home" data-slide="0" aria-label="Homepage">
+    <div class="slide-inner reveal">
+      <span class="hero-badge">Final Demo 2026</span>
+      <h1 class="hero-title">AssetGuard AI</h1>
+      <p class="hero-intro">Decision-support for engineering load compliance — from drawings to on-site checks.</p>
+      <p class="hero-line">Client: GJP Engineering</p>
+      <p class="hero-line">UWA CITS5206 · Group 11</p>
+    </div>
+  </section>
+
+  <!-- 1 · Introduction -->
+  <section id="slide-1" class="slide slide--alt" data-slide="1" aria-label="Introduction">
+    <div class="slide-inner">
+      <span class="section-label reveal">Introduction</span>
+      <h2 class="slide-title reveal">What we are presenting</h2>
+      <p class="slide-lead reveal">A decision-support platform for GJP Engineering — compare on-site equipment loads against design limits with a clear audit trail.</p>
+      <ul class="bullet-list reveal">
+        <li><strong>Client</strong> — GJP Engineering (structural / load compliance)</li>
+        <li><strong>Team</strong> — UWA CITS5206, Group 11</li>
+        <li><strong>Scope</strong> — Web app, API, AI extraction pipeline, documentation</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 2 · Client problem & our solution (summary) -->
+  <section id="slide-2" class="slide" data-slide="2" aria-label="Client problem and our solution">
+    <div class="slide-inner slide-inner--split">
+      <span class="section-label reveal">Summary</span>
+      <h2 class="slide-title reveal">Problem vs Solution</h2>
+      <div class="split-panels reveal">
+        <article class="card card--problem">
+          <h3>Client problem</h3>
+          <ul class="bullet-list">
+            <li>Design limits scattered in PDFs — hard to use on site</li>
+            <li>Manual load checks are slow and error-prone</li>
+            <li>No central record of outcomes and alerts</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Our solution</h3>
+          <ul class="bullet-list">
+            <li>Web platform + AI pipeline (PDF/images → JSON criteria)</li>
+            <li>Role-based UI: evaluate loads, manage assets, import data</li>
+            <li>Logged results and email alerts when non-compliant</li>
+          </ul>
+        </article>
+      </div>
+      <p class="reveal note-muted">Decision-support only — not a replacement for engineering judgement.</p>
+    </div>
+  </section>
+
+  <!-- 3 · User workflow -->
+  <section id="slide-3" class="slide slide--alt" data-slide="3" aria-label="User workflow">
+    <div class="slide-inner">
+      <span class="section-label reveal">Live system</span>
+      <h2 class="slide-title reveal">User workflow</h2>
+      <p class="slide-lead reveal">Hover a role to view its workflow in the application.</p>
+      <div class="workflow-switcher reveal">
+        <div class="workflow-role-tabs" role="tablist" aria-label="User roles">
+          <button type="button" class="role-tab" role="tab" data-flow="contractors" aria-pressed="false" aria-selected="false">Contractors</button>
+          <button type="button" class="role-tab" role="tab" data-flow="manager" aria-pressed="false" aria-selected="false">Asset_Manager</button>
+          <button type="button" class="role-tab" role="tab" data-flow="admin" aria-pressed="false" aria-selected="false">System_Admin</button>
+        </div>
+        <div class="workflow-detail-panel" id="workflow-detail-panel" aria-hidden="true">
+          <div class="workflow-role-intro" aria-live="polite">
+            <p class="role-intro" data-flow="contractors">On-site staff who sign in, select an asset, run load evaluations, and view their own history. Email alerts can be sent when a check is non-compliant.</p>
+            <p class="role-intro" data-flow="manager">Oversees the fleet: dashboard metrics, asset and capacity management, team-wide evaluation history, and alert email settings for managers.</p>
+            <p class="role-intro" data-flow="admin">Full system control — create users and roles, manage locations, import AI-extracted JSON criteria, and access all manager features.</p>
+          </div>
+          <div class="workflow-diagram" id="workflow-diagram">
+            <img class="role-flow" data-flow="contractors" src="image/contractorFlow.svg" alt="Contractors workflow" width="960" height="200" />
+            <img class="role-flow" data-flow="manager" src="image/managerFlow.svg" alt="Asset Manager workflow" width="960" height="200" />
+            <img class="role-flow" data-flow="admin" src="image/adminFlow.svg" alt="System Admin workflow" width="960" height="220" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · Application video -->
+  <section id="slide-4" class="slide" data-slide="4" aria-label="Application video">
+    <div class="slide-inner">
+      <span class="section-label reveal">Demo video</span>
+      <h2 class="slide-title reveal">Application video</h2>
+      <p class="slide-lead reveal">Hover a role to preview its walkthrough recording.</p>
+      <div class="video-switcher reveal">
+        <div class="workflow-role-tabs video-role-tabs" role="tablist" aria-label="Demo videos by role">
+          <button type="button" class="role-tab video-tab" role="tab" data-video="contractors" aria-pressed="false" aria-selected="false">Contractors</button>
+          <button type="button" class="role-tab video-tab" role="tab" data-video="manager" aria-pressed="false" aria-selected="false">Asset_Manager</button>
+          <button type="button" class="role-tab video-tab" role="tab" data-video="admin" aria-pressed="false" aria-selected="false">System_Admin</button>
+        </div>
+        <div class="video-detail-panel" id="video-detail-panel" aria-hidden="true">
+          <article class="video-block" data-video="contractors">
+            <video class="demo-role-video hidden" controls playsinline preload="metadata">
+              <source src="video/contractors.mp4" type="video/mp4" />
+            </video>
+            <div class="video-placeholder">
+              <p>Contractors video not uploaded yet.</p>
+              <p>Place file at <code>finalDemo/video/contractors.mp4</code></p>
+            </div>
+            <p class="video-caption">Sign in, evaluate load, view own history</p>
+          </article>
+          <article class="video-block" data-video="manager">
+            <video class="demo-role-video hidden" controls playsinline preload="metadata">
+              <source src="video/manager.mp4" type="video/mp4" />
+            </video>
+            <div class="video-placeholder">
+              <p>Asset Manager video not uploaded yet.</p>
+              <p>Place file at <code>finalDemo/video/manager.mp4</code></p>
+            </div>
+            <p class="video-caption">Dashboard, assets, history, and alerts</p>
+          </article>
+          <article class="video-block" data-video="admin">
+            <video class="demo-role-video hidden" controls playsinline preload="metadata">
+              <source src="video/admin.mp4" type="video/mp4" />
+            </video>
+            <div class="video-placeholder">
+              <p>System Admin video not uploaded yet.</p>
+              <p>Place file at <code>finalDemo/video/admin.mp4</code></p>
+            </div>
+            <p class="video-caption">Users, locations, JSON import, full access</p>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5 · Technical summary -->
+  <section id="slide-5" class="slide slide--tall slide--alt slide--arch-only" data-slide="5" aria-label="Technical summary">
+    <div class="slide-inner">
+      <span class="section-label reveal">Technical summary</span>
+      <h2 class="slide-title reveal">Architecture and stack</h2>
+      <div class="architecture-wrap reveal">
+        <img src="image/Backend%20Frame.png" alt="AssetGuard AI backend architecture" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · Quality assurance & project management -->
+  <section id="slide-6" class="slide" data-slide="6" aria-label="Quality assurance and project management">
+    <div class="slide-inner">
+      <span class="section-label reveal">Quality assurance</span>
+      <h2 class="slide-title reveal">QA &amp; project management</h2>
+      <p class="slide-lead reveal">Testing, milestones, and Git-based delivery with the client.</p>
+      <div class="qa-grid reveal">
+        <div>
+          <h3 class="subsection-title">Testing</h3>
+          <ul class="bullet-list">
+            <li>Automated API flow: <code>tests/test_api_flow.py</code></li>
+            <li>Manual reports: Issues 16-21 in <code>testing/</code></li>
+            <li>Screenshots and sign-off per feature area</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="subsection-title">Project management</h3>
+          <ul class="bullet-list">
+            <li>Weekly meetings with GJP Engineering</li>
+            <li>MVP scope aligned to D1 specification</li>
+            <li>Tasks tracked on GitHub Issues</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="subsection-title">Milestones</h3>
+          <ul class="bullet-list">
+            <li>Core platform - auth, assets, evaluation</li>
+            <li>AI extraction and JSON import</li>
+            <li>QA, documentation, and final demo</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="subsection-title">Version control</h3>
+          <ul class="bullet-list">
+            <li>Monorepo on GitHub (<code>AssetAI-Guard</code>)</li>
+            <li>Feature branches and pull requests to <code>main</code></li>
+            <li>No direct pushes to <code>main</code>; focused commits</li>
+            <li>README and GitHub Wiki for shared docs</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · Deliveries summary -->
+  <section id="slide-7" class="slide slide--alt" data-slide="7" aria-label="Deliveries summary">
+    <div class="slide-inner">
+      <span class="section-label reveal">Deliveries</span>
+      <h2 class="slide-title reveal">Application features</h2>
+      <p class="slide-lead reveal">Three core capabilities for GJP Engineering.</p>
+      <ul class="bullet-list reveal bullet-list--deliveries">
+        <li><strong>Asset management</strong> — Locations, assets, and design load capacities in one place</li>
+        <li><strong>Evaluation system</strong> — Compare on-site equipment loads to limits; Compliant or Non-Compliant</li>
+        <li><strong>Email alerts</strong> — Notify stakeholders when a check is non-compliant</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 · Key notes for users & developers -->
+  <section id="slide-8" class="slide slide--alt" data-slide="8" aria-label="Key notes for users and developers">
+    <div class="slide-inner slide-inner--split">
+      <span class="section-label reveal">Key notes</span>
+      <h2 class="slide-title reveal">For users &amp; developers</h2>
+      <div class="split-panels reveal">
+        <article class="card">
+          <h3>Users</h3>
+          <ul class="bullet-list">
+            <li>Sign in with role-appropriate demo accounts (see Wiki)</li>
+            <li>Always verify critical loads with engineering judgement</li>
+            <li>Non-compliant results can trigger email alerts to managers</li>
+            <li>User guide: GitHub Wiki — Getting Started &amp; User Guide</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Developers</h3>
+          <ul class="bullet-list">
+            <li>Start stack: <code>start-dev.bat</code> / <code>start-dev.sh</code></li>
+            <li>API base: <code>http://127.0.0.1:5000/api/v1</code></li>
+            <li>Import path: extraction tool → JSON → admin import API</li>
+            <li>Docs: Wiki Development Guide &amp; API Reference</li>
+          </ul>
+        </article>
+      </div>
+      <p class="reveal note-muted"><a href="https://github.com/xinghe0709/AssetAI-Guard">github.com/xinghe0709/AssetAI-Guard</a></p>
+    </div>
+  </section>
+
+  <!-- 8 · Future work -->
+  <section id="slide-9" class="slide slide--alt" data-slide="9" aria-label="Future work">
+    <div class="slide-inner">
+      <span class="section-label reveal">Future work</span>
+      <h2 class="slide-title reveal">Next steps</h2>
+      <p class="slide-lead reveal">Planned improvements beyond this semester delivery.</p>
+      <ul class="bullet-list reveal">
+        <li><strong>Email system</strong> — Production-ready alerts and templates</li>
+        <li><strong>Full deployment</strong> — Live hosting for UI, API, and database</li>
+        <li><strong>AI pipeline integration</strong> — Deeper fit with the extraction tool in the main app</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9 · Thank you -->
+  <section id="slide-10" class="slide slide--alt slide--thanks" data-slide="10" aria-label="Thank you">
+    <div class="slide-inner reveal">
+      <p class="thanks-large">Thank you</p>
+      <p class="thanks-meta">Group 11 · GJP Engineering · UWA CITS5206</p>
+      <div class="thanks-team" role="list">
+        <span class="thanks-tag" role="listitem">Keerthana Narkunaraja</span>
+        <span class="thanks-tag" role="listitem">Jiasen Niu</span>
+        <span class="thanks-tag" role="listitem">Aoli Wang</span>
+        <span class="thanks-tag" role="listitem">Xinghe Wang</span>
+        <span class="thanks-tag" role="listitem">Rui Xin</span>
+        <span class="thanks-tag" role="listitem">Stewie Yang</span>
+      </div>
+      <p class="note-muted"><a href="https://github.com/xinghe0709/AssetAI-Guard">GitHub — AssetAI-Guard</a></p>
+    </div>
+  </section>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
