@@ -27,9 +27,8 @@
     <button type="button" data-slide="4" aria-label="Application video"></button>
     <button type="button" data-slide="6" aria-label="Technical summary"></button>
     <button type="button" data-slide="7" aria-label="Quality assurance"></button>
-    <button type="button" data-slide="8" aria-label="Deliveries"></button>
-    <button type="button" data-slide="9" aria-label="Key notes"></button>
-    <button type="button" data-slide="10" aria-label="Future work"></button>
+    <button type="button" data-slide="8" aria-label="Deliveries &amp; Documentation"></button>
+    <button type="button" data-slide="9" aria-label="Future work"></button>
     <button type="button" data-slide="10" aria-label="Thank you"></button>
   </nav>
 
@@ -217,65 +216,48 @@
     </div>
   </section>
 
-  <!-- 7 · Deliveries summary -->
-  <section id="slide-7" class="slide slide--alt" data-slide="7" aria-label="Deliveries summary">
+  <!-- 7 · Deliveries and documentation -->
+  <section id="slide-7" class="slide slide--alt" data-slide="7" aria-label="Deliveries and documentation">
     <div class="slide-inner">
       <span class="section-label reveal">Deliveries</span>
-      <h2 class="slide-title reveal">Application features</h2>
-      <p class="slide-lead reveal">Three core capabilities for GJP Engineering.</p>
-      <ul class="bullet-list reveal bullet-list--deliveries">
-        <li><strong>Asset management</strong> — Locations, assets, and design load capacities in one place</li>
-        <li><strong>Evaluation system</strong> — Compare on-site equipment loads to limits; Compliant or Non-Compliant</li>
-        <li><strong>Email alerts</strong> — Notify stakeholders when a check is non-compliant</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 7 · Key notes for users & developers -->
-  <section id="slide-8" class="slide slide--alt" data-slide="8" aria-label="Key notes for users and developers">
-    <div class="slide-inner slide-inner--split">
-      <span class="section-label reveal">Key notes</span>
-      <h2 class="slide-title reveal">For users &amp; developers</h2>
-      <div class="split-panels reveal">
-        <article class="card">
-          <h3>Users</h3>
+      <h2 class="slide-title reveal">Documentation &amp; resources</h2>
+      <p class="slide-lead reveal">Comprehensive documentation has been hosted on the <a href="https://github.com/xinghe0709/AssetAI-Guard/wiki">GitHub Wiki</a></p>
+      
+      <div class="qa-grid reveal">
+        <div
+          <h3 class="subsection-title">For Users</h3>
+          <p>Features step-by-step, role-tailored workflows covering batch JSON importing, rule engine calculations for load safety, and manual email report generation.</p>
+          <p><a href="https://github.com/xinghe0709/AssetAI-Guard/wiki/User-Manual">User Manual Details</a></p>
+        </div>
+        <div>
+          <h3 class="subsection-title">For Developers</h3>
+          <p>Serves as a single-source-of-truth reference for engineers to deploy, debug, or extend the system architecture:</p>
           <ul class="bullet-list">
-            <li>Sign in with role-appropriate demo accounts (see Wiki)</li>
-            <li>Always verify critical loads with engineering judgement</li>
-            <li>Non-compliant results can trigger email alerts to managers</li>
-            <li>User guide: GitHub Wiki — Getting Started &amp; User Guide</li>
+            <li><a href="https://github.com/xinghe0709/AssetAI-Guard/wiki/API-Reference">API Reference</a></li>
+            <li><a href="https://github.com/xinghe0709/AssetAI-Guard/wiki/Development-Guide">Development Guide</a></li>
+            <li><a href="https://github.com/xinghe0709/AssetAI-Guard/wiki/Troubleshooting">Troubleshooting</a></li>
           </ul>
-        </article>
-        <article class="card">
-          <h3>Developers</h3>
-          <ul class="bullet-list">
-            <li>Start stack: <code>start-dev.bat</code> / <code>start-dev.sh</code></li>
-            <li>API base: <code>http://127.0.0.1:5000/api/v1</code></li>
-            <li>Import path: extraction tool → JSON → admin import API</li>
-            <li>Docs: Wiki Development Guide &amp; API Reference</li>
-          </ul>
-        </article>
+        </div>
       </div>
-      <p class="reveal note-muted"><a href="https://github.com/xinghe0709/AssetAI-Guard">github.com/xinghe0709/AssetAI-Guard</a></p>
     </div>
   </section>
 
   <!-- 8 · Future work -->
-  <section id="slide-9" class="slide slide--alt" data-slide="9" aria-label="Future work">
+  <section id="slide-8" class="slide slide--alt" data-slide="8" aria-label="Future work">
     <div class="slide-inner">
       <span class="section-label reveal">Future work</span>
       <h2 class="slide-title reveal">Next steps</h2>
       <p class="slide-lead reveal">Planned improvements beyond this semester delivery.</p>
       <ul class="bullet-list reveal">
-        <li><strong>Email system</strong> — Production-ready alerts and templates</li>
-        <li><strong>Full deployment</strong> — Live hosting for UI, API, and database</li>
-        <li><strong>AI pipeline integration</strong> — Deeper fit with the extraction tool in the main app</li>
+        <li><strong>Dashboard Enhancements</strong> — Embedding rich time-series widgets and predictive equipment health trend charts.</li>
+        <li><strong>Row-Level Access Control</strong> — Upgrading the reporting security to filter log history views strictly based on organizational subdivisions or individual user assignment records. </li>
+        <li><strong>Cloud Infrastructure Native Scaling</strong> — Migrating database models to PostgreSQL and deploying the containerized full-stack services across AWS/Azure infrastructure for real-time asset tracking workflows.</li>
       </ul>
     </div>
   </section>
 
   <!-- 9 · Thank you -->
-  <section id="slide-10" class="slide slide--alt slide--thanks" data-slide="10" aria-label="Thank you">
+  <section id="slide-9" class="slide slide--alt slide--thanks" data-slide="9" aria-label="Thank you">
     <div class="slide-inner reveal">
       <p class="thanks-large">Thank you</p>
       <p class="thanks-meta">Group 11 · GJP Engineering · UWA CITS5206</p>
